@@ -1,7 +1,7 @@
 import { useState } from "react";
 import usePremumBiodatas from "../../hooks/usePremumBiodatas";
 import { useEffect } from "react";
-import BiodataCard from "../Utils/biodatas/biodataCard";
+import BiodataCard from "../Utils/Biodatas/BiodataCard";
 
 const PremiumBiodata = () => {
   const [sortOrder, setSortOrder] = useState("asc");
