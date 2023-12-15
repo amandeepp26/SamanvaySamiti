@@ -1,0 +1,14 @@
+.topBanner .swiper-button-prev,
+.topBanner .swiper-button-next,
+.topBanner .swiper-pagination {
+    color: white;
+}
+
+@media only screen and (max-width: 768px) {
+
+    .topBanner .swiper-button-prev,
+    .topBanner .swiper-button-next {
+        display: none;
+    }
+
+}

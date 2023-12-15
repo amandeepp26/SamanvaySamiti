@@ -1,0 +1,4 @@
+.header-menu li a.active {
+  background-color: #9b59d9;
+  color: white;
+}

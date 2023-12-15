@@ -1,0 +1,53 @@
+@media only screen and (max-width: 1024px) {
+  .custom-media-query {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+}
+
+/* Min and max slider css  */
+
+.range {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.multi-range-slider {
+  display: flex;
+  position: relative;
+  border: none !important;
+  border-radius: 10px;
+  padding: 20px 10px;
+  box-shadow: none !important;
+  flex-direction: column;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+.multi-range-slider .thumb .caption * {
+  position: absolute;
+  min-width: 30px;
+  height: 30px;
+  font-size: 75%;
+  text-align: center;
+  line-height: 30px;
+  background-color: #9b59d9 !important;
+  border-radius: 15px;
+  color: white;
+  box-shadow: 0px 0px 5px #9b59d9;
+  padding: 0px 5px;
+  white-space: nowrap;
+}
+
+.multi-range-slider .bar-inner {
+  background-color: #9b59d9 !important;
+  box-shadow: inset 0px 0px 5px #9b59d9 !important;
+  border: solid 1px #9b59d9 !important;
+}
+
+.multi-range-slider .thumb::before {
+  background-color: #9b59d9 !important;
+  border: solid 1px #9b59d9 !important;
+  box-shadow: 0px 0px 3px #9b59d9, inset 0px 0px 5px #9b59d9 !important;
+}
