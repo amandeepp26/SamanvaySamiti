@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import useBiodatas from "../../hooks/useBiodatas";
 import LoaderIcon from "../Utils/LoaderIcon";
-import BiodataCard from "../Utils/biodatas/BiodataCard";
+import BiodataCard from "../Utils/Biodatas/BiodataCard";
 import "./Biodatas.css";
 import MultiRangeSlider from "multi-range-slider-react";
 import useTotalBiodataForPagination from "../../hooks/useTotalBiodataForPagination";
