@@ -1,4 +1,4 @@
-import bannerbg from "../../../assets/banners/homebannerbg.jpeg";
+import bannerbg from "../../../assets/banners/homeBanner.jpeg";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
