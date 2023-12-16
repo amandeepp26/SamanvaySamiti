@@ -1,18 +1,10 @@
 import Container from "../Utils/Container";
 import SectionTitle from "../Utils/SectionTitle";
 import Banner from "./Banner/Banner";
-import profile from "../../assets/icons/profile.png";
-import query from "../../assets/icons/query.png";
-import chat from "../../assets/icons/chat.png";
-import totalGirls from "../../assets/img/totalGirls.jpg";
-import totalBoys from "../../assets/img/totalBoys.jpg";
-import totalMarrige from "../../assets/img/totalMarrige.jpg";
 import Slider from "./Slider/Slider";
 import Button from "../Utils/Button";
 import PremiumBiodata from "./PremiumBiodata";
 import useAdminStatistic from "../../hooks/useAdminStatistic";
-import LoaderIcon from "../Utils/LoaderIcon";
-import Slider_Backup from "./Slider/Slider_Backup";
 import Search from "./Search/Search";
 
 const Home = () => {
