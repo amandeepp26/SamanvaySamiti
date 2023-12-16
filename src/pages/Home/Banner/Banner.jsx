@@ -1,15 +1,8 @@
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination, Navigation, Autoplay } from "swiper/modules";
-import banner from "../../../assets/banners/banner.jpeg";
-import banner1 from "../../../assets/banners/banner1.png";
-import banner2 from "../../../assets/banners/banner2.jpg";
-import banner3 from "../../../assets/banners/banner3.png";
 import bannerbg from "../../../assets/banners/homebannerbg.jpeg";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "./Banner.css";
-import ButtonOutLine from "../../Utils/ButtonOutLine";
 const Banner = () => {
   return (
     <div className=" flex">
