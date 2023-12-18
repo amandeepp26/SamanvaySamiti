@@ -24,6 +24,8 @@ import AdminRoutes from "../PrivateRoute/AdminRoutes";
 import Payment from "../pages/Dashboard/Payment/Payment";
 import SuccessStory from "../pages/Dashboard/Admin/SuccessStory";
 import GotMarried from "../pages/Dashboard/Clients/GotMarried";
+import Blogs from "../pages/Blogs/Blogs";
+import OurTeam from "../pages/OurTeam/OurTeam";
 
 const router = createBrowserRouter([
   {
@@ -38,6 +40,14 @@ const router = createBrowserRouter([
       {
         path: "biodatas",
         element: <Biodatas />,
+      },
+      {
+        path: "blogs",
+        element: <Blogs />,
+      },
+      {
+        path: "ourteams",
+        element: <OurTeam />,
       },
       {
         path: "about-us",

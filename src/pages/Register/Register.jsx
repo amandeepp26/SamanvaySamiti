@@ -18,7 +18,7 @@ const Register = () => {
   const [showPass, setShowPass] = useState(true);
   const [step, setStep] = useState(0);
   const [formData, setFormData] = useState({});
-
+  const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
   const axiosPublic = useAxiosPublic();
@@ -26,7 +26,7 @@ const Register = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    // formState: { errors },
     reset,
   } = useForm();
   const onSubmit = (data) => {
@@ -99,12 +99,36 @@ const Register = () => {
         setSubmitBtnLoader(false);
       });
   };
-
+  const isValidPhoneNumber = (phoneNumber) => {
+    const phoneNumberRegex = /^[6-9]{10}$/;
+    return phoneNumberRegex.test(phoneNumber);
+  };
   const handleInputChange = (fieldName, value) => {
+    // if (!validationErrors) {
     setFormData({
       ...formData,
       [fieldName]: value,
     });
+    // }
+    // const validationErrors = validateField(fieldName, value);
+    // setErrors((prevErrors) => ({
+    //   ...prevErrors,
+    //   [fieldName]: validationErrors,
+    // }));
+  };
+
+  const validateField = (fieldName, value) => {
+    // Example validation logic
+    if (fieldName === "Phone number" && !isValidPhoneNumber(value)) {
+      return "Invalid phone number";
+    }
+    if (fieldName === "E-mail" && !isValidPhoneNumber(value)) {
+      return "Invalid emmail number";
+    }
+    // Add more validation rules as needed
+
+    // If no validation errors
+    return null;
   };
 
   const handleCheckboxChange = (fieldName, day) => {
@@ -123,7 +147,15 @@ const Register = () => {
 
   const dropdownOptions = {
     blood_group: ["A+", "B+", "AB+", "O+", "A-", "B-", "AB-", "O-"],
-    gotra: ["Gotra 1", "Gotra 2", "Gotra 3"],
+    gotra: [
+      "भारद्वाज (Bhardwaj)",
+      "वत्स (Vatsa)",
+      "कौशिक (Kaushik)",
+      "भार्गव (Bhargava)",
+      "गौतम (Gautam)",
+      "वशिष्ठ (Vashishta)",
+      "कश्यप (Kashyap)",
+    ],
     education_level_completed: [
       "10th",
       "12th",
@@ -138,13 +170,22 @@ const Register = () => {
       "Private Job",
       "Self employeed professional",
     ],
-    Payment_currency: ["10", "12"],
+    Payment_currency: ["USD", "EUR", "GBP", "INR", "JPY", "AUD", "CAD"],
     Brothers_Unmarried: [1, 2, 3, 4, 5],
     Brothers_married: [1, 2, 3, 4, 5],
     Sisters_Unmarried: [1, 2, 3, 4, 5],
     Sisters_married: [1, 2, 3, 4, 5],
-    kuldevi: ["sdbjhsd", "dshjbdjhsbd"],
-    // Add more fields and their options as needed
+    kuldevi: [
+      "श्री. अंबिका भवानी माता, निझर वेलदा, नंदुरबार",
+      "श्री. अन्नपूर्णा माता, कापडणे, धुळे",
+      "श्री. आशापुरी माता, शिंदखेडा-पाटण, धुळे",
+      "श्री. एकवीरा माता, वणी आंबोडे, धुळे",
+      "श्री. एकवीरा माता, धुळे",
+      "श्री. खंबाअंबा माता, हिंगणी",
+      "श्री. जोगेश्वरी माता, बेटावद",
+      "श्री. जोगेश्वरी माता, जोगशेलू / शेलुमेथी विखरण, शिंदखेडा",
+      "श्री. जोगेश्वरी माता, मुडी मांडळ",
+    ],
   };
   const weeklyHolidays = [
     "Sunday (रविवार)",
@@ -502,9 +543,14 @@ const Register = () => {
                               <input
                                 className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                                 type="text"
-                                name={`brother_in_law_${index + 1}_father_name`}
                                 placeholder="Enter here"
-                                value={formData[fieldName]}
+                                value={formData["brothers_in_lows_name_phone"]}
+                                onChange={(e) =>
+                                  handleInputChange(
+                                    "brothers_in_lows_name_phone",
+                                    e.target.value
+                                  )
+                                }
                               />
                             </div>
                           )
@@ -513,32 +559,51 @@ const Register = () => {
                     )}
 
                   {fieldName === "Sisters_married" &&
-                    formData[fieldName] > 0 &&
-                    // Render in-law fields for each married sister
-                    Array.from({ length: formData[fieldName] }).map(
-                      (_, index) => (
-                        <div key={index}>
-                          <label>
-                            {`In-law ${
-                              index + 1
-                            }'s Father's Name and Mobile Number`}
-                          </label>
-                          {/* Render input fields for in-law details */}
-                          <input
-                            type="text"
-                            name={`sister_in_law_${index + 1}_father_name`}
-                            // Add other attributes and event handlers as needed
-                          />
-                          <input
-                            type="text"
-                            name={`sister_in_law_${index + 1}_father_mobile`}
-                            // Add other attributes and event handlers as needed
-                          />
-                        </div>
-                      )
+                    formData[fieldName] > 0 && (
+                      <>
+                        <h6 className="mt-3">
+                          भगिनी व यजमानांचे नाव आणि मोबाईल नंबर Married Sister
+                          and brother-in-law's name and mobile number
+                          <br />
+                          नातेवाईकांचा तपशील नमूद करताना त्यांच्या गावाचे नाव
+                          आणि संपर्क क्रमांकावर स्वल्पविराम लावा.
+                          <br /> While mentioning relative's details put a comma
+                          in their village name and contact number.
+                          <br /> उदा. : श्री. यजमान वडील वाणी, ९८९८९८९८९८,
+                          आर्वी-धुळे ह.मु. पुणे सौ. ताई - श्री. यजमान वडील वाणी,
+                          मुळगांव, ह. मु. मुंबई विवाहित
+                        </h6>
+                        {Array.from({ length: formData[fieldName] }).map(
+                          (_, index) => (
+                            <div key={index} className="mt-5">
+                              <label
+                                htmlFor={formData[fieldName]}
+                                className="block mb-2 text-sm font-medium text-gray-900"
+                              >
+                                {`${
+                                  index + 1
+                                }. Sisters Father's in law Name and Mobile Number`}
+                              </label>
+                              <input
+                                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                                type="text"
+                                // name={`_in_law_${index + 1}_father_name`}
+                                placeholder="Enter here"
+                                value={formData["sisters_in_lows_name_phone"]}
+                                onChange={(e) =>
+                                  handleInputChange(
+                                    "sisters_in_lows_name_phone",
+                                    e.target.value
+                                  )
+                                }
+                              />
+                            </div>
+                          )
+                        )}
+                      </>
                     )}
                   {errors[fieldName] && (
-                    <span className="text-red-500">This field is required</span>
+                    <span className="text-red-500">{errors[fieldName]}</span>
                   )}
                 </div>
               </div>
@@ -549,7 +614,7 @@ const Register = () => {
                 <button
                   type="button"
                   onClick={() =>
-                    setStep((prevStep) => Math.max(1, prevStep - 1))
+                    setStep((prevStep) => Math.max(0, prevStep - 1))
                   }
                   className={`bg-primary-normal text-white cursor-pointer font-medium rounded-lg text-sm px-5 py-2.5`}
                 >

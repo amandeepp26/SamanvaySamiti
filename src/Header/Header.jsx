@@ -49,7 +49,7 @@ const Header = () => {
               </li>
               <li>
                 <NavLink
-                  to={"/biodatas"}
+                  to={"/ourteams"}
                   className="text-base font-medium hover:!bg-primary-hover hover:text-white py-2 px-4 rounded-lg"
                 >
                   {" "}
@@ -59,7 +59,7 @@ const Header = () => {
 
               <li>
                 <NavLink
-                  to={"/biodatas"}
+                  to={"/blogs"}
                   className="text-base font-medium hover:!bg-primary-hover hover:text-white py-2 px-4 rounded-lg"
                 >
                   {" "}
