@@ -19,7 +19,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           width="20px"
           height="20px"
           color="#ffffff"
-          style={{ backgroundColor: "#9b59d9", padding: "11px 10px" }}
+          style={{ backgroundColor: "#D10002", padding: "11px 10px" }}
         />
       </QueryClientProvider>
     </Authprovider>

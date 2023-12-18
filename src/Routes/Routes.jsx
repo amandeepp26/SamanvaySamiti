@@ -26,110 +26,142 @@ import SuccessStory from "../pages/Dashboard/Admin/SuccessStory";
 import GotMarried from "../pages/Dashboard/Clients/GotMarried";
 
 const router = createBrowserRouter([
-    {
+  {
+    path: "/",
+    element: <MainLayout />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
         path: "/",
-        element: <MainLayout />,
-        errorElement: <ErrorPage />,
-        children: [
-            {
-                path: '/',
-                element: <Home />
-            },
-            {
-                path: 'biodatas',
-                element: <Biodatas />
-            },
-            {
-                path: 'about-us',
-                element: <AboutUs />
-            },
-            {
-                path: 'contact-us',
-                element: <ContactUs />
-            },
-            {
-                path: '/biodata/:id',
-                element: <PrivateRoute> <BiodataDetails /> </PrivateRoute>
-            },
-            {
-                path: 'register',
-                element: <Register />
-            },
-            {
-                path: 'login',
-                element: <Login />
-            },
-            {
-                path: 'checkout/:id',
-                element: <PrivateRoute> <Payment /> </PrivateRoute>
-            }
-        ]
-    },
-    {
-        path: '/dashboard',
-        element: <PrivateRoute><DashboardLayout /></PrivateRoute>,
-        errorElement: <ErrorPage />,
-        children: [
+        element: <Home />,
+      },
+      {
+        path: "biodatas",
+        element: <Biodatas />,
+      },
+      {
+        path: "about-us",
+        element: <AboutUs />,
+      },
+      {
+        path: "contact-us",
+        element: <ContactUs />,
+      },
+      {
+        path: "/biodata/:id",
+        element: (
+          <PrivateRoute>
+            {" "}
+            <BiodataDetails />{" "}
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "register/:id",
+        element: <Register />,
+      },
+      {
+        path: "login",
+        element: <Login />,
+      },
+      {
+        path: "checkout/:id",
+        element: (
+          <PrivateRoute>
+            {" "}
+            <Payment />{" "}
+          </PrivateRoute>
+        ),
+      },
+    ],
+  },
+  {
+    path: "/dashboard",
+    element: (
+      <PrivateRoute>
+        <DashboardLayout />
+      </PrivateRoute>
+    ),
+    errorElement: <ErrorPage />,
+    children: [
+      // Admin routes
+      {
+        path: "admin",
+        element: (
+          <AdminRoutes>
+            {" "}
+            <AdminDashboard />{" "}
+          </AdminRoutes>
+        ),
+      },
+      {
+        path: "users",
+        element: (
+          <AdminRoutes>
+            {" "}
+            <ManageUsers />{" "}
+          </AdminRoutes>
+        ),
+      },
+      {
+        path: "premium",
+        element: (
+          <AdminRoutes>
+            {" "}
+            <ApprovedPremium />{" "}
+          </AdminRoutes>
+        ),
+      },
+      {
+        path: "requested",
+        element: (
+          <AdminRoutes>
+            {" "}
+            <ApprovedContactRequest />{" "}
+          </AdminRoutes>
+        ),
+      },
+      {
+        path: "stories",
+        element: (
+          <AdminRoutes>
+            {" "}
+            <SuccessStory />{" "}
+          </AdminRoutes>
+        ),
+      },
 
-
-            // Admin routes 
-            {
-                path: 'admin',
-                element: <AdminRoutes> <AdminDashboard /> </AdminRoutes>
-            },
-            {
-                path: 'users',
-                element: <AdminRoutes> <ManageUsers/> </AdminRoutes>
-            },
-            {
-                path: 'premium',
-                element: <AdminRoutes> <ApprovedPremium /> </AdminRoutes> 
-            },
-            {
-                path: 'requested',
-                element: <AdminRoutes> <ApprovedContactRequest /> </AdminRoutes>
-            },
-            {
-                path: 'stories',
-                element: <AdminRoutes> <SuccessStory /> </AdminRoutes>
-            },
-
-
-
-
-
-            // Clients Routes
-            {
-                path: 'client',
-                element: <ClientsDashboard />
-            },
-            {
-                path: 'add',
-                element: <EditBiodata />
-            },
-            {
-                path: 'view',
-                element: <ViewBiodata />
-            },
-            {
-                path: 'request',
-                element: <ContactRequest />
-            },
-            {
-                path: 'favourite',
-                element: <MyFavourites />
-            },
-            {
-                path:'got-married',
-                element:<GotMarried/>
-            },
-            {
-                path: 'logout',
-                element: <Logout />
-            }
-
-        ]
-    }
-])
+      // Clients Routes
+      {
+        path: "client",
+        element: <ClientsDashboard />,
+      },
+      {
+        path: "add",
+        element: <EditBiodata />,
+      },
+      {
+        path: "view",
+        element: <ViewBiodata />,
+      },
+      {
+        path: "request",
+        element: <ContactRequest />,
+      },
+      {
+        path: "favourite",
+        element: <MyFavourites />,
+      },
+      {
+        path: "got-married",
+        element: <GotMarried />,
+      },
+      {
+        path: "logout",
+        element: <Logout />,
+      },
+    ],
+  },
+]);
 
 export default router;

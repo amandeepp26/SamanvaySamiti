@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Search = () => {
   return (
     <div
@@ -9,18 +11,18 @@ const Search = () => {
           "0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06)",
       }}
     >
-      <div className="mb-4 lg:mb-0 lg:w-1/5 lg:mr-4">
+      {/* <div className="mb-4 lg:mb-0 lg:w-1/5 lg:mr-4">
         <h1 className="text-lg font-bold mb-2">I am</h1>
         <select className="p-2 border border-gray-300 rounded w-full">
           <option value="man">Man</option>
           <option value="woman">Woman</option>
         </select>
-      </div>
+      </div> */}
       <div className="mb-4 lg:mb-0 lg:w-1/5 lg:mr-4">
         <h1 className="text-lg font-bold mb-2">Looking for</h1>
         <select className="p-2 border border-gray-300 rounded w-full">
-          <option value="man">Man</option>
-          <option value="woman">Woman</option>
+          <option value="man">वर</option>
+          <option value="woman">वधु</option>
         </select>
       </div>
       <div className="mb-4 lg:mb-0 lg:w-1/5 lg:mr-4">
@@ -51,12 +53,14 @@ const Search = () => {
         </select>
       </div>
       <div className="lg:w-1/5">
-        <button
-          style={{ alignSelf: "center" }}
-          className="bg-blue-500 text-white p-2 mt-8 rounded w-full"
-        >
-          Search
-        </button>
+        <Link to={"/biodatas"}>
+          <button
+            style={{ alignSelf: "center" }}
+            className="bg-blue-500 text-white p-2 mt-8 rounded w-full"
+          >
+            Search
+          </button>
+        </Link>
       </div>
     </div>
   );

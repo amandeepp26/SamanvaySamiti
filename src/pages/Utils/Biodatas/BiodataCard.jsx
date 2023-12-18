@@ -17,7 +17,7 @@ const BiodataCard = ({ item }) => {
 
   return (
     <div>
-      <div className="flex flex-col md:flex-row gap-2 h-[300px] shadow-md hover:shadow-lg bg-white rounded-md border border-[#9b59d91c] hover:border-[#9b59d952] ">
+      <div className="flex flex-col md:flex-row gap-2 h-[300px] shadow-md hover:shadow-lg bg-white rounded-md border border-[#D100021c] hover:border-[#D1000252] ">
         <div className="mt-4 md:mt-0 relative inline-block w-[full] h-[full]">
           <Link to={`/biodata/${_id}`}>
             <img

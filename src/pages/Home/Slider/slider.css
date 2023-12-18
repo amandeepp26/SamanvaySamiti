@@ -1,13 +1,13 @@
 .successStorySlider .swiper-button-prev,
 .successStorySlider .swiper-button-next,
 .successStorySlider .swiper-pagination {
-  color: #9b59d9;
+  color: #d10002;
 }
 
 .successStorySlider .swiper-button-prev::after,
 .successStorySlider .swiper-button-next::after {
   font-size: 15px;
-  background-color: #9b59d9;
+  background-color: #d10002;
   color: white;
   padding: 13px 17px;
   border-radius: 50%;

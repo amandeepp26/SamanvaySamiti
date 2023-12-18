@@ -150,7 +150,7 @@ const Biodatas = () => {
                 ruler={false}
                 minValue={minValue}
                 maxValue={maxValue}
-                barInnerColor="#9b59d9"
+                barInnerColor="#D10002"
                 onChange={(e) => {
                   handleAgeInput(e);
                 }}

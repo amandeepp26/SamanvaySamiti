@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import logo from "../../assets/logo/mainLogo.png";
+import logo from "../../assets/logo/logo.png";
 import PropTypes from "prop-types";
 
 const Logo = ({ width }) => {
