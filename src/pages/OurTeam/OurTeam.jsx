@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 
 function OurTeam() {
   const [users, setUsers] = useState([]);
-  const [isloading, setisloading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -16,15 +17,26 @@ function OurTeam() {
       }
 
       const data = await response.json();
-      console.log(data); // Log the fetched data
-      setUsers(data.mandal);
-      setisloading(false);
+
+      const sortedUsers = data.mandal.sort((a, b) => {
+        const designationOrder = {
+          'अध्यक्ष': 1,
+          'कोषाध्यक्ष': 2,
+          'महासचिव': 3,
+          'सचिव': 4,
+          'सदस्य': 5,
+        };
+
+        return designationOrder[a.designation] - designationOrder[b.designation];
+      });
+
+      setUsers(sortedUsers);
+      setIsLoading(false); // Set loading to false after fetching and sorting
     } catch (error) {
       console.error("Error fetching user details:", error);
     }
   };
 
-  // Function to group users by mandal_name
   const groupUsersByMandal = () => {
     const groupedUsers = {};
 
@@ -41,7 +53,6 @@ function OurTeam() {
     return groupedUsers;
   };
 
-  // Function to render users based on mandal_name
   const renderUsersByMandal = () => {
     const groupedUsers = groupUsersByMandal();
 
@@ -61,7 +72,7 @@ function OurTeam() {
               />
               <div className="px-6 py-4">
                 <div className="font-bold text-xl mb-2">{item.member_name}</div>
-                <p className="text-gray-700 text-xs">{item.designation}</p>
+                <p className="text-gray-700 text-md">{item.designation}</p>
               </div>
             </div>
           ))}
@@ -70,7 +81,8 @@ function OurTeam() {
     ));
   };
 
-  return <>{isloading ? <div></div> : renderUsersByMandal()}</>;
+  return <>{isLoading ? 
+      <div className="w-full h-[70vh] flex items-center justify-center flex-col">Loading...</div> : renderUsersByMandal()}</>;
 }
 
 export default OurTeam;
