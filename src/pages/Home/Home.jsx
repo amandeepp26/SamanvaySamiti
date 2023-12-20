@@ -207,7 +207,7 @@ const Home = () => {
         </div>
       </section> */}
 
-      <section className="pb-20">
+      {/* <section className="pb-20">
         <SectionTitle
           colorTitle="Dating Tips "
           blackTitle="& Advices"
@@ -216,7 +216,7 @@ const Home = () => {
         <div>
           <Slider />
         </div>
-      </section>
+      </section> */}
     </Container>
   );
 };
