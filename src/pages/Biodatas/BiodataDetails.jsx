@@ -15,6 +15,7 @@ const BiodataDetails = () => {
     useTypeBiodatas(singleBiodata?.type);
 
   const { selfUser, refetchSelfUser } = useSelfUser();
+  const [isloading, setisloading] = useState(true);
   const [userData, setUserData] = useState(null);
   const handleStoreFavorite = useStoreFavorite();
 
@@ -31,11 +32,13 @@ const BiodataDetails = () => {
 
       console.log("response------>", response);
       if (!response.ok) {
+        setisloading(false);
         setUserData(null);
       } else {
         const data = await response.json();
         console.log(data); // Log the fetched data
         setUserData(data.profile);
+        setisloading(false);
       }
     } catch (error) {
       console.error("Error fetching user details:", error);
@@ -46,6 +49,13 @@ const BiodataDetails = () => {
     refetchTypeBiodatas();
   }, [singleBiodata?.type, refetchTypeBiodatas, refetchSelfUser]);
 
+  if (isloading) {
+    return (
+      <div className="w-full h-[70vh] flex items-center justify-center flex-col">
+        Loading......
+      </div>
+    );
+  }
   return (
     <div className="w-4/6 container mx-auto bg-white grid ">
       {/* Left Content */}
