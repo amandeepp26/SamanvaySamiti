@@ -3,21 +3,21 @@ import "./PrivacyPolicy.css";
 const PrivacyPolicy = () => {
   return (
     <>
-      <div className="2xl:container 2xl:mx-auto lg:py-16 lg:px-20 md:py-12 md:px-6 pb-9 py-9 px-4 privacy_policy">
+      <div className="2xl:container 2xl:mx-auto lg:py-16 lg:px-20 md:py-12 md:px-6 pb-9 py-9 px-4 privacy-policy">
         <div className="flex flex-col lg:flex-row justify-between gap-8">
-          <div class="page">
-            <div class="header">
-              <div class="container">
-                <p class="title">
+          <div className="page">
+            {/* <div className="header">
+              <div className="container">
+                <p className="title">
                   Privacy Policy for लाडशखीय वाणी समाज मंडळ समन्वय समिती, मुंबई
                   आणि संस्कारवाणी&nbsp;मुंबई
                 </p>
               </div>
-            </div>
-            <div class="translations-content-container">
-              <div class="container">
+            </div> */}
+            <div className="translations-content-container">
+              <div className="container">
                 <div
-                  class="tab-content translations-content-item en visible"
+                  className="privacy-policy tab-content translations-content-item en visible"
                   id="en"
                 >
                   <h1>Privacy Policy</h1>
@@ -647,8 +647,8 @@ const PrivacyPolicy = () => {
               </div>
             </div>
 
-            <div class="footer">
-              <div class="container">
+            <div className="footer">
+              <div className="container">
                 <p>
                   Generated using{" "}
                   <a

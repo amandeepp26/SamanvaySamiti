@@ -8,4 +8,13 @@
   body {
     font-family: "Poppins", sans-serif;
   }
+  .privacy-policy h1 {
+    font-size: 30px;
+    font-weight: 500;
+    padding: 10px 0;
+  }
+  .privacy-policy p {
+    font-weight: 400;
+    padding: 10px 0;
+  }
 }

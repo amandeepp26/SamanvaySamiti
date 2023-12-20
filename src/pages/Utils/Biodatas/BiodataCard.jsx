@@ -17,71 +17,54 @@ const BiodataCard = ({ item }) => {
 
   return (
     <div>
-      <div className="flex flex-col md:flex-row gap-2 h-[300px] shadow-md hover:shadow-lg bg-white rounded-md border border-[#D100021c] hover:border-[#D1000252] ">
-        <div className="mt-4 md:mt-0 relative inline-block w-[full] h-[full]">
-          <Link to={`/biodata/${_id}`}>
-            <img
-              className="full opacity-80"
-              src={
-                "https://t4.ftcdn.net/jpg/02/14/74/61/360_F_214746128_31JkeaP6rU0NzzzdFC4khGkmqc8noe6h.jpg"
-              }
-              alt="profile image"
-            />
-            {isPro === "Premium" && (
-              <span
-                style={{
-                  position: "absolute",
-                  top: 0,
-                  right: 0,
-                  padding: "2px 5px",
-                  borderRadius: "0px 0px 0px 8px",
-                  fontSize: "11px",
-                }}
-                className="bg-primary-normal text-white"
+      <div className="flex flex-col md:flex-row gap-2 h-fit shadow-md hover:shadow-lg bg-white rounded-md">
+        <Link to={`/biodata/${_id}`}>
+          <div className="relative bg-white border border-gray-200 rounded-lg shadow ">
+            <a href="#">
+              <img
+                className="rounded-t-lg"
+                src="https://t4.ftcdn.net/jpg/02/14/74/61/360_F_214746128_31JkeaP6rU0NzzzdFC4khGkmqc8noe6h.jpg"
+                alt=""
+              />
+              {isPro === "Premium" && (
+                <span className="absolute top-3 left-3 bg-yellow-600 rounded-full text-[12px] px-2 text-white">
+                  Premium
+                </span>
+              )}
+            </a>
+            <div className="p-5 leading-1">
+              <a href="#">
+                <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-800">
+                  {type}
+                </h5>
+              </a>
+              <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{`Age: ${age}`}</p>
+              <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{`Occupation: ${occupation}`}</p>
+
+              <a
+                href="#"
+                className="bg-primary-normal hover:bg-primary-hover inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg"
               >
-                Premium
-              </span>
-            )}
-            <div
-              className="absolute bottom-0 left-0 right-0 text-white p-2"
-              style={{
-                backgroundColor: "rgba(0, 0, 0, 0.5)", // Adjust opacity here
-              }}
-            >
-              <p className="text-lg font-bold">{type}</p>
-              <p>{`Age: ${age}`}</p>
-              <p>{`Occupation: ${occupation}`}</p>
-            </div>
-          </Link>
-        </div>
-        {/* <div className="flex gap-3 items-center justify-center md:flex-col">
-          <div className="relative group">
-            <button className="md:block mr-3 p-2 rounded-full text-primary-normal text-lg border border-primary-normal hover:bg-primary-normal hover:text-white">
-              <MdFavoriteBorder />
-            </button>
-            <div className="absolute hidden bg-gray-800 text-white text-xs p-1 rounded-md -mt-[66px] -ml-3 group-hover:block">
-              Favorite
+                View
+                <svg
+                  className="rtl:rotate-180 w-3.5 h-3.5 ms-2"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 14 10"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M1 5h12m0 0L9 1m4 4L9 9"
+                  />
+                </svg>
+              </a>
             </div>
           </div>
-
-          <div className="relative group">
-            <button className="md:block mr-3 p-2 rounded-full text-primary-normal text-lg border border-primary-normal hover:bg-primary-normal hover:text-white">
-              <MdOutlineEmail />
-            </button>
-            <div className="absolute hidden bg-gray-800 text-white text-xs p-1 rounded-md -mt-[66px] -ml-3 group-hover:block">
-              Contact
-            </div>
-          </div>
-
-          <div className="relative group">
-            <button className="md:block mr-3 p-2 rounded-full text-primary-normal text-lg border border-primary-normal hover:bg-primary-normal hover:text-white">
-              <IoChatbubblesOutline />
-            </button>
-            <div className="absolute hidden bg-gray-800 text-white text-xs p-1 rounded-md -mt-[66px] -ml-0 group-hover:block">
-              Chat
-            </div>
-          </div>
-        </div> */}
+        </Link>
       </div>
     </div>
   );

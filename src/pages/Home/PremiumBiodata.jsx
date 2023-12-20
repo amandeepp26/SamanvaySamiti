@@ -19,6 +19,9 @@ const PremiumBiodata = () => {
     sortData();
   }, [sortOrder, originalData]);
 
+  useEffect(() => {
+    // getPremiumData();
+  }, []);
   const handleSortChange = (event) => {
     setSortOrder(event.target.value);
   };
@@ -40,7 +43,7 @@ const PremiumBiodata = () => {
 
   return (
     <>
-      <div>
+      {/* <div>
         <h2 className="text-center text-xl font-semibold">Sort By Age</h2>
         <div className="flex gap-4 justify-center pt-3 pb-10">
           <label className="flex gap-1 font-medium hover:text-primary-normal cursor-pointer">
@@ -66,7 +69,7 @@ const PremiumBiodata = () => {
             Descending
           </label>
         </div>
-      </div>
+      </div> */}
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 gap-y-5 items-center justify-between">
         {isLoadingPremiumBiodata

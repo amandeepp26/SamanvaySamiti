@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const Search = () => {
+  const [userId, setuserId] = useState("");
   return (
     <div
       className="flex flex-col lg:flex-row p-4 items-center py-20"
@@ -18,32 +20,34 @@ const Search = () => {
           <option value="woman">Woman</option>
         </select>
       </div> */}
-      <div className="mb-4 lg:mb-0 lg:w-1/5 lg:mr-4">
+      {/* <div className="mb-4 lg:mb-0 lg:w-1/5 lg:mr-4">
         <h1 className="text-lg font-bold mb-2">Looking for</h1>
         <select className="p-2 border border-gray-300 rounded w-full">
           <option value="man">वर</option>
           <option value="woman">वधु</option>
         </select>
-      </div>
-      <div className="mb-4 lg:mb-0 lg:w-1/5 lg:mr-4">
+      </div> */}
+      {/* <div className="mb-4 lg:mb-0 lg:w-1/5 lg:mr-4">
         <h1 className="text-lg font-bold mb-2">Age</h1>
         <select className="p-2 border border-gray-300 rounded w-full">
-          {/* Age options can be added here */}
           <option value="18-25">18 - 25</option>
           <option value="26-35">26 - 35</option>
           <option value="36-45">36 - 45</option>
-          {/* Add more age ranges as needed */}
         </select>
-      </div>
+      </div> */}
       <div className="mb-4 lg:mb-0 lg:w-1/5 lg:mr-4">
-        <h1 className="text-lg font-bold mb-2">Location</h1>
+        <h1 className="text-lg font-bold mb-2">User Id</h1>
         <input
           type="text"
           className="p-2 border border-gray-300 rounded w-full"
-          placeholder="Enter location"
+          placeholder="Enter User Id"
+          value={userId}
+          onChange={(e) => {
+            setuserId(e.target.value);
+          }}
         />
       </div>
-      <div className="mb-4 lg:mb-0 lg:w-1/5 lg:mr-4">
+      {/* <div className="mb-4 lg:mb-0 lg:w-1/5 lg:mr-4">
         <h1 className="text-lg font-bold mb-2">City</h1>
         <select className="p-2 border border-gray-300 rounded w-full">
           <option value="man">Maharashtra</option>
@@ -51,12 +55,13 @@ const Search = () => {
           <option value="man">Dehradun</option>
           <option value="woman">Chandigarh</option>
         </select>
-      </div>
+      </div> */}
       <div className="lg:w-1/5">
-        <Link to={"/biodatas"}>
+        <Link to={`/biodata/${userId}`}>
           <button
-            style={{ alignSelf: "center" }}
-            className="bg-blue-500 text-white p-2 mt-8 rounded w-full"
+            disabled={!userId}
+            style={{ alignSelf: "center", backgroundColor: "#D10002" }}
+            className=" text-white p-2 mt-8 rounded w-[60%]"
           >
             Search
           </button>

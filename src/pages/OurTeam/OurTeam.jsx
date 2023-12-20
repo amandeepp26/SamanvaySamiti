@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 
 function OurTeam() {
   const [users, setUsers] = useState([]);
+  const [isloading, setisloading] = useState(true);
   useEffect(() => {
     fetchData();
   }, []);
@@ -17,6 +18,7 @@ function OurTeam() {
       const data = await response.json();
       console.log(data); // Log the fetched data
       setUsers(data.mandal);
+      setisloading(false);
     } catch (error) {
       console.error("Error fetching user details:", error);
     }
@@ -53,7 +55,7 @@ function OurTeam() {
               className="w-full overflow-hidden shadow-lg m-2 bg-white rounded-lg sm:w-1/2 md:w-1/4 p-2"
             >
               <img
-                className="w-full h-48 object-cover"
+                className="w-full h-48 object-contain"
                 src={item.photo}
                 alt={item.member_name}
               />
@@ -68,7 +70,7 @@ function OurTeam() {
     ));
   };
 
-  return <>{renderUsersByMandal()}</>;
+  return <>{isloading ? <div></div> : renderUsersByMandal()}</>;
 }
 
 export default OurTeam;
