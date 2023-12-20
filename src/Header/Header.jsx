@@ -115,7 +115,7 @@ const Header = () => {
                           </>
                         ) : (
                           <>
-                            <Button text="Dashboard" link="/dashboard/client" />
+                            <Button text="Dashboard" link="/dashboard/view" />
                           </>
                         )}
                       </>
@@ -170,11 +170,20 @@ const Header = () => {
                   </li>
                   <li className="py-2">
                     <NavLink
-                      to={"/biodatas"}
+                      to={"/ourteams"}
                       className="text-base font-medium hover:!bg-primary-hover hover:text-white py-3 px-4 rounded-lg block"
                     >
                       {" "}
-                      Biodatas{" "}
+                      Our Team{" "}
+                    </NavLink>
+                  </li>
+                  <li className="py-2">
+                    <NavLink
+                      to={"/blogs"}
+                      className="text-base font-medium hover:!bg-primary-hover hover:text-white py-3 px-4 rounded-lg block"
+                    >
+                      {" "}
+                      Blogs{" "}
                     </NavLink>
                   </li>
                   <li className="py-2">

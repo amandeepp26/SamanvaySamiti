@@ -123,7 +123,7 @@ const blogData = [
 
 const Blogs = () => {
   return (
-    <div className="flex flex-wrap justify-center mx-20">
+    <div className="flex flex-wrap justify-center md:mx-10 lg:mx-20">
       {blogData.map((item) => (
         <div key={item.id} className="w-full sm:w-1/2  md:w-1/4 p-2">
           <div className="shadow-md hover:shadow-lg bg-white ">

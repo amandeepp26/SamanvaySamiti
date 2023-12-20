@@ -10,6 +10,7 @@ import useAxiosPublic from "../../hooks/useAxiosPublic";
 import LoaderIcon from "../Utils/LoaderIcon";
 import male from "../../assets/icons/male.jpg";
 import female from "../../assets/icons/female.jpg";
+import Button from "../Utils/Button";
 
 const Register = () => {
   const { registerUser, userUpdateOnSignUp, setUser } = useAuth();
@@ -308,7 +309,8 @@ const Register = () => {
             {formFields[step].map((fieldName) => (
               <div key={fieldName}>
                 <div>
-                  {fieldName.includes(`father-in-law`) ? null : (
+                  {fieldName.includes(`father-in-law`) ||
+                  fieldName === "Payment" ? null : (
                     <label
                       htmlFor={fieldName}
                       className="block mb-2 text-sm font-medium text-gray-900"
@@ -496,6 +498,34 @@ const Register = () => {
                         </label>
                       </div>
                     </div>
+                  ) : fieldName === "Payment" ? (
+                    <div className="mt-5">
+                      <label className="block mb-2 text-sm font-medium text-gray-900">
+                        I agree to the terms and conditions and privacy policy
+                      </label>
+                      <div className="flex items-center">
+                        <input
+                          type="checkbox"
+                          id="acceptTermsCheckbox"
+                          checked={formData["acceptTerms"]}
+                          onChange={(e) =>
+                            handleInputChange("acceptTerms", e.target.checked)
+                          }
+                          className="mr-2"
+                        />
+                        <label
+                          htmlFor="acceptTermsCheckbox"
+                          className="text-sm"
+                        >
+                          I accept the terms and conditions
+                        </label>
+                      </div>
+                      {errors["acceptTerms"] && (
+                        <span className="text-red-500">
+                          You must accept the terms and conditions
+                        </span>
+                      )}
+                    </div>
                   ) : fieldName.includes("father-in-law") ? null : (
                     <input
                       className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
@@ -608,7 +638,7 @@ const Register = () => {
                 </div>
               </div>
             ))}
-
+            {step === stepTitles.length - 1 && <PaymentPlan />}
             <div className="flex justify-between px-4">
               {step === 0 ? null : (
                 <button
@@ -646,3 +676,107 @@ const Register = () => {
 };
 
 export default Register;
+
+const PaymentPlan = () => {
+  return (
+    <div className="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 ">
+      <h5 className="mb-4 text-xl font-medium text-gray-500 dark:text-gray-400">
+        Standard plan
+      </h5>
+      <div className="flex items-baseline text-gray-900 ">
+        <span className="text-3xl font-semibold">$</span>
+        <span className="text-5xl font-extrabold ">49</span>
+        <span className="ms-1 text-xl font-normal text-gray-500 dark:text-gray-400">
+          /month
+        </span>
+      </div>
+      <ul role="list" className="space-y-5 my-7">
+        <li className="flex items-center">
+          <svg
+            className="flex-shrink-0 w-4 h-4 text-blue-600 dark:text-blue-500"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
+            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
+          </svg>
+          <span className="text-base font-normal leading-tight text-gray-500 dark:text-gray-400 ms-3">
+            Unlimited Profile Access
+          </span>
+        </li>
+        <li className="flex">
+          <svg
+            className="flex-shrink-0 w-4 h-4 text-blue-600 dark:text-blue-500"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
+            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
+          </svg>
+          <span className="text-base font-normal leading-tight text-gray-500 dark:text-gray-400 ms-3">
+            Advanced Search Filters
+          </span>
+        </li>
+        <li className="flex">
+          <svg
+            className="flex-shrink-0 w-4 h-4 text-blue-600 dark:text-blue-500"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
+            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
+          </svg>
+          <span className="text-base font-normal leading-tight text-gray-500 dark:text-gray-400 ms-3">
+            Priority Visibility
+          </span>
+        </li>
+        <li className="flex line-through decoration-gray-500">
+          <svg
+            className="flex-shrink-0 w-4 h-4 text-gray-400 dark:text-gray-500"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
+            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
+          </svg>
+          <span className="text-base font-normal leading-tight text-gray-500 ms-3">
+            Enhanced Privacy Controls
+          </span>
+        </li>
+        <li className="flex line-through decoration-gray-500">
+          <svg
+            className="flex-shrink-0 w-4 h-4 text-gray-400 dark:text-gray-500"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
+            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
+          </svg>
+          <span className="text-base font-normal leading-tight text-gray-500 ms-3">
+            Profile Verification Badge
+          </span>
+        </li>
+        <li className="flex line-through decoration-gray-500">
+          <svg
+            className="flex-shrink-0 w-4 h-4 text-gray-400 dark:text-gray-500"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
+            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
+          </svg>
+          <span className="text-base font-normal leading-tight text-gray-500 ms-3">
+            Featured Profile Spotlights
+          </span>
+        </li>
+      </ul>
+      <Button text="Choose Plan" />
+    </div>
+  );
+};

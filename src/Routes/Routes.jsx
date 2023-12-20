@@ -26,6 +26,7 @@ import SuccessStory from "../pages/Dashboard/Admin/SuccessStory";
 import GotMarried from "../pages/Dashboard/Clients/GotMarried";
 import Blogs from "../pages/Blogs/Blogs";
 import OurTeam from "../pages/OurTeam/OurTeam";
+import PrivacyPolicy from "../pages/Privacy policy/PrivacyPolicy";
 
 const router = createBrowserRouter([
   {
@@ -52,6 +53,10 @@ const router = createBrowserRouter([
       {
         path: "about-us",
         element: <AboutUs />,
+      },
+      {
+        path: "privacy-policy",
+        element: <PrivacyPolicy />,
       },
       {
         path: "contact-us",
