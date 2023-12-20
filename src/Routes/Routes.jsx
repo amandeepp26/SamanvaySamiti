@@ -27,6 +27,7 @@ import GotMarried from "../pages/Dashboard/Clients/GotMarried";
 import Blogs from "../pages/Blogs/Blogs";
 import OurTeam from "../pages/OurTeam/OurTeam";
 import PrivacyPolicy from "../pages/Privacy policy/PrivacyPolicy";
+import Users from "../pages/Users/Users";
 
 const router = createBrowserRouter([
   {
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
       {
         path: "ourteams",
         element: <OurTeam />,
+      },
+      {
+        path: "users",
+        element: <Users />,
       },
       {
         path: "about-us",

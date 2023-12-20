@@ -20,14 +20,16 @@ function OurTeam() {
 
       const sortedUsers = data.mandal.sort((a, b) => {
         const designationOrder = {
-          'अध्यक्ष': 1,
-          'कोषाध्यक्ष': 2,
-          'महासचिव': 3,
-          'सचिव': 4,
-          'सदस्य': 5,
+          अध्यक्ष: 1,
+          कोषाध्यक्ष: 2,
+          महासचिव: 3,
+          सचिव: 4,
+          सदस्य: 5,
         };
 
-        return designationOrder[a.designation] - designationOrder[b.designation];
+        return (
+          designationOrder[a.designation] - designationOrder[b.designation]
+        );
       });
 
       setUsers(sortedUsers);
@@ -63,7 +65,7 @@ function OurTeam() {
           {userList.map((item, index) => (
             <div
               key={index}
-              className="w-full overflow-hidden shadow-lg m-2 bg-white rounded-lg sm:w-1/2 md:w-1/4 p-2"
+              className="w-full sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4 overflow-hidden shadow-lg m-2 bg-white rounded-lg p-2"
             >
               <img
                 className="w-full h-48 object-contain"
@@ -81,8 +83,17 @@ function OurTeam() {
     ));
   };
 
-  return <>{isLoading ? 
-      <div className="w-full h-[70vh] flex items-center justify-center flex-col">Loading...</div> : renderUsersByMandal()}</>;
+  return (
+    <>
+      {isLoading ? (
+        <div className="w-full h-[70vh] flex items-center justify-center flex-col">
+          Loading...
+        </div>
+      ) : (
+        renderUsersByMandal()
+      )}
+    </>
+  );
 }
 
 export default OurTeam;

@@ -56,6 +56,15 @@ const Header = () => {
                   Our Team{" "}
                 </NavLink>
               </li>
+              <li>
+                <NavLink
+                  to={"/users"}
+                  className="text-base font-medium hover:!bg-primary-hover hover:text-white py-2 px-4 rounded-lg"
+                >
+                  {" "}
+                  Users{" "}
+                </NavLink>
+              </li>
 
               <li>
                 <NavLink

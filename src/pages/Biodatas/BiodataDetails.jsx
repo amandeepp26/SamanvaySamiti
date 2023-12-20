@@ -102,9 +102,9 @@ const BiodataDetails = () => {
                 <span className="font-medium">Birth Time :</span>{" "}
                 {userData?.personal_details?.birth_time}
               </p>
-              <p className="py-1">
+              {/* <p className="py-1">
                 <span className="font-medium">Day Of Birth :</span> Monday
-              </p>
+              </p> */}
 
               <p className="py-1">
                 <span className="font-medium">Place of Birth :</span>{" "}
@@ -160,7 +160,8 @@ const BiodataDetails = () => {
               </p>
               <p className="py-1">
                 <span className="font-medium">Monthly Income :</span>{" "}
-                {userData?.professional_details?.monthly_income}
+                {userData?.professional_details?.monthly_income} (
+                {userData?.professional_details.payment_currency})
               </p>
               <p className="py-1">
                 <span className="font-medium">Weekly Holiday:</span>{" "}
@@ -168,54 +169,73 @@ const BiodataDetails = () => {
               </p>
               <p className="py-1">
                 <span className="font-medium">Weight :</span>{" "}
-                {singleBiodata?.weight} kg
+                {userData?.personal_details?.weight} kg
               </p>
               <p className="py-1">
-                <span className="font-medium">Mobile no. :</span> +91 8755255090
+                <span className="font-medium">Mobile no. :</span>{" "}
+                {userData?.contact_details?.mobile}
               </p>
               <p className="py-1">
-                <span className="font-medium">Email :</span> xyz@gmail.com
+                <span className="font-medium">Email :</span> {userData?.email}
               </p>
               <p className="py-1">
                 <span className="font-medium">Permanent Address :</span>{" "}
-                dbhsdbsbduysh sbbhsufhbs hjsbfhhsifbs
+                {userData?.family_details.address}
               </p>
               <p className="py-1">
-                <span className="font-medium">Expectations :</span> Educated,
-                Desciplined
+                <span className="font-medium">Expectations :</span>{" "}
+                {userData?.contact_details?.partner_expectations}
               </p>
               <p className="py-1">
                 <span className="font-medium">Guardian name :</span>{" "}
-                {singleBiodata?.fathersName}
+                {userData?.family_details.fathers_name}
               </p>
               <p className="py-1">
                 <span className="font-medium">Guardian occupation :</span>{" "}
-                Shopkeeper
+                {userData?.family_details?.guardians_profession}
               </p>
               <p className="py-1">
-                <span className="font-medium">Guardian Address :</span> sjdjsh
-                fdnfuekj fkjenkfjne febfkje
+                <span className="font-medium">Guardian Address :</span>{" "}
+                {userData?.family_details.address}
               </p>
               <p className="py-1">
-                <span className="font-medium">Mother's name :</span> Mrs.
-                Sanjana
+                <span className="font-medium">Mother's name :</span>{" "}
+                {userData?.family_details.mothers_name}
               </p>
               <p className="py-1">
-                <span className="font-medium">Grand-parent's name :</span> Mr.
-                gvghvgh bhbvh
+                <span className="font-medium">Grand-parent's name :</span>
+                {userData?.fathers_family_details.grandfather_name}
               </p>
-              <p className="py-1">
-                <span className="font-medium">Kaka :</span> Shopkeeper
-              </p>
-              <p className="py-1">
-                <span className="font-medium">Fuwa :</span> Shopkeeper
-              </p>
-              <p className="py-1">
-                <span className="font-medium">Mama :</span> Shopkeeper
-              </p>
-              <p className="py-1">
-                <span className="font-medium">Mausa:</span> Shopkeeper
-              </p>
+              {userData?.fathers_family_details?.kaka
+                .filter((kakaName) => kakaName.trim() !== "") // Filter out empty strings
+                .map((kakaName, index) => (
+                  <p key={index} className="py-1">
+                    <span className="font-medium">Kaka: {kakaName}</span>
+                  </p>
+                ))}
+
+              {userData?.fathers_family_details?.fuva
+                .filter((kakaName) => kakaName.trim() !== "") // Filter out empty strings
+                .map((kakaName, index) => (
+                  <p key={index} className="py-1">
+                    <span className="font-medium">Fuwa: {kakaName}</span>
+                  </p>
+                ))}
+
+              {userData?.mothers_family_details?.mama
+                .filter((kakaName) => kakaName.trim() !== "") // Filter out empty strings
+                .map((kakaName, index) => (
+                  <p key={index} className="py-1">
+                    <span className="font-medium">Fuwa: {kakaName}</span>
+                  </p>
+                ))}
+              {userData?.mothers_family_details?.mavsa
+                .filter((kakaName) => kakaName.trim() !== "") // Filter out empty strings
+                .map((kakaName, index) => (
+                  <p key={index} className="py-1">
+                    <span className="font-medium">Mausa: {kakaName}</span>
+                  </p>
+                ))}
             </div>
 
             <h1 className="text-base font-medium text-primary-normal border-t border-b py-2 mt-6 mb-2">
@@ -223,38 +243,43 @@ const BiodataDetails = () => {
             </h1>
             <div className="grid grid-cols-2 gap-1">
               <p className="py-1">
-                <span className="font-medium">Married :</span> 2
+                <span className="font-medium">Married :</span>{" "}
+                {userData?.brothers_details?.brother_married}
               </p>
               <p className="py-1">
-                <span className="font-medium">Unmarried :</span> 0
+                <span className="font-medium">Unmarried :</span>{" "}
+                {userData?.brothers_details?.brother_unmarried}
               </p>
-              <p className="py-1">
+
+              {/* <p className="py-1">
                 <span className="font-medium">Married Brother name :</span>{" "}
                 Ankush Singh
               </p>
               <p className="py-1">
                 <span className="font-medium">Married Brother name :</span>{" "}
                 Sanjay Singh
-              </p>
+              </p> */}
             </div>
             <h1 className="text-base font-medium text-primary-normal border-t border-b py-2 mt-6 mb-2">
               Sisters
             </h1>
             <div className="grid grid-cols-2 gap-1">
               <p className="py-1">
-                <span className="font-medium">Married :</span> 2
+                <span className="font-medium">Married :</span>{" "}
+                {userData?.sisters_details.sisters_married}
               </p>
               <p className="py-1">
-                <span className="font-medium">Unmarried :</span> 0
+                <span className="font-medium">Unmarried :</span>{" "}
+                {userData?.sisters_details.sisters_unmarried}
               </p>
-              <p className="py-1">
+              {/* <p className="py-1">
                 <span className="font-medium">Married Sister name :</span>{" "}
                 sjhdjsh jhdshjb
               </p>
               <p className="py-1">
                 <span className="font-medium">Married Sister name :</span>{" "}
                 dhudfd
-              </p>
+              </p> */}
             </div>
 
             <h1 className="text-base font-medium text-primary-normal border-t border-b py-2 mt-6 mb-2">
