@@ -10,7 +10,7 @@ function OurTeam() {
 
   const fetchData = async () => {
     try {
-      const response = await fetch(`https://api.samanvaysamiti.com/api/mandal`);
+      const response = await fetch(`https://api.welkinhawk.in.net/api/mandal`);
 
       if (!response.ok) {
         throw new Error("Failed to fetch user details");

@@ -25,7 +25,7 @@ const ContactUs = () => {
     try {
       setLoading(true);
       const response = await axios.post(
-        "https://api.samanvaysamiti.com/api/contact",
+        "https://api.welkinhawk.in.net/api/contact",
         formData
       );
 

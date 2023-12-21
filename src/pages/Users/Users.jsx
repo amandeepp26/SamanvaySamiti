@@ -9,7 +9,7 @@ function Users() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "https://api.samanvaysamiti.com/api/users/search-users",
+          "https://api.welkinhawk.in.net/api/users/search-users",
           {
             method: "POST",
             headers: {

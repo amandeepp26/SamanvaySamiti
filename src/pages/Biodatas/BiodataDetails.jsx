@@ -27,7 +27,7 @@ const BiodataDetails = () => {
   const fetchDetails = async () => {
     try {
       const response = await fetch(
-        `https://api.samanvaysamiti.com/api/users/user-detail/${id}`
+        `https://api.welkinhawk.in.net/api/users/user-detail/${id}`
       );
 
       console.log("response------>", response);
