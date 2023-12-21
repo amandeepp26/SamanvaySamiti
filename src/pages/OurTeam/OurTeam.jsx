@@ -59,13 +59,13 @@ function OurTeam() {
     const groupedUsers = groupUsersByMandal();
 
     return Object.entries(groupedUsers).map(([mandal, userList]) => (
-      <div key={mandal} className="mt-10 mx-auto max-w-screen-lg">
-        <h2 className="flex font-bold text-xl">{mandal}</h2>
-        <div className="flex flex-wrap mt-6">
+      <div key={mandal} className="mt-10 mx-20 ">
+        <h2 className="flex font-bold text-xl ml-20">{mandal}</h2>
+        <div className="flex flex-wrap   mt-6 ml-20">
           {userList.map((item, index) => (
             <div
               key={index}
-              className="w-full sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4 overflow-hidden shadow-lg m-2 bg-white rounded-lg p-2"
+              className="w-[50%] sm:w-1/2 md:w-1/2 lg:w-3/10 xl:w-1/5 overflow-hidden shadow-lg m-2 bg-white rounded-lg p-2"
             >
               <img
                 className="w-full h-48 object-contain"
@@ -73,7 +73,7 @@ function OurTeam() {
                 alt={item.member_name}
               />
               <div className="px-6 py-4">
-                <div className="font-bold text-xl mb-2">{item.member_name}</div>
+                <div className="font-bold text-md mb-2">{item.member_name}</div>
                 <p className="text-gray-700 text-md">{item.designation}</p>
               </div>
             </div>

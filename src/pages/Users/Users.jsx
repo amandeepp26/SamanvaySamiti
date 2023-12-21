@@ -45,7 +45,7 @@ function Users() {
           Loading...
         </div>
       ) : (
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 gap-y-5 items-center justify-between">
+        <div className="grid grid-cols-1 lg:mx-20 lg:grid-cols-4 gap-4 gap-y-5 items-center justify-between">
           {users.map((key) => {
             return <BiodataCard item={key} />;
           })}

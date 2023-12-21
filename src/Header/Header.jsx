@@ -188,6 +188,15 @@ const Header = () => {
                   </li>
                   <li className="py-2">
                     <NavLink
+                      to={"/users"}
+                      className="text-base font-medium hover:!bg-primary-hover hover:text-white py-3 px-4 rounded-lg block"
+                    >
+                      {" "}
+                      Users{" "}
+                    </NavLink>
+                  </li>
+                  <li className="py-2">
+                    <NavLink
                       to={"/blogs"}
                       className="text-base font-medium hover:!bg-primary-hover hover:text-white py-3 px-4 rounded-lg block"
                     >

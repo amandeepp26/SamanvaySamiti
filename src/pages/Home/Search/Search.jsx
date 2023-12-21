@@ -61,7 +61,7 @@ const Search = () => {
           <button
             disabled={!userId}
             style={{ alignSelf: "center", backgroundColor: "#D10002" }}
-            className=" text-white p-2 mt-8 rounded w-[60%]"
+            className=" text-white p-2 mt-8 rounded w-full"
           >
             Search
           </button>

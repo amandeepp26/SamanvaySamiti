@@ -17,7 +17,7 @@ const BiodataCard = ({ item }) => {
 
   return (
     <div>
-      <div className="flex flex-col mx-5 mt-5 md:flex-row gap-2 shadow-md hover:shadow-lg bg-white rounded-md">
+      <div className="flex flex-col mx-3 mt-5 md:flex-row gap-2 shadow-md hover:shadow-lg bg-white rounded-md">
         <Link to={`/biodata/${item.serial_no}`} className="w-full">
           <div className="relative bg-white border border-gray-200 rounded-lg shadow">
             <a
@@ -35,16 +35,11 @@ const BiodataCard = ({ item }) => {
           Premium
         </span>
       )} */}
-            <div className="p-5 leading-1">
-              <a href="#">
-                <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-800">
-                  {type}
-                </h5>
-              </a>
-              <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{`${item?.personal_details?.fullname}`}</p>
+            <div className="p-3 leading-1">
+              <p className="mb-3 font-semibold text-gray-700 w-[250px] dark:text-gray-400">{`${item?.personal_details?.fullname}`}</p>
               {/* <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{`${item?.personal_details?.gotra}`}</p> */}
               <div>
-                <div className="bg-red-600 text-white font-bold py-1 px-2 rounded-tl-lg rounded-br-lg absolute bottom-5 right-5">
+                <div className="bg-red-600 text-white font-bold py-1 px-2 rounded-tl-lg rounded-br-lg absolute bottom-5 right-3">
                   {item?.personal_details?.gotra}
                 </div>
               </div>
