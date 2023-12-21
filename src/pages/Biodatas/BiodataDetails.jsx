@@ -80,7 +80,9 @@ const BiodataDetails = () => {
             <h1 className="font-bold text-3xl py-2 text-start">
               <span className="font-bold"></span>
             </h1>
-
+            <h1 className="text-base font-medium text-primary-normal border-t border-b py-2 mt-6 mb-2">
+              Personal Details
+            </h1>
             <p className="py-2 text-xl">
               Name :
               <span className="font-bold text-2xl">
@@ -142,14 +144,23 @@ const BiodataDetails = () => {
                 <span className="font-medium">Office Address :</span>{" "}
                 {userData?.professional_details?.job_address}
               </p>
-              {/* <p className="py-1">
-            <span className="font-medium">Age :</span> {singleBiodata?.age}
-          </p> */}
-
+              <p className="py-1">
+                <span className="font-medium">Weight :</span>{" "}
+                {userData?.personal_details?.weight} kg
+              </p>
               <p className="py-1">
                 <span className="font-medium">Gender :</span>{" "}
                 {userData?.personal_details?.gender}
               </p>
+              {/* <p className="py-1">
+            <span className="font-medium">Age :</span> {singleBiodata?.age}
+          </p> */}
+            </div>
+
+            <h1 className="text-base font-medium text-primary-normal border-t border-b py-2 my-10 mb-2">
+              Professional Details
+            </h1>
+            <div className="grid grid-cols-2 gap-1">
               <p className="py-1 ">
                 <span className="font-medium">Occupation :</span>{" "}
                 {userData?.professional_details?.profession}
@@ -167,14 +178,16 @@ const BiodataDetails = () => {
                 <span className="font-medium">Weekly Holiday:</span>{" "}
                 {userData?.professional_details?.weekly_holiday}
               </p>
-              <p className="py-1">
-                <span className="font-medium">Weight :</span>{" "}
-                {userData?.personal_details?.weight} kg
-              </p>
+            </div>
+            <h1 className="text-base font-medium text-primary-normal border-t border-b py-2 my-10 mb-2">
+              Contact Details
+            </h1>
+            <div className="grid grid-cols-2 gap-1">
               <p className="py-1">
                 <span className="font-medium">Mobile no. :</span>{" "}
                 {userData?.contact_details?.mobile}
               </p>
+
               <p className="py-1">
                 <span className="font-medium">Email :</span> {userData?.email}
               </p>
@@ -186,6 +199,11 @@ const BiodataDetails = () => {
                 <span className="font-medium">Expectations :</span>{" "}
                 {userData?.contact_details?.partner_expectations}
               </p>
+            </div>
+            <h1 className="text-base font-medium text-primary-normal border-t border-b py-2 my-10 mb-2">
+              Family Details
+            </h1>
+            <div className="grid grid-cols-2 gap-1">
               <p className="py-1">
                 <span className="font-medium">Guardian name :</span>{" "}
                 {userData?.family_details.fathers_name}
@@ -237,21 +255,22 @@ const BiodataDetails = () => {
                   </p>
                 ))}
             </div>
+          </div>
 
-            <h1 className="text-base font-medium text-primary-normal border-t border-b py-2 mt-6 mb-2">
-              Brothers
-            </h1>
-            <div className="grid grid-cols-2 gap-1">
-              <p className="py-1">
-                <span className="font-medium">Married :</span>{" "}
-                {userData?.brothers_details?.brother_married}
-              </p>
-              <p className="py-1">
-                <span className="font-medium">Unmarried :</span>{" "}
-                {userData?.brothers_details?.brother_unmarried}
-              </p>
+          <h1 className="text-base font-medium text-primary-normal border-t border-b py-2 mt-6 mb-2">
+            Brothers
+          </h1>
+          <div className="grid grid-cols-2 gap-1">
+            <p className="py-1">
+              <span className="font-medium">Married :</span>{" "}
+              {userData?.brothers_details?.brother_married}
+            </p>
+            <p className="py-1">
+              <span className="font-medium">Unmarried :</span>{" "}
+              {userData?.brothers_details?.brother_unmarried}
+            </p>
 
-              {/* <p className="py-1">
+            {/* <p className="py-1">
                 <span className="font-medium">Married Brother name :</span>{" "}
                 Ankush Singh
               </p>
@@ -259,20 +278,20 @@ const BiodataDetails = () => {
                 <span className="font-medium">Married Brother name :</span>{" "}
                 Sanjay Singh
               </p> */}
-            </div>
-            <h1 className="text-base font-medium text-primary-normal border-t border-b py-2 mt-6 mb-2">
-              Sisters
-            </h1>
-            <div className="grid grid-cols-2 gap-1">
-              <p className="py-1">
-                <span className="font-medium">Married :</span>{" "}
-                {userData?.sisters_details.sisters_married}
-              </p>
-              <p className="py-1">
-                <span className="font-medium">Unmarried :</span>{" "}
-                {userData?.sisters_details.sisters_unmarried}
-              </p>
-              {/* <p className="py-1">
+          </div>
+          <h1 className="text-base font-medium text-primary-normal border-t border-b py-2 mt-6 mb-2">
+            Sisters
+          </h1>
+          <div className="grid grid-cols-2 gap-1">
+            <p className="py-1">
+              <span className="font-medium">Married :</span>{" "}
+              {userData?.sisters_details.sisters_married}
+            </p>
+            <p className="py-1">
+              <span className="font-medium">Unmarried :</span>{" "}
+              {userData?.sisters_details.sisters_unmarried}
+            </p>
+            {/* <p className="py-1">
                 <span className="font-medium">Married Sister name :</span>{" "}
                 sjhdjsh jhdshjb
               </p>
@@ -280,37 +299,36 @@ const BiodataDetails = () => {
                 <span className="font-medium">Married Sister name :</span>{" "}
                 dhudfd
               </p> */}
-            </div>
-
-            <h1 className="text-base font-medium text-primary-normal border-t border-b py-2 mt-6 mb-2">
-              Contact Info
-            </h1>
-
-            {selfUser.isPro === "Premium" ? (
-              <>
-                <p className="py-1">
-                  <span className="font-medium">Name :</span>{" "}
-                  {singleBiodata?.name}
-                </p>
-                <p className="py-1">
-                  <span className="font-medium">Mobile :</span>{" "}
-                  {singleBiodata?.mobile}
-                </p>
-                <p className="py-1">
-                  <span className="font-medium">Email :</span>{" "}
-                  {singleBiodata?.email}
-                </p>
-              </>
-            ) : (
-              <>
-                <Link to={`/checkout/${singleBiodata?._id}`}>
-                  <button className="py-2 px-3 mt-5 text-sm rounded bg-primary-normal text-white">
-                    Request for contact info
-                  </button>
-                </Link>
-              </>
-            )}
           </div>
+
+          <h1 className="text-base font-medium text-primary-normal border-t border-b py-2 mt-6 mb-2">
+            Contact Info
+          </h1>
+
+          {selfUser.isPro === "Premium" ? (
+            <>
+              <p className="py-1">
+                <span className="font-medium">Name :</span>{" "}
+                {singleBiodata?.name}
+              </p>
+              <p className="py-1">
+                <span className="font-medium">Mobile :</span>{" "}
+                {singleBiodata?.mobile}
+              </p>
+              <p className="py-1">
+                <span className="font-medium">Email :</span>{" "}
+                {singleBiodata?.email}
+              </p>
+            </>
+          ) : (
+            <>
+              <Link to={`/checkout/${singleBiodata?._id}`}>
+                <button className="py-2 px-3 mt-5 text-sm rounded bg-primary-normal text-white">
+                  Request for contact info
+                </button>
+              </Link>
+            </>
+          )}
         </div>
       )}
 

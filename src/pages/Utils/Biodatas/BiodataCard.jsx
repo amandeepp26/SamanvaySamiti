@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { MdFavoriteBorder, MdOutlineEmail } from "react-icons/md";
 import { IoChatbubblesOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
-import ribbonImage from "../../../assets/img/ribbon.png";
+
 const BiodataCard = ({ item }) => {
   const {
     img,
@@ -17,15 +17,15 @@ const BiodataCard = ({ item }) => {
 
   return (
     <div>
-      <div className="flex flex-wrap mx-5 mt-5 gap-2">
-        <Link to={`/biodata/${item.serial_no}`} className="w-full md:w-4/6">
+      <div className="flex flex-col mx-5 mt-5 md:flex-row gap-2 shadow-md hover:shadow-lg bg-white rounded-md">
+        <Link to={`/biodata/${item.serial_no}`} className="w-full">
           <div className="relative bg-white border border-gray-200 rounded-lg shadow">
             <a
               href="#"
-              className="block w-full h-60 overflow-hidden rounded-t-lg"
+              className="block w-full h-[300px] overflow-hidden rounded-t-lg"
             >
               <img
-                className="w-full h-72 object-cover"
+                className="w-full h-fit object-cover"
                 src={item?.personal_details?.photo[0]}
                 alt=""
               />
@@ -42,14 +42,11 @@ const BiodataCard = ({ item }) => {
                 </h5>
               </a>
               <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{`${item?.personal_details?.fullname}`}</p>
-              <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{`${item?.personal_details?.gotra}`}</p>
-
-              {/* Ribbon background for Gotra */}
-              <div className="absolute bottom-0 right-3 py-5 px-2 rounded-md">
-                <img src={ribbonImage} className="w-20 h-10 " />
-                <p className="font-normal text-white">
-                  {`${item?.personal_details?.gotra}`}
-                </p>
+              {/* <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{`${item?.personal_details?.gotra}`}</p> */}
+              <div>
+                <div className="bg-red-600 text-white font-bold py-1 px-2 rounded-tl-lg rounded-br-lg absolute bottom-5 right-5">
+                  {item?.personal_details?.gotra}
+                </div>
               </div>
             </div>
           </div>
