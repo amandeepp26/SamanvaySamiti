@@ -58,7 +58,7 @@ const Header = () => {
               </li>
               <li>
                 <NavLink
-                  to={"/users"}
+                  to={"/वधु-वर"}
                   className="text-base font-medium hover:!bg-primary-hover hover:text-white py-2 px-4 rounded-lg"
                 >
                   {" "}
@@ -68,7 +68,7 @@ const Header = () => {
 
               <li>
                 <NavLink
-                  to={"/blogs"}
+                  to={"/माहिती"}
                   className="text-base font-medium hover:!bg-primary-hover hover:text-white py-2 px-4 rounded-lg"
                 >
                   {" "}
@@ -77,7 +77,7 @@ const Header = () => {
               </li>
               <li>
                 <NavLink
-                  to={"/about-us"}
+                  to={"/आमच्या-बद्दल"}
                   className="text-base font-medium hover:!bg-primary-hover hover:text-white py-2 px-4 rounded-lg"
                 >
                   {" "}
@@ -86,7 +86,7 @@ const Header = () => {
               </li>
               <li>
                 <NavLink
-                  to={"/contact-us"}
+                  to={"/संपर्क"}
                   className="text-base font-medium hover:!bg-primary-hover hover:text-white py-2 px-4 rounded-lg"
                 >
                   {" "}
@@ -188,7 +188,7 @@ const Header = () => {
                   </li>
                   <li className="py-2">
                     <NavLink
-                      to={"/users"}
+                      to={"/वधु-वर"}
                       className="text-base font-medium hover:!bg-primary-hover hover:text-white py-3 px-4 rounded-lg block"
                     >
                       {" "}
@@ -197,7 +197,7 @@ const Header = () => {
                   </li>
                   <li className="py-2">
                     <NavLink
-                      to={"/blogs"}
+                      to={"/माहिती"}
                       className="text-base font-medium hover:!bg-primary-hover hover:text-white py-3 px-4 rounded-lg block"
                     >
                       {" "}
@@ -206,7 +206,7 @@ const Header = () => {
                   </li>
                   <li className="py-2">
                     <NavLink
-                      to={"/about-us"}
+                      to={"/आमच्या-बद्दल"}
                       className="text-base font-medium hover:!bg-primary-hover hover:text-white py-3 px-4 rounded-lg block"
                     >
                       {" "}
@@ -215,7 +215,7 @@ const Header = () => {
                   </li>
                   <li className="py-2">
                     <NavLink
-                      to={"/contact-us"}
+                      to={"/संपर्क"}
                       className="text-base font-medium hover:!bg-primary-hover hover:text-white py-3 px-4 rounded-lg block"
                     >
                       {" "}

@@ -44,7 +44,7 @@ const router = createBrowserRouter([
         element: <Biodatas />,
       },
       {
-        path: "/blogs",
+        path: "/माहिती",
         element: <Blogs />,
       },
       {
@@ -52,11 +52,11 @@ const router = createBrowserRouter([
         element: <OurTeam />,
       },
       {
-        path: "/users",
+        path: "/वधु-वर",
         element: <Users />,
       },
       {
-        path: "/about-us",
+        path: "/आमच्या-बद्दल",
         element: <AboutUs />,
       },
       {
@@ -64,7 +64,7 @@ const router = createBrowserRouter([
         element: <PrivacyPolicy />,
       },
       {
-        path: "/contact-us",
+        path: "/संपर्क",
         element: <ContactUs />,
       },
       {
