@@ -91,13 +91,13 @@ function OurTeam() {
     const groupedUsers = groupUsersByMandal();
 
     return Object.entries(groupedUsers).map(([mandal, userList]) => (
-      <div key={mandal} className="mt-10 mx-20 ">
-        <h2 className="flex font-bold text-xl ml-20">{mandal}</h2>
-        <div className="flex flex-wrap   mt-6 ml-20">
+      <div key={mandal} className="mt-10 mx-10 sm:mx-20 ">
+        <h2 className="flex font-bold text-xl mx-0 sm:mx-20">{mandal}</h2>
+        <div className="flex flex-col md:flex-row flex-wrap mt-6 mx-0 sm:mx-20">
           {userList.map((item, index) => (
             <div
               key={index}
-              className="w-[50%] sm:w-1/2 md:w-1/2 lg:w-3/10 xl:w-1/5 overflow-hidden shadow-lg m-2 bg-white rounded-lg p-2"
+              className="w-100 sm:w-60 overflow-hidden shadow-lg m-2 bg-white rounded-lg p-2"
             >
               <img
                 className="w-full h-48 object-contain"

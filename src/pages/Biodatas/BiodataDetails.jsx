@@ -67,19 +67,19 @@ const BiodataDetails = () => {
       ) : (
         <div className="border-b-2 lg:border-b-0  pb-8 col-span-3">
           <div>
-            <div className="my-3 flex relative flex-col items-center justify-center rounded-sm bg-gradient-to-r from-pink-200 via-pink-400 to-red-400 h-80">
+            <div className="my-2 flex relative flex-col items-center justify-center rounded-sm bg-gradient-to-r from-pink-200 via-pink-400 to-red-400 h-80">
               <img
-                className="w-48 h-48 rounded-full border border-4"
+                className="w-32 h-32 mt-10 sm:mt-0 sm:w-48 sm:h-48 rounded-full border border-4"
                 src={userData?.personal_details?.photo[0]}
               />
-              <p className="text-[28px] font-bold text-gray-800 pt-2">
+              <p className="text-[18px] sm:text-[28px] font-bold text-gray-800 pt-2">
                 {" "}
                 {userData?.personal_details?.fullname}
               </p>
-              <p className="text-dark text-3xl font-bold py-1 px-10 rounded-tl-lg absolute top-5 left-2">
+              <p className="text-dark text-xl sm:text-3xl font-bold py-1 px-10 rounded-tl-lg absolute top-5 left-2">
                 {userData?.serial_no}
               </p>
-              <div className="bg-blue-800 text-white font-bold py-1 px-10 rounded-tl-lg rounded-br-lg absolute top-5 right-5">
+              <div className="bg-blue-800 text-xs sm:text-lg text-white font-bold py-1 px-5 sm:px-10 rounded-tl-lg rounded-br-lg absolute top-5 right-5">
                 {userData?.personal_details?.gotra}
               </div>
               <div
@@ -87,7 +87,7 @@ const BiodataDetails = () => {
                   userData?.personal_details?.gender === "उपवर"
                     ? "bg-blue-200 text-dark"
                     : "bg-blue-400 text-white"
-                } font-bold py-1 px-10 rounded-tr-lg rounded-bl-lg absolute top-[60px] right-5`}
+                } text-xs sm:text-lg  font-bold py-1 px-5 sm:px-10 rounded-tr-lg rounded-bl-lg absolute top-[60px] right-5`}
               >
                 {userData?.personal_details?.gender}
               </div>
@@ -106,7 +106,7 @@ const BiodataDetails = () => {
               </span>
             </p> */}
 
-            <div className="grid grid-cols-2 gap-1">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-1">
               <p className="py-1">
                 <span className="font-medium">जन्मनाव :</span>{" "}
                 {userData?.personal_details?.birth_name}
@@ -159,7 +159,7 @@ const BiodataDetails = () => {
             <h1 className="text-base font-medium text-primary-normal border-t border-b py-2 my-10 mb-2">
               शैक्षणिक/पदवी तपशील
             </h1>
-            <div className="grid grid-cols-2 gap-1">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-1">
               <p className="py-1">
                 <span className="font-medium">शिक्षण पातळी पूर्ण : </span>
                 {userData?.educational_details?.education_level}
@@ -180,7 +180,7 @@ const BiodataDetails = () => {
             <h1 className="text-base font-medium text-primary-normal border-t border-b py-2 my-10 mb-2">
               नोकरी/व्यावसायिक तपशील
             </h1>
-            <div className="grid grid-cols-2 gap-1">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-1">
               <p className="py-1 ">
                 <span className="font-medium">नोकरी/व्यवसाय पद : </span>{" "}
                 {userData?.professional_details?.profession}
@@ -209,7 +209,7 @@ const BiodataDetails = () => {
             <h1 className="text-base font-medium text-primary-normal border-t border-b py-2 my-10 mb-2">
               संपर्क
             </h1>
-            <div className="grid grid-cols-2 gap-1">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-1">
               <p className="py-1">
                 <span className="font-medium">मोबाईल क्रमांक :</span>{" "}
                 {userData?.contact_details?.mobile}
@@ -233,7 +233,7 @@ const BiodataDetails = () => {
             <h1 className="text-base font-medium text-primary-normal border-t border-b py-2 my-10 mb-2">
               पालक
             </h1>
-            <div className="grid grid-cols-2 gap-1">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-1">
               <p className="py-1">
                 <span className="font-medium">पालक / वडिलांचे पूर्ण नाव :</span>{" "}
                 {userData?.family_details.fathers_name}
@@ -322,7 +322,7 @@ const BiodataDetails = () => {
           <h1 className="text-base font-medium text-primary-normal border-t border-b py-2 mt-6 mb-2">
             भाऊ
           </h1>
-          <div className="grid grid-cols-2 gap-1">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-1">
             <p className="py-1">
               <span className="font-medium">बन्धु - विवाहित :</span>{" "}
               {userData?.brothers_details?.brother_married}
@@ -357,7 +357,7 @@ const BiodataDetails = () => {
           <h1 className="text-base font-medium text-primary-normal border-t border-b py-2 mt-6 mb-2">
             भगिनी
           </h1>
-          <div className="grid grid-cols-2 gap-1">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-1">
             <p className="py-1">
               <span className="font-medium">भगिनी - विवाहित :</span>{" "}
               {userData?.sisters_details.sisters_married}
@@ -392,7 +392,7 @@ const BiodataDetails = () => {
           <h1 className="text-base font-medium text-primary-normal border-t border-b py-2 mt-6 mb-2">
             आजोबा
           </h1>
-          <div className="grid grid-cols-2 gap-1">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-1">
             <p className="py-1">
               <span className="font-medium">आजोबांचे नाव :</span>{" "}
               {userData?.fathers_family_details?.grandfather_name}
@@ -425,7 +425,7 @@ const BiodataDetails = () => {
           <h1 className="text-base font-medium text-primary-normal border-t border-b py-2 mt-6 mb-2">
             आजोळ
           </h1>
-          <div className="grid grid-cols-2 gap-1">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-1">
             <p className="py-1">
               <span className="font-medium">आजोबांचे नाव :</span>{" "}
               {userData?.mothers_family_details?.grandfather_name}

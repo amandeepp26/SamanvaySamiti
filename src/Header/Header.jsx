@@ -38,7 +38,7 @@ const Header = () => {
           </div>
           <nav className="hidden lg:block">
             <ul className="header-menu flex gap-3 items-center justify-center">
-              <li>
+              {/* <li>
                 <NavLink
                   to={"/"}
                   className="text-base font-medium hover:!bg-primary-hover hover:text-white py-2 px-4 rounded-lg"
@@ -46,7 +46,7 @@ const Header = () => {
                   {" "}
                   Home{" "}
                 </NavLink>
-              </li>
+              </li> */}
               <li>
                 <NavLink
                   to={"/समिती"}
@@ -62,7 +62,7 @@ const Header = () => {
                   className="text-base font-medium hover:!bg-primary-hover hover:text-white py-2 px-4 rounded-lg"
                 >
                   {" "}
-                  Users{" "}
+                  वधु-वर{" "}
                 </NavLink>
               </li>
 
@@ -72,7 +72,7 @@ const Header = () => {
                   className="text-base font-medium hover:!bg-primary-hover hover:text-white py-2 px-4 rounded-lg"
                 >
                   {" "}
-                  Blogs{" "}
+                  माहिती{" "}
                 </NavLink>
               </li>
               <li>
@@ -81,7 +81,7 @@ const Header = () => {
                   className="text-base font-medium hover:!bg-primary-hover hover:text-white py-2 px-4 rounded-lg"
                 >
                   {" "}
-                  About us{" "}
+                  आमच्या बद्दल{" "}
                 </NavLink>
               </li>
               <li>
@@ -90,7 +90,7 @@ const Header = () => {
                   className="text-base font-medium hover:!bg-primary-hover hover:text-white py-2 px-4 rounded-lg"
                 >
                   {" "}
-                  Contact us{" "}
+                  संपर्क{" "}
                 </NavLink>
               </li>
             </ul>
@@ -168,7 +168,7 @@ const Header = () => {
                   <Logo width="w-56" />
                 </div>
                 <ul className="header-menu mt-10">
-                  <li className="py-2">
+                  {/* <li className="py-2">
                     <NavLink
                       to={"/"}
                       className="text-base font-medium hover:!bg-primary-hover hover:text-white py-3 px-4 rounded-lg block"
@@ -176,7 +176,7 @@ const Header = () => {
                       {" "}
                       Home{" "}
                     </NavLink>
-                  </li>
+                  </li> */}
                   <li className="py-2">
                     <NavLink
                       to={"/समिती"}
@@ -192,7 +192,7 @@ const Header = () => {
                       className="text-base font-medium hover:!bg-primary-hover hover:text-white py-3 px-4 rounded-lg block"
                     >
                       {" "}
-                      Users{" "}
+                      वधु-वर{" "}
                     </NavLink>
                   </li>
                   <li className="py-2">
@@ -201,7 +201,7 @@ const Header = () => {
                       className="text-base font-medium hover:!bg-primary-hover hover:text-white py-3 px-4 rounded-lg block"
                     >
                       {" "}
-                      Blogs{" "}
+                      माहिती{" "}
                     </NavLink>
                   </li>
                   <li className="py-2">
@@ -210,7 +210,7 @@ const Header = () => {
                       className="text-base font-medium hover:!bg-primary-hover hover:text-white py-3 px-4 rounded-lg block"
                     >
                       {" "}
-                      About us{" "}
+                      आमच्या बद्दल{" "}
                     </NavLink>
                   </li>
                   <li className="py-2">
@@ -219,7 +219,7 @@ const Header = () => {
                       className="text-base font-medium hover:!bg-primary-hover hover:text-white py-3 px-4 rounded-lg block"
                     >
                       {" "}
-                      Contact us{" "}
+                      संपर्क{" "}
                     </NavLink>
                   </li>
                   <div className="pl-4">
