@@ -25,6 +25,7 @@ const Biodatas = () => {
 
   const numberOfPages = Math.ceil(totalPaginationBiodata / itemsPerPage);
 
+  const [users, setUsers] = useState([]);
   const [biodatas, , isBiodataLoading] = useBiodatas(
     viewAll,
     typeValue,
@@ -39,6 +40,38 @@ const Biodatas = () => {
   // for (let i = 0; i < numberOfPages; i++) {
   //     pages.push(i + 1);
   // }
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          "https://api.welkinhawk.in.net/api/users/search-users",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ minWeight: 0, maxWeight: 100 }),
+          }
+        );
+
+        console.log("Response status:", response.status);
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const result = await response.json();
+        console.log("API Data:", result);
+        setUsers(result.result);
+      } catch (error) {
+        console.error("Error fetching data:", error.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []); // Moved the fetchData call inside useEffect
 
   useEffect(() => {
     setTotalPaginationBiodata(totalBiodataForPagination || 0);
@@ -368,7 +401,7 @@ const Biodatas = () => {
           </>
         ) : (
           <>
-            {biodatas?.length <= 0 ? (
+            {users?.length <= 0 ? (
               <>
                 <div className="h-96 w-full flex items-center justify-center">
                   <h2 className="text-2xl text-center">No Data Found !</h2>
@@ -376,8 +409,8 @@ const Biodatas = () => {
               </>
             ) : (
               <>
-                <div className="custom-media-query grid grid-cols-1 lg:grid-cols-2 gap-4 py-6">
-                  {biodatas.map((item) => (
+                <div className="custom-media-query grid grid-cols-1 lg:grid-cols-3 gap-4 py-6">
+                  {users.map((item) => (
                     <BiodataCard key={item._id} item={item} />
                   ))}
                 </div>

@@ -49,11 +49,11 @@ const Header = () => {
               </li>
               <li>
                 <NavLink
-                  to={"/ourteams"}
+                  to={"/समिती"}
                   className="text-base font-medium hover:!bg-primary-hover hover:text-white py-2 px-4 rounded-lg"
                 >
                   {" "}
-                  Our Team{" "}
+                  समिती{" "}
                 </NavLink>
               </li>
               <li>
@@ -179,11 +179,11 @@ const Header = () => {
                   </li>
                   <li className="py-2">
                     <NavLink
-                      to={"/ourteams"}
+                      to={"/समिती"}
                       className="text-base font-medium hover:!bg-primary-hover hover:text-white py-3 px-4 rounded-lg block"
                     >
                       {" "}
-                      Our Team{" "}
+                      समिती{" "}
                     </NavLink>
                   </li>
                   <li className="py-2">

@@ -44,27 +44,27 @@ const router = createBrowserRouter([
         element: <Biodatas />,
       },
       {
-        path: "blogs",
+        path: "/blogs",
         element: <Blogs />,
       },
       {
-        path: "ourteams",
+        path: "/समिती",
         element: <OurTeam />,
       },
       {
-        path: "users",
+        path: "/users",
         element: <Users />,
       },
       {
-        path: "about-us",
+        path: "/about-us",
         element: <AboutUs />,
       },
       {
-        path: "privacy-policy",
+        path: "/privacy-policy",
         element: <PrivacyPolicy />,
       },
       {
-        path: "contact-us",
+        path: "/contact-us",
         element: <ContactUs />,
       },
       {
