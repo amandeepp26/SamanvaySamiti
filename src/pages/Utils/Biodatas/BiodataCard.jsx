@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import { MdFavoriteBorder, MdOutlineEmail } from "react-icons/md";
 import { IoChatbubblesOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
+import premium from "../../../assets/img/premium.png";
 
 const BiodataCard = ({ item }) => {
   const {
@@ -30,11 +31,15 @@ const BiodataCard = ({ item }) => {
                 alt=""
               />
             </a>
-            {/* {isPro === "Premium" && (
-        <span className="absolute top-3 left-3 bg-yellow-600 rounded-full text-[12px] px-2 text-white">
-          Premium
-        </span>
-      )} */}
+            {item?.featured && (
+              <img
+                src={premium}
+                className="w-[40px] absolute top-0 left-0 h-[40px]"
+              />
+              // <span className="absolute top-3 left-3 bg-yellow-600 rounded-full text-[12px] px-2 text-white">
+              //   Premium
+              // </span>
+            )}
             <div className="p-3 leading-1">
               <h4 className="font-semibold text-md">{item.serial_no}</h4>
               <p className="mb-3 font-semibold text-gray-700 w-[250px] dark:text-gray-400">{`${item?.personal_details?.fullname}`}</p>
