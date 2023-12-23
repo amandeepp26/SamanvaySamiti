@@ -24,7 +24,7 @@ const Footer = () => {
                     Help & Support
                   </h2>
                   <ul className="text-gray-500 font-medium">
-                    <li className="mb-4 font-normal">
+                    {/* <li className="mb-4 font-normal">
                       <a href="#" className="hover:underline">
                         Get Free Registration
                       </a>
@@ -33,7 +33,7 @@ const Footer = () => {
                       <a href="#" className="hover:underline">
                         Membership Plans
                       </a>
-                    </li>
+                    </li> */}
                     <li className="mb-4 font-normal">
                       <a href="/contact-us" className="hover:underline">
                         Contact us
