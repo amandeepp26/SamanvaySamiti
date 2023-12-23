@@ -1,14 +1,36 @@
 .topBanner .swiper-button-prev,
 .topBanner .swiper-button-next,
 .topBanner .swiper-pagination {
-    color: white;
+  color: white;
 }
 
 @media only screen and (max-width: 768px) {
+  .topBanner .swiper-button-prev,
+  .topBanner .swiper-button-next {
+    display: none;
+  }
+}
 
-    .topBanner .swiper-button-prev,
-    .topBanner .swiper-button-next {
-        display: none;
-    }
+/* Banner.css */
 
+/* Styles for mobile view */
+@media (max-width: 767px) {
+  .desktop-image {
+    display: none; /* Hide desktop image on mobile */
+  }
+
+  .mobile-image {
+    display: block; /* Show mobile image on mobile */
+  }
+}
+
+/* Styles for desktop view */
+@media (min-width: 768px) {
+  .desktop-image {
+    display: block; /* Show desktop image on desktop */
+  }
+
+  .mobile-image {
+    display: none; /* Hide mobile image on desktop */
+  }
 }

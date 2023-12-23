@@ -634,30 +634,16 @@ const PrivacyPolicy = () => {
                       <p>
                         By visiting this page on our website:{" "}
                         <a
-                          href="https://samanvaysamiti.com/contact"
+                          href="https://samanvaysamiti.com/संपर्क"
                           rel="external nofollow noopener"
                           target="_blank"
                         >
-                          https://samanvaysamiti.com/contact
+                          https://samanvaysamiti.com/संपर्क
                         </a>
                       </p>
                     </li>
                   </ul>
                 </div>
-              </div>
-            </div>
-
-            <div className="footer">
-              <div className="container">
-                <p>
-                  Generated using{" "}
-                  <a
-                    href="https://www.termsfeed.com/privacy-policy-generator/"
-                    target="_blank"
-                  >
-                    TermsFeed Privacy Policy Generator
-                  </a>
-                </p>
               </div>
             </div>
           </div>

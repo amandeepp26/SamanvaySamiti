@@ -28,6 +28,8 @@ import Blogs from "../pages/Blogs/Blogs";
 import OurTeam from "../pages/OurTeam/OurTeam";
 import PrivacyPolicy from "../pages/Privacy policy/PrivacyPolicy";
 import Users from "../pages/Users/Users";
+import CookiesPolicy from "../pages/Cookies Policy/CookiesPolicy";
+import TermsConditions from "../pages/Terms & Conditions/TermsConditions";
 
 const router = createBrowserRouter([
   {
@@ -66,6 +68,14 @@ const router = createBrowserRouter([
       {
         path: "/संपर्क",
         element: <ContactUs />,
+      },
+      {
+        path: "/cookies-policy",
+        element: <CookiesPolicy />,
+      },
+      {
+        path: "/terms-and-conditions",
+        element: <TermsConditions />,
       },
       {
         path: "/biodata/:id",

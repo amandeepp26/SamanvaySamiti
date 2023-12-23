@@ -1,18 +1,22 @@
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination, Navigation, Autoplay } from "swiper/modules";
 import banner1 from "../../../assets/banners/homebanner.jpg";
-import banner2 from "../../../assets/banners/banner2.jpg";
-import banner3 from "../../../assets/banners/banner3.png";
+import mobileBanner from "../../../assets/banners/mobile-banner.jpeg";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "./Banner.css";
-import ButtonOutLine from "../../Utils/ButtonOutLine";
 const Banner = () => {
   return (
     <div className=" flex">
-      <img src={banner1} className="h-[full] w-[full]" />
-      {/* {
+      <img src={mobileBanner} className="h-[full] w-[full] mobile-image" />
+      <img src={banner1} className="h-[full] w-[full] desktop-image" />
+    </div>
+  );
+};
+
+export default Banner;
+
+{
+  /* {
         <Swiper
           pagination={{
             type: "fraction",
@@ -113,9 +117,5 @@ const Banner = () => {
             </div>
           </SwiperSlide>
         </Swiper>
-      } */}
-    </div>
-  );
-};
-
-export default Banner;
+      } */
+}

@@ -5,7 +5,7 @@ const Search = () => {
   const [userId, setuserId] = useState("");
   return (
     <div
-      className="flex flex-col lg:flex-row p-4 sm:items-center py-20"
+      className="flex flex-col lg:flex-row p-4 sm:items-center py-10"
       style={{
         backgroundColor: "white",
         borderBottomWidth: 1,

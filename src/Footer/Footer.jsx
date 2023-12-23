@@ -35,7 +35,7 @@ const Footer = () => {
                       </a>
                     </li> */}
                     <li className="mb-4 font-normal">
-                      <a href="/contact-us" className="hover:underline">
+                      <a href="/संपर्क" className="hover:underline">
                         Contact us
                       </a>
                     </li>
@@ -57,12 +57,15 @@ const Footer = () => {
                       </a>
                     </li>
                     <li className="mb-4 font-normal">
-                      <a href="#" className="hover:underline">
+                      <a
+                        href="/terms-and-conditions"
+                        className="hover:underline"
+                      >
                         Terms and Condition
                       </a>
                     </li>
                     <li className="mb-4 font-normal">
-                      <a href="#" className="hover:underline">
+                      <a href="/cookies-policy" className="hover:underline">
                         Cookie Policy
                       </a>
                     </li>
