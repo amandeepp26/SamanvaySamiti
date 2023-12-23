@@ -59,7 +59,7 @@ const BiodataDetails = () => {
     );
   }
   return (
-    <div className="w-full container mx-auto  grid">
+    <div className="lg:w-4/6 md:w-[100%] container mx-auto  grid">
       {/* Left Content */}
       {userData === null ? (
         <div className="w-full h-[70vh] flex items-center justify-center flex-col">
@@ -407,7 +407,7 @@ const BiodataDetails = () => {
                 className="absolute inset-0 bg-black opacity-50"
                 onClick={() => setIsImageModalOpen(false)}
               ></div>
-              <div className="absolute top-1/2 md:h-[80%] md:w-[40%] h-[60vh] w-[80%] left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+              <div className="absolute top-1/2 md:h-[80%] md:w-[40%]  lg:h-[80%] lg:w-[30%]  h-[60vh] w-[80%] left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                 <img
                   className="w-full h-full object-cover"
                   src={userData?.personal_details?.photo[0]}

@@ -36,8 +36,11 @@ const BiodataCard = ({ item }) => {
         </span>
       )} */}
             <div className="p-3 leading-1">
+              <h4 className="font-semibold text-md">{item.serial_no}</h4>
               <p className="mb-3 font-semibold text-gray-700 w-[250px] dark:text-gray-400">{`${item?.personal_details?.fullname}`}</p>
-              {/* <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{`${item?.personal_details?.gotra}`}</p> */}
+              {item?.professional_details?.work_city && (
+                <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{`${item?.professional_details?.work_city}`}</p>
+              )}
               <div>
                 <div className="bg-red-600 text-white font-bold py-1 px-2 rounded-tl-lg rounded-br-lg absolute bottom-5 right-3">
                   {item?.personal_details?.gotra}
