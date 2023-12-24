@@ -140,7 +140,7 @@ const Biodatas = () => {
       <div className="border-b-2 lg:border-b-0 lg:border-r bg-[#ffffffc2]">
         {/* View All  */}
 
-        <div className="m-3 p-2 bg-white border border-gray-200 rounded-sm mt-7">
+        {/* <div className="m-3 p-2 bg-white border border-gray-200 rounded-sm mt-7">
           <h3 className="mb-1 pl-3 font-semibold text-gray-900">
             View all Biodata
           </h3>
@@ -164,7 +164,7 @@ const Biodatas = () => {
               </div>
             </li>
           </ul>
-        </div>
+        </div> */}
 
         {/* Filter by age  */}
 
@@ -241,7 +241,7 @@ const Biodatas = () => {
 
         {/* Filter by Division  */}
 
-        <div className="m-3 p-2 bg-white border border-gray-200 rounded-sm mt-5">
+        {/* <div className="m-3 p-2 bg-white border border-gray-200 rounded-sm mt-5">
           <h3 className="mb-1 pl-3 font-semibold text-gray-900">
             Filter by Division
           </h3>
@@ -373,7 +373,7 @@ const Biodatas = () => {
               </div>
             </li>
           </ul>
-        </div>
+        </div> */}
       </div>
 
       {/* Content section  */}

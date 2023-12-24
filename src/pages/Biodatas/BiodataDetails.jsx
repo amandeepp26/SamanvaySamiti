@@ -172,12 +172,13 @@ const BiodataDetails = () => {
               </p>
             </div>
             <h1 className="text-base px-5 font-medium text-primary-normal border-t border-b py-2 my-10 mb-2">
-              नोकरी/व्यावसायिक तपशील
+              नोकरी/व्यावसायिक तपशील ({" "}
+              {userData?.professional_details?.profession})
             </h1>
             <div className="grid grid-cols-1 mx-5 sm:grid-cols-2 gap-1">
               <p className="py-1 ">
                 <span className="font-medium">नोकरी/व्यवसाय पद : </span>{" "}
-                {userData?.professional_details?.profession}
+                {userData?.professional_details?.job_title}
               </p>
               <p className="py-1">
                 <span className="font-medium">
