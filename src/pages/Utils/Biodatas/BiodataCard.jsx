@@ -29,6 +29,7 @@ const BiodataCard = ({ item }) => {
                 className="w-full h-fit object-cover"
                 src={item?.personal_details?.photo[0]}
                 alt=""
+                draggable={false}
               />
             </a>
             {item?.featured && (

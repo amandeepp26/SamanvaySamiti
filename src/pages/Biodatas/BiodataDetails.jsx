@@ -76,6 +76,7 @@ const BiodataDetails = () => {
                 onClick={() => setIsImageModalOpen(true)}
                 className="w-32 h-32 mt-10 sm:mt-0 sm:w-48 sm:h-48 rounded-full border border-4"
                 src={userData?.personal_details?.photo[0]}
+                draggable={false}
               />
               <p className="text-[18px] sm:text-[28px] font-bold text-gray-800 pt-2">
                 {" "}
@@ -414,6 +415,7 @@ const BiodataDetails = () => {
                   className="w-full h-full object-cover"
                   src={userData?.personal_details?.photo[0]}
                   alt={userData?.personal_details?.fullname}
+                  draggable={false}
                 />
               </div>
             </div>

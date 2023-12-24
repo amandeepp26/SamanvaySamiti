@@ -50,18 +50,23 @@ function OurTeam() {
         return mandalOrder[a.mandal_name] - mandalOrder[b.mandal_name];
       });
 
-      const sortedUsers = sortedMandals.sort((a, b) => {
-        const designationOrder = {
-          अध्यक्ष: 1,
-          कोषाध्यक्ष: 2,
-          महासचिव: 3,
-          सचिव: 4,
-          सदस्य: 5,
-        };
+      const customOrder = {
+        अध्यक्ष: 1,
+        उपाध्यक्ष: 2,
+        "महा सचिव": 3,
+        सरचिटणीस: 4,
+        सचिव: 5,
+        चिटणीस: 6,
+        कोषाध्यक्ष: 7,
+        "अंतर्गत हिशेब तपासणीस": 8,
+        संघटक: 9,
+        "महिला संघटक": 10,
+        विश्वस्त: 11,
+        सदस्य: 12,
+      };
 
-        return (
-          designationOrder[a.designation] - designationOrder[b.designation]
-        );
+      const sortedUsers = sortedMandals.sort((a, b) => {
+        return customOrder[a.designation] - customOrder[b.designation];
       });
 
       setUsers(sortedUsers);
@@ -103,6 +108,7 @@ function OurTeam() {
                 className="w-full h-48 object-contain"
                 src={item.photo}
                 alt={item.member_name}
+                draggable={false}
               />
               <div className="px-6 py-4">
                 <div className="font-bold text-md mb-2">{item.member_name}</div>
