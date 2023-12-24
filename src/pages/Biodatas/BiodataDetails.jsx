@@ -22,10 +22,12 @@ const BiodataDetails = () => {
   const handleStoreFavorite = useStoreFavorite();
 
   useEffect(() => {
-    console.log("id issss-------->", id);
     fetchDetails();
   }, []);
-
+  useEffect(() => {
+    // Scroll to the top when the component mounts
+    window.scrollTo(0, 0);
+  }, []);
   const fetchDetails = async () => {
     try {
       const response = await fetch(
@@ -203,11 +205,11 @@ const BiodataDetails = () => {
             <div className="grid grid-cols-1 mx-5 sm:grid-cols-2 gap-1">
               <p className="py-1">
                 <span className="font-medium">मोबाईल क्रमांक :</span>{" "}
-                {userData?.contact_details?.mobile}
+                {userData?.phone}
               </p>
               <p className="py-1">
                 <span className="font-medium">दूरध्वनी क्रमांक :</span>{" "}
-                {userData?.phone}
+                {userData?.contact_details?.mobile}
               </p>
               <p className="py-1">
                 <span className="font-medium">ईमेल :</span> {userData?.email}

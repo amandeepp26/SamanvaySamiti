@@ -1,8 +1,8 @@
 import president from "../../assets/img/president.jpg";
 const Content = () => {
   return (
-    <div>
-      <div className="flex lg:flex-row flex-col items-center justify-center">
+    <div className="text-justify">
+      <div className="flex lg:flex-row flex-col items-center text-justify justify-center">
         <img
           src={president}
           alt="President"
