@@ -1,15 +1,12 @@
-
 import axios from "axios";
 
 const axiosPublic = axios.create({
-    baseURL: 'https://biyebari-server.vercel.app',
-    withCredentials: true
-})
+  baseURL: "https://www.samanvaysamiti.com/",
+  withCredentials: true,
+});
 
 const useAxiosPublic = () => {
-
-    return axiosPublic;
+  return axiosPublic;
 };
 
 export default useAxiosPublic;
-
