@@ -55,12 +55,12 @@ const router = createBrowserRouter([
       },
       {
         path: "/वधु-वर",
-        element: <Users />,
-        // element: (
-        //   <PrivateRoute>
-        //     <Users />
-        //   </PrivateRoute>
-        // ),
+        // element: <Users />,
+        element: (
+          <PrivateRoute>
+            <Users />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/आमच्या-बद्दल",

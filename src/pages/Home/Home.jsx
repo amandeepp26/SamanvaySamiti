@@ -12,9 +12,9 @@ const Home = () => {
         <Banner />
       </section>
       {/* Search */}
-      <section>
+      {/* <section>
         <Search />
-      </section>
+      </section> */}
       <section>
         <Content />
       </section>
