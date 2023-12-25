@@ -5,11 +5,17 @@ import BiodataCard from "../Utils/Biodatas/BiodataCard";
 import "./Biodatas.css";
 import MultiRangeSlider from "multi-range-slider-react";
 import useTotalBiodataForPagination from "../../hooks/useTotalBiodataForPagination";
+import { Link } from "react-router-dom";
 
 const Biodatas = () => {
   const [viewAll, setViewAll] = useState(null);
-  const [typeValue, setTypeValue] = useState(null);
+  const [typeValue, setTypeValue] = useState("");
+  const [educationLevel, seteducationLevel] = useState("");
+  const [gotra, setGotra] = useState("");
   const [divisionValue, setDivisionValue] = useState(null);
+  const [isloading, setisloading] = useState(false);
+
+  const [userId, setuserId] = useState("");
 
   const [minMaxAutoRunStop, setMinMaxAutoRunStop] = useState(true);
 
@@ -40,39 +46,66 @@ const Biodatas = () => {
   // for (let i = 0; i < numberOfPages; i++) {
   //     pages.push(i + 1);
   // }
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          "https://api.welkinhawk.in.net/api/users/search-users",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ minWeight: 0, maxWeight: 100 }),
-          }
-        );
-
-        console.log("Response status:", response.status);
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const result = await response.json();
-        console.log("API Data:", result);
-        setUsers(result.result);
-      } catch (error) {
-        console.error("Error fetching data:", error.message);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
     fetchData();
-  }, []); // Moved the fetchData call inside useEffect
+  }, [typeValue, educationLevel, viewAll, gotra]); // Moved the fetchData call inside useEffect
 
+  const fetchData = async () => {
+    setisloading(true);
+    try {
+      // Prepare the request payload
+      const requestBody = {
+        minWeight: 0,
+        maxWeight: 100,
+        //  gender: typeValue,
+      };
+
+      if (typeValue) {
+        requestBody.gender = typeValue;
+      }
+      // Add education_level_completed to the request payload if educationLevel has data
+      if (educationLevel) {
+        requestBody.education_level_completed = educationLevel;
+      }
+      if (gotra) {
+        requestBody.gotra = gotra;
+      }
+
+      const response = await fetch(
+        "https://api.welkinhawk.in.net/api/users/search-users",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(requestBody),
+        }
+      );
+
+      console.log("Response status:", response);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      console.log("API Data:", result);
+      setUsers(result.result);
+      setisloading(false);
+    } catch (error) {
+      console.error("Error fetching data:", error.message);
+    } finally {
+      setisloading(false);
+    }
+  };
+
+  const handleEducationLevel = (e) => {
+    seteducationLevel(e.target.value);
+  };
+  const handleGotraSelect = (e) => {
+    setGotra(e.target.value);
+  };
   useEffect(() => {
     setTotalPaginationBiodata(totalBiodataForPagination || 0);
   }, [totalBiodataForPagination]);
@@ -100,7 +133,7 @@ const Biodatas = () => {
   const handleViewAll = () => {
     setTypeValue(null);
     setDivisionValue(null);
-
+    seteducationLevel(null);
     setMinValue(null);
     setMaxValue(null);
   };
@@ -140,9 +173,9 @@ const Biodatas = () => {
       <div className="border-b-2 lg:border-b-0 lg:border-r bg-[#ffffffc2]">
         {/* View All  */}
 
-        {/* <div className="m-3 p-2 bg-white border border-gray-200 rounded-sm mt-7">
+        <div className="m-3 p-2 bg-white border border-gray-200 rounded-sm mt-7">
           <h3 className="mb-1 pl-3 font-semibold text-gray-900">
-            View all Biodata
+            View all Users
           </h3>
           <ul className="text-sm font-medium text-gray-900">
             <li className="w-full">
@@ -164,11 +197,11 @@ const Biodatas = () => {
               </div>
             </li>
           </ul>
-        </div> */}
+        </div>
 
         {/* Filter by age  */}
 
-        <div className="m-3 p-2 bg-white border border-gray-200 rounded-sm mt-5">
+        {/* <div className="m-3 p-2 bg-white border border-gray-200 rounded-sm mt-5">
           <h3 className="pl-3 font-semibold text-gray-900">Filter by Age</h3>
           <div>
             <div className="range">
@@ -191,8 +224,38 @@ const Biodatas = () => {
               />
             </div>
           </div>
-        </div>
+        </div> */}
 
+        <div className="m-3 p-2 bg-white border border-gray-200 rounded-sm mt-5">
+          <h3 className="pl-3 font-semibold text-gray-900">
+            Search by User ID
+          </h3>
+          <div>
+            <div className="mb-4 lg:mb-0 lg:w-full lg:mr-4 my-5">
+              {/* <h1 className="text-lg font-bold mb-2">User Id</h1> */}
+              <input
+                type="text"
+                className="p-2 border border-gray-300 rounded w-full"
+                placeholder="Enter User Id"
+                value={userId}
+                onChange={(e) => {
+                  setuserId(e.target.value);
+                }}
+              />
+            </div>
+            <div className="lg:w-full">
+              <Link to={`/biodata/${userId}`}>
+                <button
+                  disabled={!userId}
+                  style={{ alignSelf: "center", backgroundColor: "#D10002" }}
+                  className=" text-white p-2 mt-5 rounded w-full"
+                >
+                  Search
+                </button>
+              </Link>
+            </div>
+          </div>
+        </div>
         {/* Filter by Type  */}
 
         <div className="m-3 p-2 bg-white border border-gray-200 rounded-sm mt-5">
@@ -205,7 +268,7 @@ const Biodatas = () => {
                 <input
                   id="male"
                   type="radio"
-                  value="Male"
+                  value="उपवर"
                   name="filter"
                   onChange={(e) => setTypeValue(e.target.value)}
                   className="w-4 h-4 text-black bg-gray-100 border-gray-300 focus:ring-primary-normal cursor-pointer"
@@ -214,7 +277,7 @@ const Biodatas = () => {
                   htmlFor="male"
                   className="w-full py-3 ms-2 text-sm font-medium text-gray-900 cursor-pointer"
                 >
-                  Male
+                  उपवर
                 </label>
               </div>
             </li>
@@ -223,7 +286,7 @@ const Biodatas = () => {
                 <input
                   id="female"
                   type="radio"
-                  value="Female"
+                  value="उपवधु"
                   name="filter"
                   onChange={(e) => setTypeValue(e.target.value)}
                   className="w-4 h-4 text-black bg-gray-100 border-gray-300 focus:ring-primary-normal cursor-pointer"
@@ -232,148 +295,247 @@ const Biodatas = () => {
                   htmlFor="female"
                   className="w-full py-3 ms-2 text-sm font-medium text-gray-900 cursor-pointer"
                 >
-                  Female
+                  उपवधु
                 </label>
               </div>
             </li>
           </ul>
         </div>
 
-        {/* Filter by Division  */}
+        {/* Filter by Education  */}
 
-        {/* <div className="m-3 p-2 bg-white border border-gray-200 rounded-sm mt-5">
+        <div className="m-3 p-2 bg-white border border-gray-200 rounded-sm mt-5">
           <h3 className="mb-1 pl-3 font-semibold text-gray-900">
-            Filter by Division
+            Filter by Education
           </h3>
           <ul className="text-sm font-medium text-gray-900">
             <li className="w-full">
-              <div onClick={handleDivisionValue} className="flex items-center">
+              <div className="flex items-center">
                 <input
-                  id="Dhaka"
+                  id="10th"
                   type="radio"
-                  value="Dhaka"
-                  name="filter"
-                  onChange={(e) => setDivisionValue(e.target.value)}
+                  value="10th"
+                  name="educationLevel"
+                  onChange={handleEducationLevel}
                   className="w-4 h-4 text-black bg-gray-100 border-gray-300 focus:ring-primary-normal cursor-pointer"
                 />
                 <label
-                  htmlFor="Dhaka"
+                  htmlFor="10th"
                   className="w-full py-3 ms-2 text-sm font-medium text-gray-900 cursor-pointer"
                 >
-                  Dhaka
+                  10th
                 </label>
               </div>
             </li>
             <li className="w-full">
-              <div onClick={handleDivisionValue} className="flex items-center">
+              <div className="flex items-center">
                 <input
-                  id="Chattagram"
+                  id="12th"
                   type="radio"
-                  value="Chattagram"
-                  name="filter"
-                  onChange={(e) => setDivisionValue(e.target.value)}
+                  value="12th"
+                  name="educationLevel"
+                  onChange={handleEducationLevel}
                   className="w-4 h-4 text-black bg-gray-100 border-gray-300 focus:ring-primary-normal cursor-pointer"
                 />
                 <label
-                  htmlFor="Chattagram"
+                  htmlFor="12th"
                   className="w-full py-3 ms-2 text-sm font-medium text-gray-900 cursor-pointer"
                 >
-                  Chattagram
+                  12th
                 </label>
               </div>
             </li>
             <li className="w-full">
-              <div onClick={handleDivisionValue} className="flex items-center">
+              <div className="flex items-center">
                 <input
-                  id="Maymansign"
+                  id="Diploma"
                   type="radio"
-                  value="Maymansign"
-                  name="filter"
-                  onChange={(e) => setDivisionValue(e.target.value)}
+                  value="Diploma"
+                  name="educationLevel"
+                  onChange={handleEducationLevel}
                   className="w-4 h-4 text-black bg-gray-100 border-gray-300 focus:ring-primary-normal cursor-pointer"
                 />
                 <label
-                  htmlFor="Maymansign"
+                  htmlFor="Diploma"
                   className="w-full py-3 ms-2 text-sm font-medium text-gray-900 cursor-pointer"
                 >
-                  Maymansign
+                  Diploma
                 </label>
               </div>
             </li>
             <li className="w-full">
-              <div onClick={handleDivisionValue} className="flex items-center">
+              <div className="flex items-center">
                 <input
-                  id="Rangpur"
+                  id="Graduate"
                   type="radio"
-                  value="Rangpur"
-                  name="filter"
-                  onChange={(e) => setDivisionValue(e.target.value)}
+                  value="Graduate"
+                  name="educationLevel"
+                  onChange={handleEducationLevel}
                   className="w-4 h-4 text-black bg-gray-100 border-gray-300 focus:ring-primary-normal cursor-pointer"
                 />
                 <label
-                  htmlFor="Rangpur"
+                  htmlFor="Graduate"
                   className="w-full py-3 ms-2 text-sm font-medium text-gray-900 cursor-pointer"
                 >
-                  Rangpur
+                  Graduate
                 </label>
               </div>
             </li>
             <li className="w-full">
-              <div onClick={handleDivisionValue} className="flex items-center">
+              <div className="flex items-center">
                 <input
-                  id="Barisal"
+                  id="PostGraduate"
                   type="radio"
-                  value="Barisal"
-                  name="filter"
-                  onChange={(e) => setDivisionValue(e.target.value)}
+                  value="Post Graduate / Master"
+                  name="educationLevel"
+                  onChange={handleEducationLevel}
                   className="w-4 h-4 text-black bg-gray-100 border-gray-300 focus:ring-primary-normal cursor-pointer"
                 />
                 <label
-                  htmlFor="Barisal"
+                  htmlFor="PostGraduate"
                   className="w-full py-3 ms-2 text-sm font-medium text-gray-900 cursor-pointer"
                 >
-                  Barisal
+                  Post Graduate / Master
                 </label>
               </div>
             </li>
             <li className="w-full">
-              <div onClick={handleDivisionValue} className="flex items-center">
+              <div className="flex items-center">
                 <input
-                  id="Khulna"
+                  id="Doctorate"
                   type="radio"
-                  value="Khulna"
-                  name="filter"
-                  onChange={(e) => setDivisionValue(e.target.value)}
+                  value="Doctorate"
+                  name="educationLevel"
+                  onChange={handleEducationLevel}
                   className="w-4 h-4 text-black bg-gray-100 border-gray-300 focus:ring-primary-normal cursor-pointer"
                 />
                 <label
-                  htmlFor="Khulna"
+                  htmlFor="Doctorate"
                   className="w-full py-3 ms-2 text-sm font-medium text-gray-900 cursor-pointer"
                 >
-                  Khulna
-                </label>
-              </div>
-            </li>
-            <li className="w-full">
-              <div onClick={handleDivisionValue} className="flex items-center">
-                <input
-                  id="Sylhet"
-                  type="radio"
-                  value="Sylhet"
-                  name="filter"
-                  onChange={(e) => setDivisionValue(e.target.value)}
-                  className="w-4 h-4 text-black bg-gray-100 border-gray-300 focus:ring-primary-normal cursor-pointer"
-                />
-                <label
-                  htmlFor="Sylhet"
-                  className="w-full py-3 ms-2 text-sm font-medium text-gray-900 cursor-pointer"
-                >
-                  Sylhet
+                  Doctorate
                 </label>
               </div>
             </li>
           </ul>
-        </div> */}
+        </div>
+
+        {/* filter by Gotra */}
+        <div className="m-3 p-2 bg-white border border-gray-200 rounded-sm mt-5">
+          <h3 className="mb-1 pl-3 font-semibold text-gray-900">
+            Filter by Gotra
+          </h3>
+          <ul className="text-sm font-medium text-gray-900">
+            <li className="w-full">
+              <div className="flex items-center">
+                <input
+                  id="काश्यप"
+                  type="radio"
+                  value="10th"
+                  name="Gotra"
+                  onChange={handleGotraSelect}
+                  className="w-4 h-4 text-black bg-gray-100 border-gray-300 focus:ring-primary-normal cursor-pointer"
+                />
+                <label
+                  htmlFor="10th"
+                  className="w-full py-3 ms-2 text-sm font-medium text-gray-900 cursor-pointer"
+                >
+                  काश्यप
+                </label>
+              </div>
+            </li>
+            <li className="w-full">
+              <div className="flex items-center">
+                <input
+                  id="खालप"
+                  type="radio"
+                  value="खालप"
+                  name="Gotra"
+                  onChange={handleGotraSelect}
+                  className="w-4 h-4 text-black bg-gray-100 border-gray-300 focus:ring-primary-normal cursor-pointer"
+                />
+                <label
+                  htmlFor="खालप"
+                  className="w-full py-3 ms-2 text-sm font-medium text-gray-900 cursor-pointer"
+                >
+                  खालप
+                </label>
+              </div>
+            </li>
+            <li className="w-full">
+              <div className="flex items-center">
+                <input
+                  id="गहिलम"
+                  type="radio"
+                  value="गहिलम"
+                  name="Gotra"
+                  onChange={handleGotraSelect}
+                  className="w-4 h-4 text-black bg-gray-100 border-gray-300 focus:ring-primary-normal cursor-pointer"
+                />
+                <label
+                  htmlFor="Diploma"
+                  className="w-full py-3 ms-2 text-sm font-medium text-gray-900 cursor-pointer"
+                >
+                  गहिलम
+                </label>
+              </div>
+            </li>
+            <li className="w-full">
+              <div className="flex items-center">
+                <input
+                  id="गौतम"
+                  type="radio"
+                  value="गौतम"
+                  name="Gotra"
+                  onChange={handleGotraSelect}
+                  className="w-4 h-4 text-black bg-gray-100 border-gray-300 focus:ring-primary-normal cursor-pointer"
+                />
+                <label
+                  htmlFor="गौतम"
+                  className="w-full py-3 ms-2 text-sm font-medium text-gray-900 cursor-pointer"
+                >
+                  गौतम
+                </label>
+              </div>
+            </li>
+            <li className="w-full">
+              <div className="flex items-center">
+                <input
+                  id="मांडव"
+                  type="radio"
+                  value="मांडव"
+                  name="Gotra"
+                  onChange={handleGotraSelect}
+                  className="w-4 h-4 text-black bg-gray-100 border-gray-300 focus:ring-primary-normal cursor-pointer"
+                />
+                <label
+                  htmlFor="मांडव"
+                  className="w-full py-3 ms-2 text-sm font-medium text-gray-900 cursor-pointer"
+                >
+                  मांडव
+                </label>
+              </div>
+            </li>
+            <li className="w-full">
+              <div className="flex items-center">
+                <input
+                  id="लोकाक्ष"
+                  type="radio"
+                  value="लोकाक्ष"
+                  name="Gotra"
+                  onChange={handleGotraSelect}
+                  className="w-4 h-4 text-black bg-gray-100 border-gray-300 focus:ring-primary-normal cursor-pointer"
+                />
+                <label
+                  htmlFor="लोकाक्ष"
+                  className="w-full py-3 ms-2 text-sm font-medium text-gray-900 cursor-pointer"
+                >
+                  लोकाक्ष
+                </label>
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
 
       {/* Content section  */}
@@ -393,7 +555,7 @@ const Biodatas = () => {
                     }
                 </h1> */}
 
-        {isBiodataLoading ? (
+        {isloading || isBiodataLoading ? (
           <>
             <div className="h-96 w-full flex items-center justify-center">
               <LoaderIcon />
@@ -420,7 +582,7 @@ const Biodatas = () => {
         )}
 
         {/* Pagination  */}
-        <div className="pt-3 pb-10 flex gap-5 justify-center">
+        {/* <div className="pt-3 pb-10 flex gap-5 justify-center">
           <div>
             <button
               onClick={handlePrevPage}
@@ -461,7 +623,7 @@ const Biodatas = () => {
               <option value="48">48</option>
             </select>
           </div>
-        </div>
+        </div> */}
         {/* Pagination End */}
       </div>
     </div>
