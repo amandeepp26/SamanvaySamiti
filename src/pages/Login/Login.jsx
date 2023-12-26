@@ -62,6 +62,13 @@ const Login = () => {
             <h1 className="text-lg pb-2 font-semibold leading-tight tracking-tight text-gray-900 md:text-2xl">
               Sign in to your account
             </h1>
+            <h1 className="text-md">
+              साईट वर लॉगिन करण्याची इन्फॉर्मशन तुम्हाला ई-मेल २८-डिसेंबर पर्यंत
+              पाठवण्यात येईल.
+              <br />
+              <br />
+              कृपया सहकार्य करावे हि नम्र विनंती.
+            </h1>
             <form className="space-y-4 md:space-y-6" onSubmit={handleUserLogin}>
               <div>
                 <label

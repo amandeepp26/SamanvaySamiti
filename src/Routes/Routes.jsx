@@ -84,13 +84,13 @@ const router = createBrowserRouter([
       },
       {
         path: "/biodata/:id",
-        element: <BiodataDetails />,
-        // element: (
-        //   <PrivateRoute>
-        //     {" "}
-        //     <BiodataDetails />{" "}
-        //   </PrivateRoute>
-        // ),
+        // element: <BiodataDetails />,
+        element: (
+          <PrivateRoute>
+            {" "}
+            <BiodataDetails />{" "}
+          </PrivateRoute>
+        ),
       },
       {
         path: "register/:id",
