@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import LoaderIcon from "../Utils/LoaderIcon";
 
 function OurTeam() {
   const [users, setUsers] = useState([]);
@@ -125,6 +126,7 @@ function OurTeam() {
     <>
       {isLoading ? (
         <div className="w-full h-[70vh] flex items-center justify-center flex-col">
+          <LoaderIcon />
           Loading...
         </div>
       ) : (

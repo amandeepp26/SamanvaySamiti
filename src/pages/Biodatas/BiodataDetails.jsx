@@ -7,7 +7,18 @@ import { MdFavoriteBorder } from "react-icons/md";
 import useStoreFavorite from "../../hooks/useStoreFavorite";
 import useSelfUser from "../../hooks/useSelfUser";
 import BiodataCard from "../Utils/Biodatas/BiodataCard";
-
+import {
+  FaFacebookF,
+  FaInstagram,
+  FaGithub,
+  FaPhone,
+  FaPhoneAlt,
+  FaWhatsapp,
+  FaTty,
+  FaMobileAlt,
+  FaMailBulk,
+  FaEnvelope,
+} from "react-icons/fa";
 const BiodataDetails = () => {
   const { id } = useParams();
   const [singleBiodata, , isSingleBiodataLoading] = useSingleBiodataById(id);
@@ -53,9 +64,18 @@ const BiodataDetails = () => {
     refetchTypeBiodatas();
   }, [singleBiodata?.type, refetchTypeBiodatas, refetchSelfUser]);
 
+  const phoneIconClicked = () => {
+    // alert("clicked");
+  };
+
+  const whatsappIconClicked = () => {
+    // alert("clicked");
+  };
+
   if (isloading) {
     return (
       <div className="w-full h-[70vh] flex items-center justify-center flex-col">
+        <LoaderIcon />
         Loading......
       </div>
     );
@@ -82,6 +102,37 @@ const BiodataDetails = () => {
                 {" "}
                 {userData?.personal_details?.fullname}
               </p>
+              <div className="flex gap-5 items-center py-2">
+                <a
+                  href={`tel:${userData?.phone}`}
+                  onClick={() => phoneIconClicked()}
+                  target="blank"
+                  className="bg-blue-800  hover:bg-primary-hover hover:text-white p-[6px] text-white rounded-full"
+                >
+                  <FaMobileAlt size={18} />
+                </a>
+                <a
+                  href={`https://wa.me/${userData?.phone}`}
+                  onClick={() => whatsappIconClicked()}
+                  className=" bg-[#25D366] hover:border-primary-hover hover:bg-primary-hover hover:text-white p-[4px] text-white rounded-full"
+                >
+                  <FaWhatsapp size={20} />
+                </a>
+                <a
+                  href={`mailto:${userData?.email}`}
+                  target="blank"
+                  className="bg-red-600 border-white-normal hover:border-primary-hover hover:bg-primary-hover hover:text-white text-white p-[6px] text-primary-normal rounded-full"
+                >
+                  <FaEnvelope size={18} />
+                </a>
+                <a
+                  href={`tel:${userData?.contact_details?.mobile}`}
+                  target="blank"
+                  className="bg-gray-600 border-white-normal hover:border-primary-hover hover:bg-primary-hover hover:text-white text-white p-[6px] text-primary-normal rounded-full"
+                >
+                  <FaPhoneAlt size={15} />
+                </a>
+              </div>
               <p className="text-dark text-xl sm:text-3xl font-bold py-1 px-10 rounded-tl-lg absolute top-5 left-2">
                 {userData?.serial_no}
               </p>
@@ -205,7 +256,7 @@ const BiodataDetails = () => {
               संपर्क
             </h1>
             <div className="grid grid-cols-1 mx-5 sm:grid-cols-2 gap-1">
-              <p className="py-1">
+              {/* <p className="py-1">
                 <span className="font-medium">मोबाईल क्रमांक :</span>{" "}
                 {userData?.phone}
               </p>
@@ -215,7 +266,7 @@ const BiodataDetails = () => {
               </p>
               <p className="py-1">
                 <span className="font-medium">ईमेल :</span> {userData?.email}
-              </p>
+              </p> */}
               <p className="py-1">
                 <span className="font-medium">सध्याचा राहण्याचा पत्ता :</span>{" "}
                 {userData?.family_details.address}

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import BiodataCard from "../Utils/Biodatas/BiodataCard";
+import LoaderIcon from "../Utils/LoaderIcon";
 
 function Users() {
   const [users, setUsers] = useState([]);
@@ -42,6 +43,7 @@ function Users() {
     <>
       {isLoading ? (
         <div className="w-full h-[70vh] flex items-center justify-center flex-col">
+          <LoaderIcon />
           Loading...
         </div>
       ) : (

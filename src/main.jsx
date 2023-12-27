@@ -14,7 +14,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <Authprovider>
       <QueryClientProvider client={queryClient}>
-        <DisableRightClick />
+        {/* <DisableRightClick /> */}
         <RouterProvider router={router} />
         <ScrollToTop
           smooth

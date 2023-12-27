@@ -11,7 +11,6 @@ import ManageUsers from "../pages/Dashboard/Admin/ManageUsers";
 import ApprovedPremium from "../pages/Dashboard/Admin/ApprovedPremium";
 import ApprovedContactRequest from "../pages/Dashboard/Admin/ApprovedContactRequest";
 import EditBiodata from "../pages/Dashboard/Clients/EditBiodata";
-import ViewBiodata from "../pages/Dashboard/Clients/ViewBiodata";
 import ContactRequest from "../pages/Dashboard/Clients/ContactRequest";
 import MyFavourites from "../pages/Dashboard/Clients/MyFavourites";
 import Logout from "../pages/Dashboard/Clients/Logout";
@@ -30,6 +29,9 @@ import PrivacyPolicy from "../pages/Privacy policy/PrivacyPolicy";
 import Users from "../pages/Users/Users";
 import CookiesPolicy from "../pages/Cookies Policy/CookiesPolicy";
 import TermsConditions from "../pages/Terms & Conditions/TermsConditions";
+import ForgotPassword from "../pages/Forgot Password/ForgotPassword";
+import ResetPassword from "../pages/Reset Password/ResetPassword";
+import MyProfile from "../pages/Dashboard/Clients/MyProfile";
 
 const router = createBrowserRouter([
   {
@@ -99,6 +101,14 @@ const router = createBrowserRouter([
       {
         path: "login",
         element: <Login />,
+      },
+      {
+        path: "forgot-password",
+        element: <ForgotPassword />,
+      },
+      {
+        path: "reset-password/:token",
+        element: <ResetPassword />,
       },
       {
         path: "checkout/:id",
@@ -177,8 +187,8 @@ const router = createBrowserRouter([
         element: <EditBiodata />,
       },
       {
-        path: "view",
-        element: <ViewBiodata />,
+        path: "my-profile",
+        element: <MyProfile />,
       },
       {
         path: "request",

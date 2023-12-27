@@ -22,16 +22,16 @@ const ClientRoutes = () => {
       <li>
         <NavLink
           className="hover:bg-gray-200 text-lg font-normal py-3 px-7 hover:text-primary-normal flex gap-2"
-          to={"/dashboard/view"}
+          to={"/dashboard/my-profile"}
         >
           <span className="text-xl mt-1">
             {" "}
             <MdLibraryBooks />{" "}
           </span>
-          <span>View Biodata</span>
+          <span>My Profile</span>
         </NavLink>
       </li>
-      <li>
+      {/* <li>
         <NavLink
           className="hover:bg-gray-200 text-lg font-normal py-3 px-7 hover:text-primary-normal flex gap-2"
           to={"/dashboard/add"}
@@ -63,7 +63,7 @@ const ClientRoutes = () => {
           </span>
           <span>My Favourites</span>
         </NavLink>
-      </li>
+      </li> */}
       {/* <li>
                 <NavLink className="hover:bg-gray-200 text-lg font-normal py-3 px-7 hover:text-primary-normal flex gap-2" to={'/dashboard/got-married'}>
                     <span className="text-xl mt-1"><GiLovers /></span>

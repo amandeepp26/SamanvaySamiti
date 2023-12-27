@@ -15,11 +15,30 @@ const Header = () => {
   const [headerNavDrawer, setHeaderNavDrawer] = useState(false);
   const { selfUser, refetchSelfUser, isLoadingSelfUser } = useSelfUser();
   const { user, loading } = useAuth();
-
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    localStorage.getItem("isLoggedIn") || false
+  );
   useEffect(() => {
     refetchSelfUser();
   }, [loading, user, refetchSelfUser]);
 
+  useEffect(() => {
+    const handleStorageChange = (event) => {
+      if (event.key === "isLoggedIn") {
+        setIsLoggedIn(event.newValue);
+      }
+    };
+
+    // Add event listener using BroadcastChannel
+    const broadcastChannel = new BroadcastChannel("auth");
+    broadcastChannel.addEventListener("message", handleStorageChange);
+
+    // Remove the event listener when the component is unmounted
+    return () => {
+      broadcastChannel.removeEventListener("message", handleStorageChange);
+      broadcastChannel.close();
+    };
+  }, []);
   return (
     <header className="bg-slate-50 border-b border-b-slate-200 z-50">
       <Container>
@@ -116,7 +135,7 @@ const Header = () => {
                   </>
                 ) : (
                   <>
-                    {user ? (
+                    {isLoggedIn ? (
                       <>
                         {selfUser?.userRole === "Admin" ? (
                           <>
@@ -124,7 +143,10 @@ const Header = () => {
                           </>
                         ) : (
                           <>
-                            <Button text="Dashboard" link="/dashboard/view" />
+                            <Button
+                              text="Dashboard"
+                              link="/dashboard/my-profile"
+                            />
                           </>
                         )}
                       </>
