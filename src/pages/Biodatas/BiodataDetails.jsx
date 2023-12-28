@@ -65,10 +65,11 @@ const BiodataDetails = () => {
     refetchTypeBiodatas();
   }, [singleBiodata?.type, refetchTypeBiodatas, refetchSelfUser]);
 
+  // calls track
 const phoneIconClicked = async () => {
   try {
     const response = await fetch(
-      "http://localhost:8000/api/users/call-profile",
+      "https://api.welkinhawk.in.net/api/users/call-profile",
       {
         method: "POST",
         headers: {
@@ -87,6 +88,7 @@ const phoneIconClicked = async () => {
 
       if (result.success) {
         // Handle success
+        window.location.href = `tel:${userData?.phoneNumber}`;
       } else {
         Swal.fire({
           position: "center",
@@ -120,20 +122,17 @@ const phoneIconClicked = async () => {
   }
 };
 
-
-
-
-  const whatsappIconClicked = async () => {
-     try {
+const downloadIconClicked = async () => {
+  try {
     const response = await fetch(
-      "https://api.welkinhawk.in.net/api/users/whatsapp-profile",
+      "https://api.welkinhawk.in.net/api/users/download-profile",
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ calledUserId: userData?._id }),
+        body: JSON.stringify({ downloadedUserId: userData?._id }),
       }
     );
 
@@ -145,6 +144,68 @@ const phoneIconClicked = async () => {
 
       if (result.success) {
         // Handle success
+       
+      } else {
+        Swal.fire({
+          position: "center",
+          icon: "warning",
+          title: "Something went wrong!",
+          showConfirmButton: false,
+          timer: 3000,
+        });
+      }
+    } else {
+      console.error("Error:", response.statusText);
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Something went wrong!",
+        showConfirmButton: false,
+        timer: 3000,
+      });
+    }
+  } catch (error) {
+    console.error("Error fetching data:", error.message);
+    Swal.fire({
+      position: "center",
+      icon: "warning",
+      title: `Error: ${error.message}`,
+      showConfirmButton: false,
+      timer: 3000,
+    });
+  } finally {
+    // setSubmitBtnLoader(false);
+  }
+};
+
+
+// Whatsapp track
+  const whatsappIconClicked = async () => {
+     try {
+    const response = await fetch(
+      "https://api.welkinhawk.in.net/api/users/whatsapp-profile",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ whatsappUserId: userData?._id }),
+      }
+    );
+
+    console.log("Response status:", response.status); // Log the status code
+
+    if (response.ok) {
+      const result = await response.json();
+      console.log("Whatsapp API Data:", result);
+
+      if (result.success) {
+        // Handle success
+        window.open(
+          `https://api.whatsapp.com/send?phone=${userData?.phone}`,
+          "_blank"
+        );
       } else {
         Swal.fire({
           position: "center",
@@ -178,6 +239,119 @@ const phoneIconClicked = async () => {
   }
   };
 
+  // Email Track
+  const emailIconClicked = async () => {
+    try {
+      const response = await fetch(
+        "https://api.welkinhawk.in.net/api/users/email-profile",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ emailUserId: userData?._id }),
+        }
+      );
+
+      console.log("Response status:", response.status); // Log the status code
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log("Whatsapp API Data:", result);
+
+        if (result.success) {
+          // Handle success
+          window.location.href = `mailto:${userData?.email}`;
+        } else {
+          Swal.fire({
+            position: "center",
+            icon: "warning",
+            title: "Something went wrong!",
+            showConfirmButton: false,
+            timer: 3000,
+          });
+        }
+      } else {
+        console.error("Error:", response.statusText);
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          title: "Something went wrong!",
+          showConfirmButton: false,
+          timer: 3000,
+        });
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error.message);
+      Swal.fire({
+        position: "center",
+        icon: "warning",
+        title: `Error: ${error.message}`,
+        showConfirmButton: false,
+        timer: 3000,
+      });
+    } finally {
+      // setSubmitBtnLoader(false);
+    }
+  };
+
+  // Telephone track
+  const telephoneIconClicked = async () => {
+    try {
+      const response = await fetch(
+        "https://api.welkinhawk.in.net/api/users/telephone-profile",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ telephoneUserId: userData?._id }),
+        }
+      );
+
+      console.log("Response status:", response.status); // Log the status code
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log("Whatsapp API Data:", result);
+
+        if (result.success) {
+          // Handle success
+        window.location.href = `tel:${userData?.contact_details?.mobile}`;
+        } else {
+          Swal.fire({
+            position: "center",
+            icon: "warning",
+            title: "Something went wrong!",
+            showConfirmButton: false,
+            timer: 3000,
+          });
+        }
+      } else {
+        console.error("Error:", response.statusText);
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          title: "Something went wrong!",
+          showConfirmButton: false,
+          timer: 3000,
+        });
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error.message);
+      Swal.fire({
+        position: "center",
+        icon: "warning",
+        title: `Error: ${error.message}`,
+        showConfirmButton: false,
+        timer: 3000,
+      });
+    } finally {
+      // setSubmitBtnLoader(false);
+    }
+  };
   if (isloading) {
     return (
       <div className="w-full h-[70vh] flex items-center justify-center flex-col">
@@ -210,35 +384,31 @@ const phoneIconClicked = async () => {
               </p>
               <div className="flex gap-5 items-center py-2">
                 <a
-                  href={`tel:${userData?.phone}`}
                   onClick={() => phoneIconClicked()}
-                  target="blank"
                   className="bg-blue-800  hover:bg-primary-hover hover:text-white p-[6px] text-white rounded-full"
                 >
                   <FaMobileAlt size={18} />
                 </a>
                 <a
-                  href={`https://wa.me/${userData?.phone}`}
-                  target="_blank"
                   onClick={() => whatsappIconClicked()}
                   className=" bg-[#25D366] hover:border-primary-hover hover:bg-primary-hover hover:text-white p-[4px] text-white rounded-full"
                 >
                   <FaWhatsapp size={20} />
                 </a>
                 <a
-                  href={`mailto:${userData?.email}`}
-                  target="blank"
+                  onClick={() => emailIconClicked()}
                   className="bg-red-600 border-white-normal hover:border-primary-hover hover:bg-primary-hover hover:text-white text-white p-[6px] text-primary-normal rounded-full"
                 >
                   <FaEnvelope size={18} />
                 </a>
+                {userData?.contact_details?.mobile &&
                 <a
-                  href={`tel:${userData?.contact_details?.mobile}`}
-                  target="blank"
+                  onClick={()=>telephoneIconClicked()}
                   className="bg-gray-600 border-white-normal hover:border-primary-hover hover:bg-primary-hover hover:text-white text-white p-[6px] text-primary-normal rounded-full"
                 >
                   <FaPhoneAlt size={15} />
                 </a>
+                }
               </div>
               <p className="text-dark text-xl sm:text-3xl font-bold py-1 px-10 rounded-tl-lg absolute top-5 left-2">
                 {userData?.serial_no}
