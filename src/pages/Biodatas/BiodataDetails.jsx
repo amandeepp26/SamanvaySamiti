@@ -19,6 +19,7 @@ import {
   FaMailBulk,
   FaEnvelope,
 } from "react-icons/fa";
+import Swal from "sweetalert2";
 const BiodataDetails = () => {
   const { id } = useParams();
   const [singleBiodata, , isSingleBiodataLoading] = useSingleBiodataById(id);
@@ -31,7 +32,7 @@ const BiodataDetails = () => {
 
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const handleStoreFavorite = useStoreFavorite();
-
+  const token = localStorage.getItem("token");
   useEffect(() => {
     fetchDetails();
   }, []);
@@ -64,12 +65,117 @@ const BiodataDetails = () => {
     refetchTypeBiodatas();
   }, [singleBiodata?.type, refetchTypeBiodatas, refetchSelfUser]);
 
-  const phoneIconClicked = () => {
-    // alert("clicked");
-  };
+const phoneIconClicked = async () => {
+  try {
+    const response = await fetch(
+      "http://localhost:8000/api/users/call-profile",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ calledUserId: userData?._id }),
+      }
+    );
 
-  const whatsappIconClicked = () => {
-    // alert("clicked");
+    console.log("Response status:", response); // Log the status code
+
+    if (response.ok) {
+      const result = await response.json();
+      console.log("API Data:", result);
+
+      if (result.success) {
+        // Handle success
+      } else {
+        Swal.fire({
+          position: "center",
+          icon: "warning",
+          title: result.message,
+          showConfirmButton: false,
+          timer: 3000,
+        });
+      }
+    } else {
+      console.error("Error:", response.statusText);
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Something went wrong!",
+        showConfirmButton: false,
+        timer: 3000,
+      });
+    }
+  } catch (error) {
+    console.error("Error fetching data:", error.message);
+    Swal.fire({
+      position: "center",
+      icon: "warning",
+      title: `Error: ${error.message}`,
+      showConfirmButton: false,
+      timer: 3000,
+    });
+  } finally {
+    // setSubmitBtnLoader(false);
+  }
+};
+
+
+
+
+  const whatsappIconClicked = async () => {
+     try {
+    const response = await fetch(
+      "https://api.welkinhawk.in.net/api/users/whatsapp-profile",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ calledUserId: userData?._id }),
+      }
+    );
+
+    console.log("Response status:", response.status); // Log the status code
+
+    if (response.ok) {
+      const result = await response.json();
+      console.log("Whatsapp API Data:", result);
+
+      if (result.success) {
+        // Handle success
+      } else {
+        Swal.fire({
+          position: "center",
+          icon: "warning",
+          title: "Something went wrong!",
+          showConfirmButton: false,
+          timer: 3000,
+        });
+      }
+    } else {
+      console.error("Error:", response.statusText);
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Something went wrong!",
+        showConfirmButton: false,
+        timer: 3000,
+      });
+    }
+  } catch (error) {
+    console.error("Error fetching data:", error.message);
+    Swal.fire({
+      position: "center",
+      icon: "warning",
+      title: `Error: ${error.message}`,
+      showConfirmButton: false,
+      timer: 3000,
+    });
+  } finally {
+    // setSubmitBtnLoader(false);
+  }
   };
 
   if (isloading) {
@@ -113,6 +219,7 @@ const BiodataDetails = () => {
                 </a>
                 <a
                   href={`https://wa.me/${userData?.phone}`}
+                  target="_blank"
                   onClick={() => whatsappIconClicked()}
                   className=" bg-[#25D366] hover:border-primary-hover hover:bg-primary-hover hover:text-white p-[4px] text-white rounded-full"
                 >

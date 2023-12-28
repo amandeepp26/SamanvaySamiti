@@ -99,7 +99,7 @@ const ForgotPassword = () => {
 
               <div className="flex items-center gap-2">
                 <input
-                  value="Save"
+                  value="Submit"
                   type="submit"
                   className={`bg-primary-normal text-white cursor-pointer font-medium rounded-lg text-sm px-5 py-2.5`}
                 />
