@@ -28,7 +28,13 @@ function Users() {
 
         const result = await response.json();
         console.log("API Data:", result);
-        setUsers(result.result);
+
+        // Sort users based on serial_no
+        const sortedUsers = result.result.sort((a, b) =>
+          a.serial_no.localeCompare(b.serial_no)
+        );
+
+        setUsers(sortedUsers);
       } catch (error) {
         console.error("Error fetching data:", error.message);
       } finally {
