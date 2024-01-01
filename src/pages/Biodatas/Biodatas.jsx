@@ -6,7 +6,6 @@ import "./Biodatas.css";
 import MultiRangeSlider from "multi-range-slider-react";
 import useTotalBiodataForPagination from "../../hooks/useTotalBiodataForPagination";
 import { Link } from "react-router-dom";
-import calculateAge from "../../Utils/CalculateAge";
 import Select from "react-select";
 
 const Biodatas = () => {
