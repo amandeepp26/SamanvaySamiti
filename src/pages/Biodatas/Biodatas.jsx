@@ -6,6 +6,8 @@ import "./Biodatas.css";
 import MultiRangeSlider from "multi-range-slider-react";
 import useTotalBiodataForPagination from "../../hooks/useTotalBiodataForPagination";
 import { Link } from "react-router-dom";
+import calculateAge from "../../Utils/CalculateAge";
+import Select from "react-select";
 
 const Biodatas = () => {
   const [viewAll, setViewAll] = useState(null);
@@ -15,12 +17,20 @@ const Biodatas = () => {
   const [divisionValue, setDivisionValue] = useState(null);
   const [isloading, setisloading] = useState(false);
 
-  const [userId, setuserId] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedGotras, setSelectedGotras] = useState([]);
+  const [selectedEducations, setSelectedEducations] = useState([]);
 
   const [minMaxAutoRunStop, setMinMaxAutoRunStop] = useState(true);
 
   const [minValue, setMinValue] = useState(null);
   const [maxValue, setMaxValue] = useState(null);
+
+  const [minWeightValue, setMinWeightValue] = useState(20);
+  const [maxWeightValue, setMaxWeightValue] = useState(100);
+
+    const [minHeightValue, setMinHeightValue] = useState(null);
+    const [maxHeightValue, setMaxHeightValue] = useState(null);
 
   // --------------------------------- PAGINATION ------------------------------------
   const [currentPage, setCurrentPage] = useState(1);
@@ -49,31 +59,51 @@ const Biodatas = () => {
 
   useEffect(() => {
     fetchData();
-  }, [typeValue, educationLevel, viewAll, gotra]); // Moved the fetchData call inside useEffect
+  }, [typeValue, educationLevel,selectedEducations,selectedGotras, viewAll,minWeightValue,maxWeightValue,minValue,maxValue,minHeightValue,maxHeightValue, gotra]); // Moved the fetchData call inside useEffect
 
   const fetchData = async () => {
     setisloading(true);
     try {
       // Prepare the request payload
       const requestBody = {
-        minWeight: 0,
-        maxWeight: 100,
-        //  gender: typeValue,
       };
 
       if (typeValue) {
         requestBody.gender = typeValue;
       }
-      // Add education_level_completed to the request payload if educationLevel has data
-      if (educationLevel) {
-        requestBody.education_level_completed = educationLevel;
+      if (minWeightValue) {
+        requestBody.minWeight = minWeightValue;
       }
-      if (gotra) {
-        requestBody.gotra = gotra;
+      if (maxWeightValue) {
+        requestBody.maxWeight = maxWeightValue;
+      }
+
+      if (minHeightValue) {
+        requestBody.minHeight = minHeightValue;
+      }
+      if (maxHeightValue) {
+        requestBody.maxHeight = maxHeightValue;
+      }
+      if (minValue) {
+        requestBody.minAge = minValue;
+      }
+      if (maxValue) {
+        requestBody.maxAge = maxValue;
+      }
+      if (searchQuery!=='') {
+        requestBody.searchQuery = searchQuery;
+      }
+      // Add education_level_completed to the request payload if educationLevel has data
+      if (selectedEducations.length >0) {
+        requestBody.education_level_completed = selectedEducations;
+      }
+      if (selectedGotras.length>0) {
+        requestBody.gotra = selectedGotras;
       }
 
       const response = await fetch(
-        "https://api.welkinhawk.in.net/api/users/search-users",
+        // "https://api.welkinhawk.in.net/api/users/search-users",
+        "http://localhost:8000/api/users/search-users",
         {
           method: "POST",
           headers: {
@@ -91,21 +121,22 @@ const Biodatas = () => {
 
       const result = await response.json();
       console.log("API Data:", result);
-      setUsers(result.result);
+      // Sort users based on serial_no
+       const sortedUsers = result.result.sort((a, b) =>
+         a.serial_no.localeCompare(b.serial_no)
+       );
+
+       setUsers(sortedUsers);
       setisloading(false);
     } catch (error) {
-      console.error("Error fetching data:", error.message);
-    } finally {
-      setisloading(false);
-    }
+    console.error("Error fetching data:", error.message);
+  } finally {
+    setisloading(false);
+  }
+
   };
 
-  const handleEducationLevel = (e) => {
-    seteducationLevel(e.target.value);
-  };
-  const handleGotraSelect = (e) => {
-    setGotra(e.target.value);
-  };
+
   useEffect(() => {
     setTotalPaginationBiodata(totalBiodataForPagination || 0);
   }, [totalBiodataForPagination]);
@@ -132,17 +163,18 @@ const Biodatas = () => {
 
   const handleViewAll = () => {
     setTypeValue(null);
-    setDivisionValue(null);
-    seteducationLevel(null);
+    setSelectedEducations([]);
+    setSelectedGotras([]);
+    setMinHeightValue(null);
+    setMaxHeightValue(null);
+    setMinWeightValue(20);
+    setMaxWeightValue(100);
+    setSearchQuery('');
     setMinValue(null);
     setMaxValue(null);
   };
   const handleTypeValue = () => {
     setViewAll(null);
-    setDivisionValue(null);
-
-    setMinValue(null);
-    setMaxValue(null);
   };
   const handleDivisionValue = () => {
     setViewAll(null);
@@ -167,10 +199,36 @@ const Biodatas = () => {
     }
   };
 
+
+    const handleWeightInput = (e) => {
+      setViewAll(null);
+      setTypeValue(null);
+      setDivisionValue(null);
+
+      if ((!viewAll || !typeValue || !divisionValue) && !minMaxAutoRunStop) {
+        setMinWeightValue(e.minValue);
+        setMaxWeightValue(e.maxValue);
+      }
+    };
+
+        const handleHeightInput = (e) => {
+          setViewAll(null);
+          setTypeValue(null);
+          setDivisionValue(null);
+
+          if (
+            (!viewAll || !typeValue || !divisionValue) &&
+            !minMaxAutoRunStop
+          ) {
+            setMinHeightValue(e.minValue);
+            setMaxHeightValue(e.maxValue);
+          }
+        };
+//  className = "container w-[120%] grid lg:grid-cols-4 lg:gap-2";
   return (
-    <div className="container mx-auto px-5 grid lg:grid-cols-4 lg:gap-3">
+    <div className="grid px-5 lg:gap-2 lg:grid-cols-6 ">
       {/* Filter Section  */}
-      <div className="border-b-2 lg:border-b-0 lg:border-r bg-[#ffffffc2]">
+      <div className="border-b-2 lg:border-b-0 lg:border-r bg-[#ffffffc2] ">
         {/* View All  */}
 
         <div className="m-3 p-2 bg-white border border-gray-200 rounded-sm mt-7">
@@ -199,9 +257,49 @@ const Biodatas = () => {
           </ul>
         </div>
 
+        <div className="m-3 p-2 bg-white border border-gray-200 rounded-sm mt-5">
+          <h3 className="pl-3 font-semibold text-gray-900">
+            Search
+          </h3>
+          <div>
+            <div className="mb-4 lg:mb-0 lg:w-full lg:mr-4 my-5">
+              {/* <h1 className="text-lg font-bold mb-2">User Id</h1> */}
+              <input
+                type="text"
+                className="p-2 border text-sm border-gray-300 rounded w-full"
+                placeholder="Enter User Id/Name/Education"
+                value={searchQuery}
+                onChange={(e) => {
+                  setSearchQuery(e.target.value);
+                }}
+              />
+            </div>
+            <div className="lg:w-full">
+              {/* <Link to={`/biodata/${userId}`}> */}
+              <button
+                disabled={!searchQuery}
+                onClick={() => {fetchData();setTypeValue(null);
+                setSelectedEducations([]);
+                setSelectedGotras([]);
+                setMinHeightValue(null);
+                setMaxHeightValue(null);
+                setMinWeightValue(20);
+                setMaxWeightValue(100);
+                setMinValue(null);
+                setMaxValue(null);}}
+                style={{ alignSelf: "center", backgroundColor: "#D10002" }}
+                className=" text-white p-2 mt-5 rounded w-full"
+              >
+                Search
+              </button>
+              {/* </Link> */}
+            </div>
+          </div>
+        </div>
+
         {/* Filter by age  */}
 
-        {/* <div className="m-3 p-2 bg-white border border-gray-200 rounded-sm mt-5">
+        <div className="m-3 p-2 bg-white border border-gray-200 rounded-sm mt-5">
           <h3 className="pl-3 font-semibold text-gray-900">Filter by Age</h3>
           <div>
             <div className="range">
@@ -224,35 +322,58 @@ const Biodatas = () => {
               />
             </div>
           </div>
-        </div> */}
+        </div>
+
+        {/* Filter by Height  */}
 
         <div className="m-3 p-2 bg-white border border-gray-200 rounded-sm mt-5">
-          <h3 className="pl-3 font-semibold text-gray-900">
-            Search by User ID
-          </h3>
+          <h3 className="pl-3 font-semibold text-gray-900">Filter by Height</h3>
           <div>
-            <div className="mb-4 lg:mb-0 lg:w-full lg:mr-4 my-5">
-              {/* <h1 className="text-lg font-bold mb-2">User Id</h1> */}
-              <input
-                type="text"
-                className="p-2 border border-gray-300 rounded w-full"
-                placeholder="Enter User Id"
-                value={userId}
+            <div className="range">
+              <h1 className="flex justify-between font-medium text-sm max-w-[260px] mx-auto mb-5">
+                <span>Min {minHeightValue}</span> <span>TO</span>{" "}
+                <span>Max {maxHeightValue}</span>
+              </h1>
+              <MultiRangeSlider
+                min={120}
+                max={200}
+                step={1}
+                ruler={false}
+                minValue={minHeightValue}
+                maxValue={maxHeightValue}
+                barInnerColor="#D10002"
                 onChange={(e) => {
-                  setuserId(e.target.value);
+                  handleHeightInput(e);
                 }}
+                onClick={handleHeightInput}
               />
             </div>
-            <div className="lg:w-full">
-              <Link to={`/biodata/${userId}`}>
-                <button
-                  disabled={!userId}
-                  style={{ alignSelf: "center", backgroundColor: "#D10002" }}
-                  className=" text-white p-2 mt-5 rounded w-full"
-                >
-                  Search
-                </button>
-              </Link>
+          </div>
+        </div>
+
+        {/* Filter by Weight  */}
+
+        <div className="m-3 p-2 bg-white border border-gray-200 rounded-sm mt-5">
+          <h3 className="pl-3 font-semibold text-gray-900">Filter by Weight</h3>
+          <div>
+            <div className="range">
+              <h1 className="flex justify-between font-medium text-sm max-w-[260px] mx-auto mb-5">
+                <span>Min {minWeightValue}</span> <span>TO</span>{" "}
+                <span>Max {maxWeightValue}</span>
+              </h1>
+              <MultiRangeSlider
+                min={20}
+                max={100}
+                step={1}
+                ruler={false}
+                minValue={minWeightValue}
+                maxValue={maxWeightValue}
+                barInnerColor="#D10002"
+                onChange={(e) => {
+                  handleWeightInput(e);
+                }}
+                onClick={handleWeightInput}
+              />
             </div>
           </div>
         </div>
@@ -306,240 +427,52 @@ const Biodatas = () => {
 
         <div className="m-3 p-2 bg-white border border-gray-200 rounded-sm mt-5">
           <h3 className="mb-1 pl-3 font-semibold text-gray-900">
-            Filter by Education
-          </h3>
-          <ul className="text-sm font-medium text-gray-900">
-            <li className="w-full">
-              <div className="flex items-center">
-                <input
-                  id="10th"
-                  type="radio"
-                  value="10th"
-                  name="educationLevel"
-                  onChange={handleEducationLevel}
-                  className="w-4 h-4 text-black bg-gray-100 border-gray-300 focus:ring-primary-normal cursor-pointer"
-                />
-                <label
-                  htmlFor="10th"
-                  className="w-full py-3 ms-2 text-sm font-medium text-gray-900 cursor-pointer"
-                >
-                  10th
-                </label>
-              </div>
-            </li>
-            <li className="w-full">
-              <div className="flex items-center">
-                <input
-                  id="12th"
-                  type="radio"
-                  value="12th"
-                  name="educationLevel"
-                  onChange={handleEducationLevel}
-                  className="w-4 h-4 text-black bg-gray-100 border-gray-300 focus:ring-primary-normal cursor-pointer"
-                />
-                <label
-                  htmlFor="12th"
-                  className="w-full py-3 ms-2 text-sm font-medium text-gray-900 cursor-pointer"
-                >
-                  12th
-                </label>
-              </div>
-            </li>
-            <li className="w-full">
-              <div className="flex items-center">
-                <input
-                  id="Diploma"
-                  type="radio"
-                  value="Diploma"
-                  name="educationLevel"
-                  onChange={handleEducationLevel}
-                  className="w-4 h-4 text-black bg-gray-100 border-gray-300 focus:ring-primary-normal cursor-pointer"
-                />
-                <label
-                  htmlFor="Diploma"
-                  className="w-full py-3 ms-2 text-sm font-medium text-gray-900 cursor-pointer"
-                >
-                  Diploma
-                </label>
-              </div>
-            </li>
-            <li className="w-full">
-              <div className="flex items-center">
-                <input
-                  id="Graduate"
-                  type="radio"
-                  value="Graduate"
-                  name="educationLevel"
-                  onChange={handleEducationLevel}
-                  className="w-4 h-4 text-black bg-gray-100 border-gray-300 focus:ring-primary-normal cursor-pointer"
-                />
-                <label
-                  htmlFor="Graduate"
-                  className="w-full py-3 ms-2 text-sm font-medium text-gray-900 cursor-pointer"
-                >
-                  Graduate
-                </label>
-              </div>
-            </li>
-            <li className="w-full">
-              <div className="flex items-center">
-                <input
-                  id="PostGraduate"
-                  type="radio"
-                  value="Post Graduate / Master"
-                  name="educationLevel"
-                  onChange={handleEducationLevel}
-                  className="w-4 h-4 text-black bg-gray-100 border-gray-300 focus:ring-primary-normal cursor-pointer"
-                />
-                <label
-                  htmlFor="PostGraduate"
-                  className="w-full py-3 ms-2 text-sm font-medium text-gray-900 cursor-pointer"
-                >
-                  Post Graduate / Master
-                </label>
-              </div>
-            </li>
-            <li className="w-full">
-              <div className="flex items-center">
-                <input
-                  id="Doctorate"
-                  type="radio"
-                  value="Doctorate"
-                  name="educationLevel"
-                  onChange={handleEducationLevel}
-                  className="w-4 h-4 text-black bg-gray-100 border-gray-300 focus:ring-primary-normal cursor-pointer"
-                />
-                <label
-                  htmlFor="Doctorate"
-                  className="w-full py-3 ms-2 text-sm font-medium text-gray-900 cursor-pointer"
-                >
-                  Doctorate
-                </label>
-              </div>
-            </li>
-          </ul>
-        </div>
-
-        {/* filter by Gotra */}
-        <div className="m-3 p-2 bg-white border border-gray-200 rounded-sm mt-5">
-          <h3 className="mb-1 pl-3 font-semibold text-gray-900">
             Filter by Gotra
           </h3>
-          <ul className="text-sm font-medium text-gray-900">
-            <li className="w-full">
-              <div className="flex items-center">
-                <input
-                  id="काश्यप"
-                  type="radio"
-                  value="10th"
-                  name="Gotra"
-                  onChange={handleGotraSelect}
-                  className="w-4 h-4 text-black bg-gray-100 border-gray-300 focus:ring-primary-normal cursor-pointer"
-                />
-                <label
-                  htmlFor="10th"
-                  className="w-full py-3 ms-2 text-sm font-medium text-gray-900 cursor-pointer"
-                >
-                  काश्यप
-                </label>
-              </div>
-            </li>
-            <li className="w-full">
-              <div className="flex items-center">
-                <input
-                  id="खालप"
-                  type="radio"
-                  value="खालप"
-                  name="Gotra"
-                  onChange={handleGotraSelect}
-                  className="w-4 h-4 text-black bg-gray-100 border-gray-300 focus:ring-primary-normal cursor-pointer"
-                />
-                <label
-                  htmlFor="खालप"
-                  className="w-full py-3 ms-2 text-sm font-medium text-gray-900 cursor-pointer"
-                >
-                  खालप
-                </label>
-              </div>
-            </li>
-            <li className="w-full">
-              <div className="flex items-center">
-                <input
-                  id="गहिलम"
-                  type="radio"
-                  value="गहिलम"
-                  name="Gotra"
-                  onChange={handleGotraSelect}
-                  className="w-4 h-4 text-black bg-gray-100 border-gray-300 focus:ring-primary-normal cursor-pointer"
-                />
-                <label
-                  htmlFor="Diploma"
-                  className="w-full py-3 ms-2 text-sm font-medium text-gray-900 cursor-pointer"
-                >
-                  गहिलम
-                </label>
-              </div>
-            </li>
-            <li className="w-full">
-              <div className="flex items-center">
-                <input
-                  id="गौतम"
-                  type="radio"
-                  value="गौतम"
-                  name="Gotra"
-                  onChange={handleGotraSelect}
-                  className="w-4 h-4 text-black bg-gray-100 border-gray-300 focus:ring-primary-normal cursor-pointer"
-                />
-                <label
-                  htmlFor="गौतम"
-                  className="w-full py-3 ms-2 text-sm font-medium text-gray-900 cursor-pointer"
-                >
-                  गौतम
-                </label>
-              </div>
-            </li>
-            <li className="w-full">
-              <div className="flex items-center">
-                <input
-                  id="मांडव"
-                  type="radio"
-                  value="मांडव"
-                  name="Gotra"
-                  onChange={handleGotraSelect}
-                  className="w-4 h-4 text-black bg-gray-100 border-gray-300 focus:ring-primary-normal cursor-pointer"
-                />
-                <label
-                  htmlFor="मांडव"
-                  className="w-full py-3 ms-2 text-sm font-medium text-gray-900 cursor-pointer"
-                >
-                  मांडव
-                </label>
-              </div>
-            </li>
-            <li className="w-full">
-              <div className="flex items-center">
-                <input
-                  id="लोकाक्ष"
-                  type="radio"
-                  value="लोकाक्ष"
-                  name="Gotra"
-                  onChange={handleGotraSelect}
-                  className="w-4 h-4 text-black bg-gray-100 border-gray-300 focus:ring-primary-normal cursor-pointer"
-                />
-                <label
-                  htmlFor="लोकाक्ष"
-                  className="w-full py-3 ms-2 text-sm font-medium text-gray-900 cursor-pointer"
-                >
-                  लोकाक्ष
-                </label>
-              </div>
-            </li>
-          </ul>
+          <Select
+            isMulti
+            options={[
+              { value: "काश्यप", label: "काश्यप" },
+              { value: "खालप", label: "खालप" },
+              { value: "गहिलम", label: "गहिलम" },
+              { value: "गौतम", label: "गौतम" },
+              { value: "मांडव", label: "मांडव" },
+              { value: "लोकाक्ष", label: "लोकाक्ष" },
+            ]}
+            onChange={(selectedOptions) =>
+              setSelectedGotras(selectedOptions.map((option) => option.label))
+            }
+            value={selectedGotras.map((label) => ({ label, value: label }))}
+          />
+        </div>
+
+        {/* Filter by Education */}
+        <div className="m-3 p-2 bg-white border border-gray-200 rounded-sm mt-5">
+          <h3 className="mb-1 pl-3 font-semibold text-gray-900">
+            Filter by Education
+          </h3>
+          <Select
+            isMulti
+            options={[
+              { value: "10th", label: "10th" },
+              { value: "12th", label: "12th" },
+              { value: "Diploma", label: "Diploma" },
+              { value: "Graduate", label: "Graduate" },
+              { value: "PostGraduate", label: "Post Graduate / Master" },
+              { value: "Doctorate", label: "Doctorate" },
+            ]}
+            onChange={(selectedOptions) =>
+              setSelectedEducations(
+                selectedOptions.map((option) => option.label)
+              )
+            }
+            value={selectedEducations.map((label) => ({ label, value: label }))}
+          />
         </div>
       </div>
 
       {/* Content section  */}
-      <div className="lg:col-span-3">
+      <div className="lg:col-span-5 overflow-auto">
         {/* <h1 className="text-2xl text-left pt-5 flex gap-2 items-center">
                     <span> Total Biodatas </span>
                     {
@@ -555,7 +488,7 @@ const Biodatas = () => {
                     }
                 </h1> */}
 
-        {isloading || isBiodataLoading ? (
+        {isloading ? (
           <>
             <div className="h-96 w-full flex items-center justify-center">
               <LoaderIcon />
@@ -571,7 +504,7 @@ const Biodatas = () => {
               </>
             ) : (
               <>
-                <div className="custom-media-query grid grid-cols-1 lg:grid-cols-3 gap-4 py-6">
+                <div className="custom-media-query grid grid-cols-1 lg:grid-cols-4 gap-4 py-6">
                   {users.map((item) => (
                     <BiodataCard key={item._id} item={item} />
                   ))}
