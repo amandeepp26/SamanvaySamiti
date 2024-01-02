@@ -32,6 +32,8 @@ import TermsConditions from "../pages/Terms & Conditions/TermsConditions";
 import ForgotPassword from "../pages/Forgot Password/ForgotPassword";
 import ResetPassword from "../pages/Reset Password/ResetPassword";
 import MyProfile from "../pages/Dashboard/Clients/MyProfile";
+import GuestRegister from "../pages/Guest/GuestRegister";
+import GuestLogin from "../pages/Guest/GuestLogin";
 
 const router = createBrowserRouter([
   {
@@ -101,6 +103,14 @@ const router = createBrowserRouter([
       {
         path: "login",
         element: <Login />,
+      },
+      {
+        path: "relative/registration",
+        element: <GuestRegister />,
+      },
+      {
+        path: "relative/login",
+        element: <GuestLogin />,
       },
       {
         path: "forgot-password",

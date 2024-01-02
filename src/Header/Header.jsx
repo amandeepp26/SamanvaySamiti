@@ -6,10 +6,11 @@ import Button from "../pages/Utils/Button";
 import "./header.css";
 import SocialWidget from "../pages/Utils/SocialWidget";
 import Logo from "../pages/Utils/Logo";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import LoaderIcon from "../pages/Utils/LoaderIcon";
 import useSelfUser from "../hooks/useSelfUser";
+import Swal from "sweetalert2";
 
 const Header = () => {
   const [headerNavDrawer, setHeaderNavDrawer] = useState(false);
@@ -18,6 +19,26 @@ const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(
     localStorage.getItem("isLoggedIn") || false
   );
+  const userType = localStorage.getItem('userType');
+    const navigate = useNavigate();
+
+ const handleLogOut = () => {
+   localStorage.removeItem("token");
+   localStorage.removeItem("isLoggedIn");
+   localStorage.removeItem("userType");
+   Swal.fire({
+     position: "center",
+     icon: "success",
+     title: "Logout Successfully!",
+     showConfirmButton: false,
+     timer: 3000,
+   });
+   setTimeout(() => {
+   window.location.reload();
+   navigate("/login");
+   }, 2000);
+
+ };
   useEffect(() => {
     refetchSelfUser();
   }, [loading, user, refetchSelfUser]);
@@ -143,10 +164,23 @@ const Header = () => {
                           </>
                         ) : (
                           <>
-                            <Button
-                              text="Dashboard"
-                              link="/dashboard/my-profile"
-                            />
+                            {userType === "guest" ? (
+                              <button
+                                onClick={() => handleLogOut()}
+                                style={{
+                                  alignSelf: "center",
+                                  backgroundColor: "#D10002",
+                                }}
+                                className="bg-primary-normal hover:bg-primary-hover py-2 px-5 text-white rounded-lg text-base font-medium"
+                              >
+                                Logout
+                              </button>
+                            ) : (
+                              <Button
+                                text="Dashboard"
+                                link="/dashboard/my-profile"
+                              />
+                            )}
                           </>
                         )}
                       </>

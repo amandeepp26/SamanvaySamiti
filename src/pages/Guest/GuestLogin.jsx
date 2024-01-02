@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 import SocialLogin from "../Utils/SocialLogin/SocialLogin";
 import LoaderIcon from "../Utils/LoaderIcon";
 
-const Login = () => {
+const GuestLogin = () => {
   const { userLogIn } = useAuth();
   const [submitBtnLoader, setSubmitBtnLoader] = useState(false);
   const [showPass, setShowPass] = useState(true);
@@ -26,13 +26,13 @@ const Login = () => {
       setSubmitBtnLoader(true);
       try {
         const response = await fetch(
-          "https://api.welkinhawk.in.net/api/users/login",
+          "https://api.welkinhawk.in.net/api/guest/login",
           {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ email: email, password: password }),
+            body: JSON.stringify({ emailOrPhone: email, password: password }),
           }
         );
 
@@ -49,8 +49,10 @@ const Login = () => {
           });
           localStorage.setItem("token", result.token);
           localStorage.setItem("isLoggedIn", true);
-          navigate(location?.state ? location?.state : "/");
+            localStorage.setItem("userType", "guest");
+          navigate("/");
           window.location.reload();
+          setSubmitBtnLoader(false);
         } else {
           Swal.fire({
             position: "center",
@@ -59,6 +61,7 @@ const Login = () => {
             showConfirmButton: false,
             timer: 3000,
           });
+          setSubmitBtnLoader(false);
         }
       } catch (error) {
         console.error("Error fetching data:", error.message);
@@ -119,7 +122,7 @@ const Login = () => {
         <div className="flex-1 max-w-md bg-white rounded-lg shadow">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1 className="text-lg pb-2 font-semibold leading-tight tracking-tight text-gray-900 md:text-2xl">
-              Sign in to your account
+              Sign in as relative
             </h1>
             {/* <h1 className="text-md">
               साईट वर लॉगिन करण्याची इन्फॉर्मशन तुम्हाला ई-मेल २८-डिसेंबर पर्यंत
@@ -134,14 +137,13 @@ const Login = () => {
                   htmlFor="email"
                   className="block mb-2 text-sm font-medium text-gray-900"
                 >
-                  Your email
+                  Your email or phone number
                 </label>
                 <input
-                  type="email"
                   name="email"
                   id="email"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                  placeholder="name@company.com"
+                  placeholder="Enter email or phone"
                   required=""
                 />
               </div>
@@ -171,7 +173,7 @@ const Login = () => {
                 </div>
               </div>
 
-              <div className="flex items-center justify-between">
+              {/* <div className="flex items-center justify-between">
                 <div className="flex items-start">
                   <div className="flex items-center h-5">
                     <input
@@ -196,7 +198,7 @@ const Login = () => {
                     Forgot password?
                   </a>
                 </Link>
-              </div>
+              </div> */}
 
               <div className="flex items-center gap-2">
                 <input
@@ -208,14 +210,14 @@ const Login = () => {
               </div>
 
               <p className=" text-sm font-light text-gray-500">
-                                You're a relative?{" "}
-                                <Link
-                                    to={'/relative/registration'}
-                                    className="font-medium text-primary-600 hover:underline"
-                                >
-                                    Register here
-                                </Link>
-                            </p>
+                Don't have relative account?{" "}
+                <Link
+                  to={"/relative/registration"}
+                  className="font-medium text-primary-600 hover:underline"
+                >
+                  Register here
+                </Link>
+              </p>
             </form>
             {/* <SocialLogin /> */}
           </div>
@@ -225,4 +227,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default GuestLogin;

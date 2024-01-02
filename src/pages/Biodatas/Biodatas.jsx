@@ -175,13 +175,6 @@ const Biodatas = () => {
   const handleTypeValue = () => {
     setViewAll(null);
   };
-  const handleDivisionValue = () => {
-    setViewAll(null);
-    setTypeValue(null);
-
-    setMinValue(null);
-    setMaxValue(null);
-  };
 
   useEffect(() => {
     setMinMaxAutoRunStop(false);
@@ -189,10 +182,7 @@ const Biodatas = () => {
 
   const handleAgeInput = (e) => {
     setViewAll(null);
-    setTypeValue(null);
-    setDivisionValue(null);
-
-    if ((!viewAll || !typeValue || !divisionValue) && !minMaxAutoRunStop) {
+    if ((!viewAll) && !minMaxAutoRunStop) {
       setMinValue(e.minValue);
       setMaxValue(e.maxValue);
     }
@@ -201,10 +191,8 @@ const Biodatas = () => {
 
     const handleWeightInput = (e) => {
       setViewAll(null);
-      setTypeValue(null);
-      setDivisionValue(null);
 
-      if ((!viewAll || !typeValue || !divisionValue) && !minMaxAutoRunStop) {
+      if ((!viewAll) && !minMaxAutoRunStop) {
         setMinWeightValue(e.minValue);
         setMaxWeightValue(e.maxValue);
       }
@@ -212,11 +200,9 @@ const Biodatas = () => {
 
         const handleHeightInput = (e) => {
           setViewAll(null);
-          setTypeValue(null);
-          setDivisionValue(null);
 
           if (
-            (!viewAll || !typeValue || !divisionValue) &&
+            (!viewAll) &&
             !minMaxAutoRunStop
           ) {
             setMinHeightValue(e.minValue);
