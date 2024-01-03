@@ -32,7 +32,7 @@ const Login = () => {
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ email: email, password: password }),
+            body: JSON.stringify({ emailOrPhone: email, password: password }),
           }
         );
 
@@ -49,6 +49,7 @@ const Login = () => {
           });
           localStorage.setItem("token", result.token);
           localStorage.setItem("isLoggedIn", true);
+          localStorage.setItem('userType',result.user.role)
           navigate(location?.state ? location?.state : "/");
           window.location.reload();
         } else {
@@ -137,7 +138,6 @@ const Login = () => {
                   Your email
                 </label>
                 <input
-                  type="email"
                   name="email"
                   id="email"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
@@ -207,15 +207,16 @@ const Login = () => {
                 {submitBtnLoader && <LoaderIcon />}
               </div>
 
-              <p className=" text-sm font-light text-gray-500">
+              {/* <p className=" text-sm font-light text-gray-500">
                                 You're a relative?{" "}
                                 <Link
-                                    to={'/relative/registration'}
+                                    to={'/relative/login'}
                                     className="font-medium text-primary-600 hover:underline"
+                                    style={{cursor:'pointer'}}
                                 >
-                                    Register here
+                                    Login here
                                 </Link>
-                            </p>
+                            </p> */}
             </form>
             {/* <SocialLogin /> */}
           </div>

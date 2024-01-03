@@ -146,7 +146,7 @@ const Header = () => {
               </>
             ) : (
               <>
-                {isLoadingSelfUser ? (
+                {/* {isLoadingSelfUser ? (
                   <>
                     <div className="flex justify-start">
                       <span className="w-[53px] h-2"></span>
@@ -154,17 +154,11 @@ const Header = () => {
                       <span className="w-[53px] h-2"></span>
                     </div>
                   </>
-                ) : (
+                ) : ( */}
                   <>
                     {isLoggedIn ? (
-                      <>
-                        {selfUser?.userRole === "Admin" ? (
                           <>
-                            <Button text="Dashboard" link="/dashboard/admin" />
-                          </>
-                        ) : (
-                          <>
-                            {userType === "guest" ? (
+                            {userType === "relative" ? (
                               <button
                                 onClick={() => handleLogOut()}
                                 style={{
@@ -182,15 +176,14 @@ const Header = () => {
                               />
                             )}
                           </>
-                        )}
-                      </>
+                     
                     ) : (
                       <>
                         <Button text="Login" link="/login" />
                       </>
                     )}
                   </>
-                )}
+                {/* )} */}
               </>
             )}
           </div>
