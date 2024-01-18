@@ -77,6 +77,7 @@ const Biodatas = () => {
       viewAll
     ]);
 
+  const myId = localStorage.getItem("userId");
 
   const fetchData = async () => {
     setisloading(true);
@@ -95,12 +96,12 @@ const Biodatas = () => {
         requestBody.maxWeight = maxWeightValue;
       }
 
-      if (minHeightValue) {
-        requestBody.minHeight = formatHeight(minHeightValue);
-      }
-      if (maxHeightValue) {
-        requestBody.maxHeight = formatHeight(maxHeightValue);
-      }
+      // if (minHeightValue) {
+      //   requestBody.minHeight = 48;
+      // }
+      // if (maxHeightValue) {
+      //   requestBody.maxHeight = 84;
+      // }
       if (minValue) {
         requestBody.minAge = minValue;
       }
@@ -145,7 +146,9 @@ const Biodatas = () => {
       const result = await response.json();
       console.log("API Data:", result);
       // Sort users based on serial_no
-       const sortedUsers = result.result.sort((a, b) =>
+       const filteredUsers = result.result.filter((user) => user._id !== myId);
+       // Sort users based on serial_no
+       const sortedUsers = filteredUsers.sort((a, b) =>
          a.serial_no.localeCompare(b.serial_no)
        );
 
@@ -477,7 +480,7 @@ const Biodatas = () => {
 
           {/* Filter by Height  */}
 
-          <div className="m-3 p-2 bg-white border border-gray-200 rounded-sm mt-5">
+          {/* <div className="m-3 p-2 bg-white border border-gray-200 rounded-sm mt-5">
             <h3 className="pl-3 font-semibold text-gray-900">
               Filter by Height
             </h3>
@@ -488,7 +491,6 @@ const Biodatas = () => {
                   <span>TO</span>{" "}
                   <span>Max {formatHeight(maxHeightValue)}</span>
                 </h1>
-                {/* Use your MultiSlider component here */}
                 <MultiRangeSlider
                   min={48} // 4ft in inches
                   max={84} // 7ft in inches
@@ -500,7 +502,7 @@ const Biodatas = () => {
                 />
               </div>
             </div>
-          </div>
+          </div> */}
           {/* Filter by age  */}
 
           <div className="m-3 p-2 bg-white border border-gray-200 rounded-sm mt-5">
