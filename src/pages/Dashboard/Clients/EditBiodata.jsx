@@ -123,8 +123,8 @@ const EditBiodata = () => {
       const getProfile = async () => {
         try {
           const response = await fetch(
-            // `https://api.welkinhawk.in.net/api/users/get-profile`,
-            "http://localhost:8000/api/users/get-profile",
+            `https://api.welkinhawk.in.net/api/users/get-profile`,
+            // "http://localhost:8000/api/users/get-profile",
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -855,8 +855,8 @@ const EditBiodata = () => {
         console.log('form dat is--->',formData)
             try {
               const response = await fetch(
-                // "https://api.welkinhawk.in.net/api/users/login",
-                "http://localhost:8000/api/users/edit",
+                "https://api.welkinhawk.in.net/api/users/login",
+                // "http://localhost:8000/api/users/edit",
                 {
                   method: "POST",
                   headers: {

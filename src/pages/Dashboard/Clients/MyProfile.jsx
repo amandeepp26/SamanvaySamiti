@@ -23,8 +23,8 @@ const MyProfile = () => {
   const getProfile = async () => {
     try {
       const response = await fetch(
-        // `https://api.welkinhawk.in.net/api/users/get-profile`,
-        "http://localhost:8000/api/users/get-profile",
+        `https://api.welkinhawk.in.net/api/users/get-profile`,
+        // "http://localhost:8000/api/users/get-profile",
         {
           headers: {
             Authorization: `Bearer ${token}`,

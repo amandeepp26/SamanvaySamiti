@@ -126,8 +126,8 @@ const Biodatas = () => {
       // }
 
       const response = await fetch(
-        // "https://api.welkinhawk.in.net/api/users/search-users",
-        "http://localhost:8000/api/users/search-users",
+        "https://api.welkinhawk.in.net/api/users/search-users",
+        // "http://localhost:8000/api/users/search-users",
         {
           method: "POST",
           headers: {
@@ -224,7 +224,8 @@ const Biodatas = () => {
     const fetchCity = async (e) => {
       try {
         const response = await fetch(
-          `http://localhost:8000/api/users/get-city?q=${e}`
+          `https://api.welkinhawk.in.net/api/users/get-city?q=${e}`
+          // `http://localhost:8000/api/users/get-city?q=${e}`
         );
 
         if (!response.ok) {

@@ -47,8 +47,8 @@ const BiodataDetails = () => {
   const fetchDetails = async () => {
     try {
       const response = await fetch(
-        // `https://api.welkinhawk.in.net/api/users/user-detail/${id}`
-        `http://localhost:8000/api/users/user-detail/${id}`
+        `https://api.welkinhawk.in.net/api/users/user-detail/${id}`
+        // `http://localhost:8000/api/users/user-detail/${id}`
       );
 
       console.log("response------>", response);
@@ -77,8 +77,8 @@ const BiodataDetails = () => {
 const phoneIconClicked = async (e) => {
   try {
     const response = await fetch(
-      // "https://api.welkinhawk.in.net/api/users/call-profile",
-      "http://localhost:8000/api/users/call-profile",
+      "https://api.welkinhawk.in.net/api/users/call-profile",
+      // "http://localhost:8000/api/users/call-profile",
       {
         method: "POST",
         headers: {
@@ -236,8 +236,8 @@ const downloadIconClicked = async (imageUrl) => {
   const whatsappIconClicked = async (e) => {
      try {
     const response = await fetch(
-      // "https://api.welkinhawk.in.net/api/users/whatsapp-profile",
-      "http://localhost:8000/api/users/whatsapp-profile",
+      "https://api.welkinhawk.in.net/api/users/whatsapp-profile",
+      // "http://localhost:8000/api/users/whatsapp-profile",
       {
         method: "POST",
         headers: {
@@ -300,8 +300,8 @@ const downloadIconClicked = async (imageUrl) => {
   const emailIconClicked = async (e) => {
     try {
       const response = await fetch(
-        // "https://api.welkinhawk.in.net/api/users/email-profile",
-        "http://localhost:8000/api/users/email-profile",
+        "https://api.welkinhawk.in.net/api/users/email-profile",
+        // "http://localhost:8000/api/users/email-profile",
         {
           method: "POST",
           headers: {
@@ -361,8 +361,8 @@ const downloadIconClicked = async (imageUrl) => {
   const telephoneIconClicked = async (e) => {
     try {
       const response = await fetch(
-        // "https://api.welkinhawk.in.net/api/users/telephone-profile",
-        "http://localhost:8000/api/users/telephone-profile",
+        "https://api.welkinhawk.in.net/api/users/telephone-profile",
+        // "http://localhost:8000/api/users/telephone-profile",
         {
           method: "POST",
           headers: {
