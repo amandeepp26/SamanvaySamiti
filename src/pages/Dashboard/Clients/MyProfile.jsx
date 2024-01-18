@@ -342,7 +342,7 @@ const MyProfile = () => {
                           {userData?.brothers_details?.brother_unmarried}
                         </p>
                       </div> */}
-
+                      {userData?.brothers_details?.father_in_law?.length >0 &&
                       <div className="py-1 border-2 p-5 mt-5 w-[90%] bg-white rounded-lg">
                         {userData?.brothers_details?.father_in_law?.map(
                           (item, index) => (
@@ -405,6 +405,7 @@ const MyProfile = () => {
                           )
                         )}
                       </div>
+                      }
                     </div>
                     <div>
                       <h1 className="text-base font-medium text-primary-normal border-t border-b py-2 mt-6 mb-2">
@@ -422,7 +423,7 @@ const MyProfile = () => {
                           {userData?.sisters_details.sisters_unmarried}
                         </p>
                       </div> */}
-
+                      {userData?.sisters_details?.brother_in_law?.length > 0 &&
                       <div className="py-1 border-2 p-5 mt-5 w-[90%] bg-white rounded-lg">
                         {userData?.sisters_details?.brother_in_law?.map(
                           (item, index) => (
@@ -455,6 +456,7 @@ const MyProfile = () => {
                           )
                         )}
                       </div>
+                      }
                     </div>
                   </div>
                   <h1 className="text-base px-5 font-medium text-primary-normal border-t border-b py-2 mt-6 mb-2">

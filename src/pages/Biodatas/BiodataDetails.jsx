@@ -754,46 +754,50 @@ const downloadIconClicked = async (imageUrl) => {
                 {userData?.brothers_details?.brother_unmarried} / विवाहित :
                 {userData?.brothers_details?.brother_married})
               </h1>
-              <div className="py-1 border-2 p-5 mt-5 w-[90%] bg-white rounded-lg">
-                {userData?.brothers_details?.father_in_law?.map(
-                  (item, index) => (
-                    <>
-                      {index === 0 && (
-                        <p className="font-medium py-2">
-                          बंधूंच्या सासऱ्यांचे नाव आणि मोबाईल नंबर :{" "}
-                        </p>
-                      )}
-                      <ExpandableSection
-                        items={item || []}
-                        renderIcons={renderIcons}
-                      />
-                    </>
-                  )
-                )}
-              </div>
+              {userData?.brothers_details?.brother_married > 0 && (
+                <div className="py-1 border-2 p-5 mt-5 w-[90%] bg-white rounded-lg">
+                  {userData?.brothers_details?.father_in_law?.map(
+                    (item, index) => (
+                      <>
+                        {index === 0 && (
+                          <p className="font-medium py-2">
+                            बंधूंच्या सासऱ्यांचे नाव आणि मोबाईल नंबर :{" "}
+                          </p>
+                        )}
+                        <ExpandableSection
+                          items={item || []}
+                          renderIcons={renderIcons}
+                        />
+                      </>
+                    )
+                  )}
+                </div>
+              )}
             </div>
             <div>
               <h1 className="text-base font-medium text-primary-normal border-t border-b py-2 mt-6 mb-2">
                 भगिनी (अविवाहित : {userData?.sisters_details?.sisters_unmarried}{" "}
                 / विवाहित :{userData?.sisters_details?.sisters_married})
               </h1>
-              <div className="py-1 border-2 p-5 mt-5 w-[90%] bg-white rounded-lg">
-                {userData?.sisters_details?.brother_in_law?.map(
-                  (item, index) => (
-                    <>
-                      {index === 0 && (
-                        <p className="font-medium py-2">
-                          बहिण व यजमानांचे नाव आणि मोबाईल नंबर :{" "}
-                        </p>
-                      )}
-                      <ExpandableSection
-                        items={item || []}
-                        renderIcons={renderIcons}
-                      />
-                    </>
-                  )
-                )}
-              </div>
+              {userData?.sisters_details?.sisters_married > 0 && (
+                <div className="py-1 border-2 p-5 mt-5 w-[90%] bg-white rounded-lg">
+                  {userData?.sisters_details?.brother_in_law?.map(
+                    (item, index) => (
+                      <>
+                        {index === 0 && (
+                          <p className="font-medium py-2">
+                            बहिण व यजमानांचे नाव आणि मोबाईल नंबर :{" "}
+                          </p>
+                        )}
+                        <ExpandableSection
+                          items={item || []}
+                          renderIcons={renderIcons}
+                        />
+                      </>
+                    )
+                  )}
+                </div>
+              )}
             </div>
           </div>
 
@@ -813,27 +817,13 @@ const downloadIconClicked = async (imageUrl) => {
                   {userData?.fathers_family_details?.grandfather?.address}
                   {renderIcons(userData?.fathers_family_details?.grandfather)}
                 </p> */}
-                <div className="py-1 border-2 p-5 mt-5 w-[90%] bg-white rounded-lg">
-                  {userData?.fathers_family_details?.kaka.map((item, index) => (
-                    <>
-                      {index === 0 && (
-                        <p className="font-medium py-2">काका : </p>
-                      )}
-                      <ExpandableSection
-                        items={item || []}
-                        renderIcons={renderIcons}
-                      />
-                    </>
-                  ))}
-                </div>
-
-                <div>
+                {userData?.fathers_family_details?.kaka?.length > 0 && (
                   <div className="py-1 border-2 p-5 mt-5 w-[90%] bg-white rounded-lg">
-                    {userData?.fathers_family_details?.fuva.map(
+                    {userData?.fathers_family_details?.kaka.map(
                       (item, index) => (
                         <>
                           {index === 0 && (
-                            <p className="font-medium py-2">फुवा : </p>
+                            <p className="font-medium py-2">काका : </p>
                           )}
                           <ExpandableSection
                             items={item || []}
@@ -843,7 +833,23 @@ const downloadIconClicked = async (imageUrl) => {
                       )
                     )}
                   </div>
+                )}
+
+                {userData?.fathers_family_details?.fuva.length > 0 &&
+                <div className="py-1 border-2 p-5 mt-5 w-[90%] bg-white rounded-lg">
+                  {userData?.fathers_family_details?.fuva.map((item, index) => (
+                    <>
+                      {index === 0 && (
+                        <p className="font-medium py-2">फुवा : </p>
+                      )}
+                      <ExpandableSection
+                        items={item || []}
+                        renderIcons={renderIcons}
+                      />
+                    </>
+                  ))}
                 </div>
+                }
               </div>
             </div>
             <div>
@@ -867,6 +873,7 @@ const downloadIconClicked = async (imageUrl) => {
                   {userData?.mothers_family_details?.grandfather?.address}
                   {renderIcons(userData?.mothers_family_details?.grandfather)}
                 </p> */}
+                {userData?.mothers_family_details?.mama?.length>0 &&
                 <div className="py-1 border-2 p-5 mt-5 w-[90%] bg-white rounded-lg">
                   {userData?.mothers_family_details?.mama?.map(
                     (item, index) => (
@@ -882,8 +889,8 @@ const downloadIconClicked = async (imageUrl) => {
                     )
                   )}
                 </div>
-
-                <div>
+                }
+                {userData?.mothers_family_details?.mavsa.length >0 &&
                   <div className="py-1 border-2 p-5 mt-5 w-[90%] bg-white rounded-lg">
                     {userData?.mothers_family_details?.mavsa?.map(
                       (item, index) => (
@@ -897,9 +904,9 @@ const downloadIconClicked = async (imageUrl) => {
                           />
                         </>
                       )
-                    )}
-                  </div>
+                    )}     
                 </div>
+                }
               </div>
             </div>
           </div>

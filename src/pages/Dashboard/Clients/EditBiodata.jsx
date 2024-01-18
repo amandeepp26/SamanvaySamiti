@@ -855,7 +855,7 @@ const EditBiodata = () => {
         console.log('form dat is--->',formData)
             try {
               const response = await fetch(
-                "https://api.welkinhawk.in.net/api/users/login",
+                "https://api.welkinhawk.in.net/api/users/edit",
                 // "http://localhost:8000/api/users/edit",
                 {
                   method: "POST",
@@ -1846,7 +1846,9 @@ const EditBiodata = () => {
                   </select>
                 </div>
                 <div>
+                  {selectedBrotherUnmarried > 0 &&
                   <h3 className="mx-2 mt-5">Brother</h3>
+                  }
                   {brotherFields.map((_, index) => (
                     <div
                       className="grid gap-4 md:grid-cols-2 border-2 mt-5 rounded-lg p-3 lg:grid-cols-2 sm:gap-6"
@@ -2034,7 +2036,9 @@ const EditBiodata = () => {
                   </select>
                 </div>
                 <div>
+                  {selectedBrothermarried > 0 &&
                   <h3 className="mx-2 mt-5">Brother's Father-in-law</h3>
+                  }
                   {inLawFields.map((_, index) => (
                     <div
                       className="grid gap-4 md:grid-cols-2 border-2 mt-5 rounded-lg p-3 lg:grid-cols-2 sm:gap-6"
@@ -2219,7 +2223,9 @@ const EditBiodata = () => {
                   </select>
                 </div>
                 <div>
+                  {selectedSisterUnmarried > 0 &&
                   <h3 className="mx-2 mt-5">Sister</h3>
+                  }
                   {sisterFields?.map((_, index) => (
                     <div
                       className="grid gap-4 md:grid-cols-2 border-2 mt-5 rounded-lg p-3 lg:grid-cols-2 sm:gap-6"
@@ -2413,7 +2419,9 @@ const EditBiodata = () => {
                   </select>
                 </div>
                 <div>
-                  <h3 className="mx-2 mb-2">Sister's Husband</h3>
+                  {selectedSistermarried > 0 &&
+                  <h3 className="mx-2 mt-5">Sister's Husband</h3>
+                  }
                   {brothersInLawFields?.map((_, index) => (
                     <div
                       className="grid gap-4 md:grid-cols-2 border-2 mt-5 rounded-lg p-3 lg:grid-cols-2 sm:gap-6"
