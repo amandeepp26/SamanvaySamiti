@@ -65,7 +65,8 @@ const DashboardLayout = () => {
                         <div>
                             <ul className="dashboard-menu mt-20 pb-10">
 
-                                {
+                            <ClientRoutes />
+                                {/* {
                                     isLoadingSelfUser ?
                                         <>
                                             <div className="flex h-60 justify-center items-center">
@@ -83,7 +84,7 @@ const DashboardLayout = () => {
                                                     </>
                                             }
                                         </>
-                                }
+                                } */}
 
                                 <hr className="my-8" />
 

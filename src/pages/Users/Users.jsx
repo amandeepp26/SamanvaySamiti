@@ -6,6 +6,8 @@ function Users() {
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  const myId = localStorage.getItem('userId');
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -29,8 +31,11 @@ function Users() {
         const result = await response.json();
         console.log("API Data:", result);
 
+        const filteredUsers = result.result.filter(
+          (user) => user._id !== myId
+        );
         // Sort users based on serial_no
-        const sortedUsers = result.result.sort((a, b) =>
+        const sortedUsers = filteredUsers.sort((a, b) =>
           a.serial_no.localeCompare(b.serial_no)
         );
 

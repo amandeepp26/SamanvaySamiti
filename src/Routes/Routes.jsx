@@ -62,7 +62,7 @@ const router = createBrowserRouter([
         // element: <Users />,
         element: (
           <PrivateRoute>
-            <Users />
+            <Biodatas />
           </PrivateRoute>
         ),
       },

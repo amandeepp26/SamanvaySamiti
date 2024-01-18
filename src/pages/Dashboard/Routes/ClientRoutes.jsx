@@ -31,7 +31,7 @@ const ClientRoutes = () => {
           <span>My Profile</span>
         </NavLink>
       </li>
-      {/* <li>
+      <li>
         <NavLink
           className="hover:bg-gray-200 text-lg font-normal py-3 px-7 hover:text-primary-normal flex gap-2"
           to={"/dashboard/add"}
@@ -39,10 +39,10 @@ const ClientRoutes = () => {
           <span className="text-xl mt-1">
             <FaEdit />
           </span>
-          <span>Add/Edit Biodata</span>
+          <span>Edit Profile</span>
         </NavLink>
       </li>
-      <li>
+      {/* <li>
         <NavLink
           className="hover:bg-gray-200 text-lg font-normal py-3 px-7 hover:text-primary-normal flex gap-2"
           to={"/dashboard/request"}

@@ -18,32 +18,37 @@ import {
   FaMobileAlt,
   FaMailBulk,
   FaEnvelope,
+  FaSortDown,
+  FaSortUp,
 } from "react-icons/fa";
 import Swal from "sweetalert2";
+import * as html2pdf from "html2pdf.js";
+
+import image from '../../assets/img/aboutUsPage.jpg'
+import { formatBirthDate } from "../../Utils/FormatDate";
+
 const BiodataDetails = () => {
   const { id } = useParams();
-  const [singleBiodata, , isSingleBiodataLoading] = useSingleBiodataById(id);
-  const [typeBiodatas, refetchTypeBiodatas, isTypeBiodataLoading] =
-    useTypeBiodatas(singleBiodata?.type);
-
-  const { selfUser, refetchSelfUser } = useSelfUser();
   const [isloading, setisloading] = useState(true);
   const [userData, setUserData] = useState(null);
+  const [relationVisibility, setRelationVisibility] = useState({});
 
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
-  const handleStoreFavorite = useStoreFavorite();
   const token = localStorage.getItem("token");
-  useEffect(() => {
-    fetchDetails();
-  }, []);
-  useEffect(() => {
-    // Scroll to the top when the component mounts
-    window.scrollTo(0, 0);
-  }, []);
+
+
+    useEffect(() => {
+      fetchDetails();
+    }, []);
+    useEffect(() => {
+      // Scroll to the top when the component mounts
+      window.scrollTo(0, 0);
+    }, []);
   const fetchDetails = async () => {
     try {
       const response = await fetch(
-        `https://api.welkinhawk.in.net/api/users/user-detail/${id}`
+        // `https://api.welkinhawk.in.net/api/users/user-detail/${id}`
+        `http://localhost:8000/api/users/user-detail/${id}`
       );
 
       console.log("response------>", response);
@@ -61,22 +66,29 @@ const BiodataDetails = () => {
     }
   };
 
-  useEffect(() => {
-    refetchTypeBiodatas();
-  }, [singleBiodata?.type, refetchTypeBiodatas, refetchSelfUser]);
+    const toggleIconsVisibility = (relation) => {
+      setRelationVisibility((prevVisibility) => ({
+        ...prevVisibility,
+        [relation]: !prevVisibility[relation],
+      }));
+    };
 
   // calls track
-const phoneIconClicked = async () => {
+const phoneIconClicked = async (e) => {
   try {
     const response = await fetch(
-      "https://api.welkinhawk.in.net/api/users/call-profile",
+      // "https://api.welkinhawk.in.net/api/users/call-profile",
+      "http://localhost:8000/api/users/call-profile",
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ calledUserId: userData?._id }),
+        body: JSON.stringify({
+          calledUserId: userData?._id,
+          calledUserNumber: e,
+        }),
       }
     );
 
@@ -88,7 +100,7 @@ const phoneIconClicked = async () => {
 
       if (result.success) {
         // Handle success
-        window.location.href = `tel:${userData?.phoneNumber}`;
+        window.location.href = `tel:${e}`;
       } else {
         Swal.fire({
           position: "center",
@@ -122,75 +134,120 @@ const phoneIconClicked = async () => {
   }
 };
 
-const downloadIconClicked = async () => {
-  try {
-    const response = await fetch(
-      "https://api.welkinhawk.in.net/api/users/download-profile",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ downloadedUserId: userData?._id }),
-      }
-    );
 
-    console.log("Response status:", response.status); // Log the status code
+const downloadIconClicked = async (imageUrl) => {
+  console.log("Start of downloadIconClicked function");
 
-    if (response.ok) {
-      const result = await response.json();
-      console.log("Whatsapp API Data:", result);
+  const element = document.getElementById("profile-container");
 
-      if (result.success) {
-        // Handle success
-       
-      } else {
-        Swal.fire({
-          position: "center",
-          icon: "warning",
-          title: "Something went wrong!",
-          showConfirmButton: false,
-          timer: 3000,
-        });
-      }
-    } else {
-      console.error("Error:", response.statusText);
-      Swal.fire({
-        position: "center",
-        icon: "error",
-        title: "Something went wrong!",
-        showConfirmButton: false,
-        timer: 3000,
-      });
-    }
-  } catch (error) {
-    console.error("Error fetching data:", error.message);
-    Swal.fire({
-      position: "center",
-      icon: "warning",
-      title: `Error: ${error.message}`,
-      showConfirmButton: false,
-      timer: 3000,
-    });
-  } finally {
-    // setSubmitBtnLoader(false);
+  if (!element) {
+    console.error("Profile container not found");
+    return;
   }
+
+  console.log("Profile container found");
+
+  // Wait for the image to load
+  const imagePromise = new Promise((resolve) => {
+    const image = new Image();
+    image.src = imageUrl;
+    image.onload = () => {
+      console.log("Image loaded");
+      resolve();
+    };
+  });
+
+  // Configure the PDF options
+  const options = {
+    margin: 1,
+    filename: `${userData?.personal_details?.fullname}-profile.pdf`,
+    image: { type: "jpeg", quality: 1 }, // Include images
+    html2canvas: { scale: 2, useCORS: true },
+    jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+  };
+
+  // Wait for the image to load before generating the PDF
+  await imagePromise;
+
+  console.log("About to generate PDF");
+
+  // Generate the PDF
+  html2pdf(element, options);
+
+  console.log("PDF generated successfully");
+
+  // try {
+  //   const response = await fetch(
+  //     // "https://api.welkinhawk.in.net/api/users/download-profile",
+  //     "http://localhost:8000/api/users/download-profile",
+  //     {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //       body: JSON.stringify({ downloadedUserId: userData?._id }),
+  //     }
+  //   );
+
+  //   console.log("Response status:", response.status); // Log the status code
+
+  //   if (response.ok) {
+  //     const result = await response.json();
+  //     console.log("Whatsapp API Data:", result);
+
+  //     if (result.success) {
+  //       // Handle success
+
+  //     } else {
+  //       Swal.fire({
+  //         position: "center",
+  //         icon: "warning",
+  //         title: "Something went wrong!",
+  //         showConfirmButton: false,
+  //         timer: 3000,
+  //       });
+  //     }
+  //   } else {
+  //     console.error("Error:", response.statusText);
+  //     Swal.fire({
+  //       position: "center",
+  //       icon: "error",
+  //       title: "Something went wrong!",
+  //       showConfirmButton: false,
+  //       timer: 3000,
+  //     });
+  //   }
+  // } catch (error) {
+  //   console.error("Error fetching data:", error.message);
+  //   Swal.fire({
+  //     position: "center",
+  //     icon: "warning",
+  //     title: `Error: ${error.message}`,
+  //     showConfirmButton: false,
+  //     timer: 3000,
+  //   });
+  // } finally {
+  // }
 };
 
 
 // Whatsapp track
-  const whatsappIconClicked = async () => {
+  const whatsappIconClicked = async (e) => {
      try {
     const response = await fetch(
-      "https://api.welkinhawk.in.net/api/users/whatsapp-profile",
+      // "https://api.welkinhawk.in.net/api/users/whatsapp-profile",
+      "http://localhost:8000/api/users/whatsapp-profile",
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ whatsappUserId: userData?._id }),
+        body: JSON.stringify({
+          whatsappUserId: userData?._id,
+          whatsappUserNumber: e,
+        }),
       }
     );
 
@@ -203,7 +260,7 @@ const downloadIconClicked = async () => {
       if (result.success) {
         // Handle success
         window.open(
-          `https://api.whatsapp.com/send?phone=${userData?.phone}`,
+          `https://api.whatsapp.com/send?phone=${e}`,
           "_blank"
         );
       } else {
@@ -240,17 +297,21 @@ const downloadIconClicked = async () => {
   };
 
   // Email Track
-  const emailIconClicked = async () => {
+  const emailIconClicked = async (e) => {
     try {
       const response = await fetch(
-        "https://api.welkinhawk.in.net/api/users/email-profile",
+        // "https://api.welkinhawk.in.net/api/users/email-profile",
+        "http://localhost:8000/api/users/email-profile",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify({ emailUserId: userData?._id }),
+          body: JSON.stringify({
+            emailUserId: userData?._id,
+            calleduserEmail: e,
+          }),
         }
       );
 
@@ -297,17 +358,21 @@ const downloadIconClicked = async () => {
   };
 
   // Telephone track
-  const telephoneIconClicked = async () => {
+  const telephoneIconClicked = async (e) => {
     try {
       const response = await fetch(
-        "https://api.welkinhawk.in.net/api/users/telephone-profile",
+        // "https://api.welkinhawk.in.net/api/users/telephone-profile",
+        "http://localhost:8000/api/users/telephone-profile",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify({ telephoneUserId: userData?._id }),
+          body: JSON.stringify({
+            telephoneUserId: userData?._id,
+            telephoneUserNumber: e,
+          }),
         }
       );
 
@@ -352,6 +417,48 @@ const downloadIconClicked = async () => {
       // setSubmitBtnLoader(false);
     }
   };
+
+
+ const renderIcons = (item) => {
+
+   return (
+     <div className="flex gap-3 mx-2 mt-2 items-center">
+      {item.mobile &&
+       <a
+         onClick={()=>phoneIconClicked(item.mobile)}
+         className="bg-blue-800 hover:bg-primary-hover hover:text-white p-[6px] text-white rounded-full"
+       >
+         <FaMobileAlt size={18} />
+       </a>
+      }
+       {item.whatsapp &&
+       <a
+         onClick={()=>whatsappIconClicked(item.whatsapp)}
+         className="bg-[#25D366] hover:border-primary-hover hover:bg-primary-hover hover:text-white p-[4px] text-white rounded-full"
+       >
+         <FaWhatsapp size={20} />
+       </a>
+        }
+       {item.email && 
+       <a
+         onClick={()=>emailIconClicked(item.email)}
+         className="bg-red-600 border-white-normal hover:border-primary-hover hover:bg-primary-hover hover:text-white text-white p-[6px] text-primary-normal rounded-full"
+       >
+         <FaEnvelope size={18} />
+       </a>
+      }
+       {item.phone && (
+         <a
+           onClick={()=>telephoneIconClicked(item.phone)}
+           className="bg-gray-600 border-white-normal hover:border-primary-hover hover:bg-primary-hover hover:text-white text-white p-[6px] text-primary-normal rounded-full"
+         >
+           <FaPhoneAlt size={15} />
+         </a>
+       )}
+     </div>
+   );
+ };
+
   if (isloading) {
     return (
       <div className="w-full h-[70vh] flex items-center justify-center flex-col">
@@ -369,7 +476,10 @@ const downloadIconClicked = async () => {
           <p className="text-md text-gray-500">Check the user id</p>
         </div>
       ) : (
-        <div className="border-b-2 lg:border-b-0  pb-8 col-span-3">
+        <div
+          id="profile-container"
+          className="border-b-2 lg:border-b-0  pb-8 col-span-3"
+        >
           <div>
             <div className="my-2 flex relative flex-col items-center justify-center rounded-sm bg-gradient-to-r from-pink-200 via-pink-400 to-red-400 h-80">
               <img
@@ -383,32 +493,48 @@ const downloadIconClicked = async () => {
                 {userData?.personal_details?.fullname}
               </p>
               <div className="flex gap-5 items-center py-2">
-                <a
-                  onClick={() => phoneIconClicked()}
-                  className="bg-blue-800  hover:bg-primary-hover hover:text-white p-[6px] text-white rounded-full"
-                >
-                  <FaMobileAlt size={18} />
-                </a>
-                <a
-                  onClick={() => whatsappIconClicked()}
-                  className=" bg-[#25D366] hover:border-primary-hover hover:bg-primary-hover hover:text-white p-[4px] text-white rounded-full"
-                >
-                  <FaWhatsapp size={20} />
-                </a>
-                <a
-                  onClick={() => emailIconClicked()}
-                  className="bg-red-600 border-white-normal hover:border-primary-hover hover:bg-primary-hover hover:text-white text-white p-[6px] text-primary-normal rounded-full"
-                >
-                  <FaEnvelope size={18} />
-                </a>
-                {userData?.contact_details?.mobile &&
-                <a
-                  onClick={()=>telephoneIconClicked()}
-                  className="bg-gray-600 border-white-normal hover:border-primary-hover hover:bg-primary-hover hover:text-white text-white p-[6px] text-primary-normal rounded-full"
-                >
-                  <FaPhoneAlt size={15} />
-                </a>
-                }
+                {userData?.contact_details?.mobile && (
+                  <a
+                    onClick={() =>
+                      phoneIconClicked(userData?.contact_details?.mobile)
+                    }
+                    className="bg-blue-800  hover:bg-primary-hover hover:text-white p-[6px] text-white rounded-full"
+                  >
+                    <FaMobileAlt size={18} />
+                  </a>
+                )}
+
+                {userData?.contact_details?.mobile && (
+                  <a
+                    onClick={() =>
+                      whatsappIconClicked(userData?.contact_details?.mobile)
+                    }
+                    className=" bg-[#25D366] hover:border-primary-hover hover:bg-primary-hover hover:text-white p-[4px] text-white rounded-full"
+                  >
+                    <FaWhatsapp size={20} />
+                  </a>
+                )}
+
+                {userData?.email && (
+                  <a
+                    onClick={() => emailIconClicked(userData?.email)}
+                    className="bg-red-600 border-white-normal hover:border-primary-hover hover:bg-primary-hover hover:text-white text-white p-[6px] text-primary-normal rounded-full"
+                  >
+                    <FaEnvelope size={18} />
+                  </a>
+                )}
+                {userData?.contact_details?.phone_number && (
+                  <a
+                    onClick={() =>
+                      telephoneIconClicked(
+                        userData?.contact_details?.phone_number
+                      )
+                    }
+                    className="bg-gray-600 border-white-normal hover:border-primary-hover hover:bg-primary-hover hover:text-white text-white p-[6px] text-primary-normal rounded-full"
+                  >
+                    <FaPhoneAlt size={15} />
+                  </a>
+                )}
               </div>
               <p className="text-dark text-xl sm:text-3xl font-bold py-1 px-10 rounded-tl-lg absolute top-5 left-2">
                 {userData?.serial_no}
@@ -425,50 +551,44 @@ const downloadIconClicked = async () => {
               >
                 {userData?.personal_details?.gender}
               </div>
+              {/* <div
+                style={{ cursor: "pointer" }}
+                id="download-button"
+                onClick={() =>
+                  downloadIconClicked(userData?.personal_details?.photo[0])
+                }
+                className={`${"bg-blue-900 text-white"} text-xs sm:text-lg  font-medium py-1 px-5 sm:px-10 rounded-lg rounded-lg absolute bottom-[10px] right-5`}
+              >
+                Download
+              </div> */}
             </div>
-            {/* <h1 className="font-bold text-3xl py-2 text-start">
-              <span className="font-bold"></span>
-            </h1> */}
             <h1 className="text-base px-5 font-medium text-primary-normal border-t border-b py-2 mt-6 mb-2">
               वैयक्तिक माहिती
             </h1>
-            {/* <p className="py-2 text-xl">
-              Name :
-              <span className="font-bold text-2xl">
-                {" "}
-                {userData?.personal_details?.fullname}
-              </span>
-            </p> */}
-
             <div className="grid grid-cols-1 mx-5 sm:grid-cols-2 gap-1">
               <p className="py-1">
                 <span className="font-medium">जन्मनाव :</span>{" "}
                 {userData?.personal_details?.birth_name}
               </p>
               <p className="py-1">
-                <span className="font-medium">जन्मदिनांक :</span>{" "}
-                {userData?.personal_details?.birth_date}
-              </p>
-              <p className="py-1">
-                <span className="font-medium">जन्मवेळ :</span>{" "}
+                <span className="font-medium">जन्मदिनांक : वेळ:</span>{" "}
+                {formatBirthDate(userData?.personal_details?.birth_date)} :{" "}
                 {userData?.personal_details?.birth_time}
               </p>
-              {/* <p className="py-1">
-                <span className="font-medium">Day Of Birth :</span> Monday
-              </p> */}
-
               <p className="py-1">
                 <span className="font-medium">जन्मस्थान :</span>{" "}
                 {userData?.personal_details?.birth_place}
               </p>
               <p className="py-1">
-                <span className="font-medium">उंची :</span>{" "}
-                {userData?.personal_details?.height}
-              </p>
-              <p className="py-1">
                 <span className="font-medium">रक्त गट :</span>{" "}
                 {userData?.personal_details?.blood_group}
               </p>
+              <p className="py-1">
+                <span className="font-medium">उंची :</span>{" "}
+                {userData?.personal_details?.height} (
+                {userData?.personal_details?.height_cm} cm)
+              </p>
+
               <p className="py-1">
                 <span className="font-medium">वजन :</span>{" "}
                 {userData?.personal_details?.weight} किलो
@@ -477,63 +597,89 @@ const downloadIconClicked = async () => {
                 <span className="font-medium">कुलदेवी :</span>{" "}
                 {userData?.personal_details?.kuldevi}
               </p>
-            </div>
-            <h1 className="text-base px-5 font-medium text-primary-normal border-t border-b py-2 my-10 mb-2">
-              शैक्षणिक/पदवी तपशील
-            </h1>
-            <div className="grid grid-cols-1 mx-5 sm:grid-cols-2 gap-1">
-              <p className="py-1">
-                <span className="font-medium">शिक्षण पातळी पूर्ण : </span>
-                {userData?.educational_details?.education_level}
-              </p>
-              <p className="py-1">
-                <span className="font-medium">शैक्षणिक/पदवी तपशील : </span>
-                {userData?.educational_details?.education_detail}
-              </p>
-              <p className="py-1">
-                <span className="font-medium">विशेष शिक्षण : </span>
-                {userData?.educational_details?.special_education}
-              </p>
-              <p className="py-1 ">
-                <span className="font-medium">स्वतः बद्दल विशेष माहिती : </span>{" "}
-                {userData?.professional_details?.special_information}
-              </p>
-            </div>
-            <h1 className="text-base px-5 font-medium text-primary-normal border-t border-b py-2 my-10 mb-2">
-              नोकरी/व्यावसायिक तपशील ({" "}
-              {userData?.professional_details?.profession})
-            </h1>
-            <div className="grid grid-cols-1 mx-5 sm:grid-cols-2 gap-1">
-              <p className="py-1 ">
-                <span className="font-medium">नोकरी/व्यवसाय पद : </span>{" "}
-                {userData?.professional_details?.job_title}
-              </p>
               <p className="py-1">
                 <span className="font-medium">
-                  कंपनी अथवा व्यवसायाचे नाव :{" "}
+                  सगोत्र विवाहास आपली मान्यता आहे का ? :
                 </span>{" "}
-                {userData?.professional_details?.company_name}
-              </p>
-
-              <p className="py-1">
-                <span className="font-medium">नोकरी/व्यवसायाचा पत्ता :</span>{" "}
-                {userData?.professional_details?.job_address}
-              </p>
-              <p className="py-1">
-                <span className="font-medium">एकूण मासिक वेतन :</span>{" "}
-                {userData?.professional_details?.monthly_income} (
-                {userData?.professional_details.payment_currency})
-              </p>
-              <p className="py-1">
-                <span className="font-medium">साप्ताहिक सुट्टी :</span>{" "}
-                {userData?.professional_details?.weekly_holiday}
+                {userData?.contact_details?.consanguineous_marriage}
               </p>
             </div>
-            <h1 className="text-base px-5 font-medium text-primary-normal border-t border-b py-2 my-10 mb-2">
+            <div className="gap-1 py-1">
+              <p className="py-2 mx-5">
+                <span className="font-medium">जोडीदाराबद्दल अपेक्षा :</span>{" "}
+                {userData?.contact_details?.partner_expectations}
+              </p>
+              <p className="py-2 mx-5">
+                <span className="font-medium">सध्याचा राहण्याचा पत्ता :</span>{" "}
+                {userData?.contact_details?.current_address}
+              </p>
+            </div>
+            <div className="grid grid-cols-1 mx-5 sm:grid-cols-2 gap-1">
+              <div>
+                <h1 className="text-base -mx-5 px-5 font-medium text-primary-normal border-t border-b py-2 my-10 mb-2">
+                  शैक्षणिक/पदवी तपशील
+                </h1>
+                <div className="grid grid-cols-1 gap-1">
+                  <p className="py-1">
+                    <span className="font-medium">शिक्षण पातळी पूर्ण : </span>
+                    {userData?.educational_details?.education_level}
+                  </p>
+                  <p className="py-1">
+                    <span className="font-medium">पदवी : </span>
+                    {userData?.educational_details?.education_detail}
+                  </p>
+                  <p className="py-1">
+                    <span className="font-medium">विशेष शिक्षण : </span>
+                    {userData?.educational_details?.special_education}
+                  </p>
+                  <p className="py-1 ">
+                    <span className="font-medium">
+                      स्वतः बद्दल विशेष माहिती :{" "}
+                    </span>{" "}
+                    {userData?.educational_details?.special_information}
+                  </p>
+                </div>
+              </div>
+              <div>
+                <h1 className="text-base font-medium text-primary-normal border-t border-b py-2 my-10 mb-2">
+                  नोकरी/व्यावसायिक तपशील ({" "}
+                  {userData?.professional_details?.profession})
+                </h1>
+                <div className="grid grid-cols-1 gap-1">
+                  <p className="py-1">
+                    <span className="font-medium">
+                      कंपनी अथवा व्यवसायाचे नाव :{" "}
+                    </span>{" "}
+                    {userData?.professional_details?.company_name}
+                  </p>
+                  <p className="py-1 ">
+                    <span className="font-medium">पद : </span>{" "}
+                    {userData?.professional_details?.job_title}
+                  </p>
+                  <p className="py-1">
+                    <span className="font-medium">एकूण मासिक वेतन :</span>{" "}
+                    {userData?.professional_details?.monthly_income} (
+                    {userData?.professional_details?.payment_currency})
+                  </p>
+                  <p className="py-1">
+                    <span className="font-medium">साप्ताहिक सुट्टी :</span>{" "}
+                    {userData.professional_details?.weekly_holiday
+                      ?.split(",")
+                      ?.map((day) => day.trim())
+                      ?.join(", ")}
+                  </p>
+                  <p className="py-1">
+                    <span className="font-medium">पत्ता :</span>{" "}
+                    {userData?.professional_details?.job_address}
+                  </p>
+                </div>
+              </div>
+            </div>
+            {/* <h1 className="text-base px-5 font-medium text-primary-normal border-t border-b py-2 my-10 mb-2">
               संपर्क
             </h1>
-            <div className="grid grid-cols-1 mx-5 sm:grid-cols-2 gap-1">
-              {/* <p className="py-1">
+            <div className="grid grid-cols-1 mx-5 sm:grid-cols-2 gap-1"> */}
+            {/* <p className="py-1">
                 <span className="font-medium">मोबाईल क्रमांक :</span>{" "}
                 {userData?.phone}
               </p>
@@ -544,9 +690,9 @@ const downloadIconClicked = async () => {
               <p className="py-1">
                 <span className="font-medium">ईमेल :</span> {userData?.email}
               </p> */}
-              <p className="py-1">
+            {/* <p className="py-1">
                 <span className="font-medium">सध्याचा राहण्याचा पत्ता :</span>{" "}
-                {userData?.family_details.address}
+                {userData?.contact_details?.current_address}
               </p>
               <p className="py-1">
                 <span className="font-medium">जोडीदाराबद्दल अपेक्षा :</span>{" "}
@@ -558,176 +704,203 @@ const downloadIconClicked = async () => {
                 </span>{" "}
                 {userData?.contact_details?.consanguineous_marriage}
               </p>
-            </div>
+            </div> */}
             <h1 className="text-base px-5 font-medium text-primary-normal border-t border-b py-2 my-10 mb-2">
-              पालक
+              कौटुंबिक परिचय
             </h1>
             <div className="grid grid-cols-1 mx-5 sm:grid-cols-2 gap-1">
               <p className="py-1">
-                <span className="font-medium">पालक / वडिलांचे पूर्ण नाव :</span>{" "}
-                {userData?.family_details.fathers_name}
+                <span className="font-medium">
+                  {userData?.family_details?.guardian} :
+                </span>{" "}
+                <ExpandableSection
+                  items={userData?.family_details?.father || []}
+                  renderIcons={renderIcons}
+                />
               </p>
               <p className="py-1">
-                <span className="font-medium">पालकांचा व्यवसाय :</span>{" "}
-                {userData?.family_details?.guardians_profession}
-              </p>
-              <p className="py-1">
-                <span className="font-medium">नोकरी / पद :</span>{" "}
+                <span className="font-medium">नोकरी/व्यावसायिक तपशील :</span>{" "}
+                {userData?.family_details?.guardians_profession},{" "}
                 {userData?.family_details?.designation}
               </p>
               <p className="py-1">
-                <span className="font-medium">पालकांचा मोबाईल क्रमांक :</span>
-                {userData?.family_details?.parents_phone}
+                <span className="font-medium">आई :</span>{" "}
+                <ExpandableSection
+                  items={userData?.family_details?.mother || []}
+                  renderIcons={renderIcons}
+                />
               </p>
+
+              {/* <p className="py-1">
+                <span className="font-medium">पालकांचा मोबाईल क्रमांक :</span>
+                {userData?.family_details?.father?.mobile}
+              </p> */}
               <p className="py-1">
-                <span className="font-medium">पालकांचा संपूर्ण पत्ता :</span>{" "}
+                <span className="font-medium">पत्ता :</span>{" "}
                 {userData?.family_details?.address}
               </p>
-              <p className="py-1">
-                <span className="font-medium">आईचे संपूर्ण नाव :</span>{" "}
-                {userData?.family_details?.mothers_name}
-              </p>
-              <p className="py-1">
+
+              {/* <p className="py-1">
                 <span className="font-medium">मोबाईल क्रमांक :</span>{" "}
-                {userData?.family_details?.mothers_phone}
-              </p>
+                {userData?.family_details?.mother?.phone}
+              </p> */}
             </div>
           </div>
 
           <div className="grid grid-cols-1 mx-5 sm:grid-cols-2 gap-1">
             <div>
               <h1 className="text-base font-medium -mx-5 px-5 text-primary-normal border-t border-b py-2 mt-6 mb-2">
-                बन्धु
+                बन्धु (अविवाहित :{" "}
+                {userData?.brothers_details?.brother_unmarried} / विवाहित :
+                {userData?.brothers_details?.brother_married})
               </h1>
-              <div className="grid grid-cols-1  sm:grid-cols-2 gap-1">
-                <p className="py-1">
-                  <span className="font-medium">विवाहित :</span>{" "}
-                  {userData?.brothers_details?.brother_married}
-                </p>
-                <p className="py-1">
-                  <span className="font-medium">अविवाहित :</span>{" "}
-                  {userData?.brothers_details?.brother_unmarried}
-                </p>
+              <div className="py-1 border-2 p-5 mt-5 w-[90%] bg-white rounded-lg">
+                {userData?.brothers_details?.father_in_law?.map(
+                  (item, index) => (
+                    <>
+                      {index === 0 && (
+                        <p className="font-medium py-2">
+                          बंधूंच्या सासऱ्यांचे नाव आणि मोबाईल नंबर :{" "}
+                        </p>
+                      )}
+                      <ExpandableSection
+                        items={item || []}
+                        renderIcons={renderIcons}
+                      />
+                    </>
+                  )
+                )}
               </div>
-              {userData?.brothers_details?.father_in_law_name_phone
-                ?.filter(
-                  (kakaName) => kakaName !== null && kakaName.trim() !== ""
-                )
-                .map((kakaName, index) => (
-                  <div key={index} className="py-1">
-                    {index === 0 && (
-                      <p className="font-medium py-2">
-                        बंधूंच्या सासऱ्यांचे नाव आणि मोबाईल नंबर :{" "}
-                      </p>
-                    )}
-                    <p>• {kakaName}</p>
-                  </div>
-                ))}
             </div>
             <div>
               <h1 className="text-base font-medium text-primary-normal border-t border-b py-2 mt-6 mb-2">
-                भगिनी
+                भगिनी (अविवाहित : {userData?.sisters_details?.sisters_unmarried}{" "}
+                / विवाहित :{userData?.sisters_details?.sisters_married})
               </h1>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-1">
-                <p className="py-1">
-                  <span className="font-medium">विवाहित :</span>{" "}
-                  {userData?.sisters_details.sisters_married}
-                </p>
-                <p className="py-1">
-                  <span className="font-medium">अविवाहित :</span>{" "}
-                  {userData?.sisters_details.sisters_unmarried}
-                </p>
+              <div className="py-1 border-2 p-5 mt-5 w-[90%] bg-white rounded-lg">
+                {userData?.sisters_details?.brother_in_law?.map(
+                  (item, index) => (
+                    <>
+                      {index === 0 && (
+                        <p className="font-medium py-2">
+                          बहिण व यजमानांचे नाव आणि मोबाईल नंबर :{" "}
+                        </p>
+                      )}
+                      <ExpandableSection
+                        items={item || []}
+                        renderIcons={renderIcons}
+                      />
+                    </>
+                  )
+                )}
               </div>
-              {userData?.sisters_details?.brothers_in_law_name_phone
-                ?.filter(
-                  (kakaName) => kakaName !== null && kakaName.trim() !== ""
-                )
-                .map((kakaName, index) => (
-                  <p key={index} className="py-1">
-                    {index === 0 && (
-                      <p className="font-medium py-2">
-                        बहिण व यजमानांचे नाव आणि मोबाईल नंबर :{" "}
-                      </p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 mx-5 sm:grid-cols-2 gap-1">
+            <div>
+              <h1 className="text-base  -mx-5 px-5 font-medium text-primary-normal border-t border-b py-2 mt-6 mb-2">
+                आजोबा
+              </h1>
+              <div>
+                <ExpandableSection
+                  items={userData?.fathers_family_details?.grandfather || []}
+                  renderIcons={renderIcons}
+                />
+                {/* <p className="py-1">
+                  {userData?.fathers_family_details?.grandfather?.salutation}{" "}
+                  {userData?.fathers_family_details?.grandfather?.name} {","}
+                  {userData?.fathers_family_details?.grandfather?.address}
+                  {renderIcons(userData?.fathers_family_details?.grandfather)}
+                </p> */}
+                <div className="py-1 border-2 p-5 mt-5 w-[90%] bg-white rounded-lg">
+                  {userData?.fathers_family_details?.kaka.map((item, index) => (
+                    <>
+                      {index === 0 && (
+                        <p className="font-medium py-2">काका : </p>
+                      )}
+                      <ExpandableSection
+                        items={item || []}
+                        renderIcons={renderIcons}
+                      />
+                    </>
+                  ))}
+                </div>
+
+                <div>
+                  <div className="py-1 border-2 p-5 mt-5 w-[90%] bg-white rounded-lg">
+                    {userData?.fathers_family_details?.fuva.map(
+                      (item, index) => (
+                        <>
+                          {index === 0 && (
+                            <p className="font-medium py-2">फुवा : </p>
+                          )}
+                          <ExpandableSection
+                            items={item || []}
+                            renderIcons={renderIcons}
+                          />
+                        </>
+                      )
                     )}
-                    <p>• {kakaName}</p>
-                  </p>
-                ))}
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-          <h1 className="text-base px-5 font-medium text-primary-normal border-t border-b py-2 mt-6 mb-2">
-            आजोबा
-          </h1>
-          <div className="grid grid-cols-1 mx-5 sm:grid-cols-2 gap-1">
             <div>
-              <p className="py-1">
-                <span className="font-medium">आजोबांचे नाव :</span>{" "}
-                {userData?.fathers_family_details?.grandfather_name}
-              </p>
+              <h1 className="text-base font-medium text-primary-normal border-t border-b py-2 mt-6 mb-2">
+                आजोळ
+                {/* <p className="py-1 text-black">
+                  {userData?.mothers_family_details?.grandfather?.salutation}{" "}
+                  {userData?.mothers_family_details?.grandfather?.name}{" "}
+                  {userData?.mothers_family_details?.grandfather?.address}
+                </p> */}
+              </h1>
+              <div>
+                <ExpandableSection
+                  items={userData?.mothers_family_details?.grandfather || []}
+                  renderIcons={renderIcons}
+                />
+                {/* <p className="py-1">
+                  <span className="font-medium">आजोबांचे नाव :</span>{" "}
+                  {userData?.mothers_family_details?.grandfather?.salutation}{" "}
+                  {userData?.mothers_family_details?.grandfather?.name}{" "}
+                  {userData?.mothers_family_details?.grandfather?.address}
+                  {renderIcons(userData?.mothers_family_details?.grandfather)}
+                </p> */}
+                <div className="py-1 border-2 p-5 mt-5 w-[90%] bg-white rounded-lg">
+                  {userData?.mothers_family_details?.mama?.map(
+                    (item, index) => (
+                      <>
+                        {index === 0 && (
+                          <p className="font-medium py-2">मामा : </p>
+                        )}
+                        <ExpandableSection
+                          items={item || []}
+                          renderIcons={renderIcons}
+                        />
+                      </>
+                    )
+                  )}
+                </div>
 
-              {userData?.fathers_family_details?.kaka
-                ?.filter(
-                  (kakaName) => kakaName !== null && kakaName.trim() !== ""
-                ) // Filter out null and empty strings
-                .map((kakaName, index) => (
-                  <p key={index} className="py-1">
-                    {index === 0 && <p className="font-medium">काका : </p>}
-                    <p>• {kakaName}</p>
-                  </p>
-                ))}
-            </div>
-            <div>
-              <p className="py-1">
-                <span className="font-medium">आजोबांचे मूळ गाव :</span>{" "}
-                {userData?.fathers_family_details?.grandfather_village}
-              </p>
-              {userData?.fathers_family_details?.fuva
-                ?.filter(
-                  (kakaName) => kakaName !== null && kakaName.trim() !== ""
-                ) // Filter out null and empty strings
-                .map((kakaName, index) => (
-                  <p key={index} className="py-1">
-                    {index === 0 && <p className="font-medium">फुवा : </p>}
-                    <p>• {kakaName}</p>
-                  </p>
-                ))}
-            </div>
-          </div>
-          <h1 className="text-base px-5 font-medium text-primary-normal border-t border-b py-2 mt-6 mb-2">
-            आजोळ
-          </h1>
-          <div className="grid grid-cols-1 mx-5 sm:grid-cols-2 gap-1">
-            <div>
-              <p className="py-1">
-                <span className="font-medium">आजोबांचे नाव :</span>{" "}
-                {userData?.mothers_family_details?.grandfather_name}
-              </p>
-
-              {userData?.mothers_family_details?.mama
-                ?.filter(
-                  (kakaName) => kakaName !== null && kakaName.trim() !== ""
-                ) // Filter out null and empty strings
-                .map((kakaName, index) => (
-                  <p key={index} className="py-1">
-                    {index === 0 && <p className="font-medium">मामा : </p>}
-                    <p>• {kakaName}</p>
-                  </p>
-                ))}
-            </div>
-            <div>
-              <p className="py-1">
-                <span className="font-medium">आजोबांचे मूळ गाव :</span>{" "}
-                {userData?.mothers_family_details?.grandfather_village}
-              </p>
-              {userData?.mothers_family_details?.mavsa
-                ?.filter(
-                  (kakaName) => kakaName !== null && kakaName.trim() !== ""
-                ) // Filter out null and empty strings
-                .map((kakaName, index) => (
-                  <p key={index} className="py-1">
-                    {index === 0 && <p className="font-medium">मावसा : </p>}
-                    <p>• {kakaName}</p>
-                  </p>
-                ))}
+                <div>
+                  <div className="py-1 border-2 p-5 mt-5 w-[90%] bg-white rounded-lg">
+                    {userData?.mothers_family_details?.mavsa?.map(
+                      (item, index) => (
+                        <>
+                          {index === 0 && (
+                            <p className="font-medium py-2">मावसा : </p>
+                          )}
+                          <ExpandableSection
+                            items={item || []}
+                            renderIcons={renderIcons}
+                          />
+                        </>
+                      )
+                    )}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           {/* <h1 className="text-base font-medium text-primary-normal border-t border-b py-2 mt-6 mb-2">
@@ -749,30 +922,6 @@ const downloadIconClicked = async () => {
               </div>
             </div>
           )}
-          {selfUser.isPro === "Premium" ? (
-            <>
-              <p className="py-1">
-                <span className="font-medium">Name :</span>{" "}
-                {singleBiodata?.name}
-              </p>
-              <p className="py-1">
-                <span className="font-medium">Mobile :</span>{" "}
-                {singleBiodata?.mobile}
-              </p>
-              <p className="py-1">
-                <span className="font-medium">Email :</span>{" "}
-                {singleBiodata?.email}
-              </p>
-            </>
-          ) : (
-            <>
-              {/* <Link to={`/checkout/${singleBiodata?._id}`}>
-                <button className="py-2 px-3 mt-5 text-sm rounded bg-primary-normal text-white">
-                  Request for contact info
-                </button>
-              </Link> */}
-            </>
-          )}
         </div>
       )}
 
@@ -782,3 +931,51 @@ const downloadIconClicked = async () => {
 };
 
 export default BiodataDetails;
+
+
+const ExpandableSection = ({ items, renderIcons }) => {
+  const [expandedItem, setExpandedItem] = useState(null);
+
+  const handleExpandToggle = (index) => {
+    setExpandedItem((prev) => (prev === index ? null : index));
+  };
+  const itemsArray = Array.isArray(items) ? items : [items];
+  return (
+    <div>
+      {itemsArray.map((item, index) => (
+        <div key={index}>
+          <div className="flex items-center">
+            <p
+              className=" py-2 cursor-pointer"
+              onClick={() => handleExpandToggle(index)}
+            >
+              • {item.salutation} {item.name} -{item.address}{" "}
+              {/* <span
+              className={`cursor-pointer transform ${
+                expandedItem !== index ? "rotate-180" : ""
+              }`}
+            >
+              {expandedItem === index ? "^" : "⌄"}
+            </span> */}
+            </p>
+            {expandedItem === index ?
+            <FaSortUp
+              className="cursor-pointer mt-2 mx-2"
+              onClick={() => handleExpandToggle(index)}
+            />
+            :
+            <FaSortDown
+              className="cursor-pointer -mt-1 mx-2"
+              onClick={() => handleExpandToggle(index)}
+            />
+            }
+          </div>
+
+          {expandedItem === index && (
+            <div className="items-center">{renderIcons(item)}</div>
+          )}
+        </div>
+      ))}
+    </div>
+  );
+};

@@ -6,6 +6,8 @@ import Swal from "sweetalert2";
 import useSelfUser from "../../../hooks/useSelfUser";
 import useSelfBiodata from "../../../hooks/useSelfBiodata";
 import { useEffect, useState } from "react";
+import { formatBirthDate } from "../../../Utils/FormatDate";
+import { FaEnvelope, FaMobileAlt, FaPhoneAlt, FaWhatsapp } from "react-icons/fa";
 
 const MyProfile = () => {
   const [userData, setData] = useState(null);
@@ -21,7 +23,8 @@ const MyProfile = () => {
   const getProfile = async () => {
     try {
       const response = await fetch(
-        `https://api.welkinhawk.in.net/api/users/get-profile`,
+        // `https://api.welkinhawk.in.net/api/users/get-profile`,
+        "http://localhost:8000/api/users/get-profile",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -141,43 +144,32 @@ const MyProfile = () => {
                     <h1 className="text-base px-5 font-medium text-primary-normal border-t border-b py-2 mt-6 mb-2">
                       वैयक्तिक माहिती
                     </h1>
-                    {/* <p className="py-2 text-xl">
-              Name :
-              <span className="font-bold text-2xl">
-                {" "}
-                {userData?.personal_details?.fullname}
-              </span>
-            </p> */}
-
                     <div className="grid grid-cols-1 mx-5 sm:grid-cols-2 gap-1">
                       <p className="py-1">
                         <span className="font-medium">जन्मनाव :</span>{" "}
                         {userData?.personal_details?.birth_name}
                       </p>
                       <p className="py-1">
-                        <span className="font-medium">जन्मदिनांक :</span>{" "}
-                        {userData?.personal_details?.birth_date}
+                        <span className="font-medium">जन्मदिनांक : वेळ:</span>{" "}
+                        {formatBirthDate(
+                          userData?.personal_details?.birth_date
+                        )}{" "}
+                        : {userData?.personal_details?.birth_time}
                       </p>
-                      <p className="py-1">
-                        <span className="font-medium">जन्मवेळ :</span>{" "}
-                        {userData?.personal_details?.birth_time}
-                      </p>
-                      {/* <p className="py-1">
-                <span className="font-medium">Day Of Birth :</span> Monday
-              </p> */}
-
                       <p className="py-1">
                         <span className="font-medium">जन्मस्थान :</span>{" "}
                         {userData?.personal_details?.birth_place}
                       </p>
                       <p className="py-1">
-                        <span className="font-medium">उंची :</span>{" "}
-                        {userData?.personal_details?.height}
-                      </p>
-                      <p className="py-1">
                         <span className="font-medium">रक्त गट :</span>{" "}
                         {userData?.personal_details?.blood_group}
                       </p>
+                      <p className="py-1">
+                        <span className="font-medium">उंची :</span>{" "}
+                        {userData?.personal_details?.height} (
+                        {userData?.personal_details?.height_cm} cm)
+                      </p>
+
                       <p className="py-1">
                         <span className="font-medium">वजन :</span>{" "}
                         {userData?.personal_details?.weight} किलो
@@ -186,94 +178,6 @@ const MyProfile = () => {
                         <span className="font-medium">कुलदेवी :</span>{" "}
                         {userData?.personal_details?.kuldevi}
                       </p>
-                    </div>
-                    <h1 className="text-base px-5 font-medium text-primary-normal border-t border-b py-2 my-10 mb-2">
-                      शैक्षणिक/पदवी तपशील
-                    </h1>
-                    <div className="grid grid-cols-1 mx-5 sm:grid-cols-2 gap-1">
-                      <p className="py-1">
-                        <span className="font-medium">
-                          शिक्षण पातळी पूर्ण :{" "}
-                        </span>
-                        {userData?.educational_details?.education_level}
-                      </p>
-                      <p className="py-1">
-                        <span className="font-medium">
-                          शैक्षणिक/पदवी तपशील :{" "}
-                        </span>
-                        {userData?.educational_details?.education_detail}
-                      </p>
-                      <p className="py-1">
-                        <span className="font-medium">विशेष शिक्षण : </span>
-                        {userData?.educational_details?.special_education}
-                      </p>
-                      <p className="py-1 ">
-                        <span className="font-medium">
-                          स्वतः बद्दल विशेष माहिती :{" "}
-                        </span>{" "}
-                        {userData?.professional_details?.special_information}
-                      </p>
-                    </div>
-                    <h1 className="text-base px-5 font-medium text-primary-normal border-t border-b py-2 my-10 mb-2">
-                      नोकरी/व्यावसायिक तपशील ({" "}
-                      {userData?.professional_details?.profession})
-                    </h1>
-                    <div className="grid grid-cols-1 mx-5 sm:grid-cols-2 gap-1">
-                      <p className="py-1 ">
-                        <span className="font-medium">नोकरी/व्यवसाय पद : </span>{" "}
-                        {userData?.professional_details?.job_title}
-                      </p>
-                      <p className="py-1">
-                        <span className="font-medium">
-                          कंपनी अथवा व्यवसायाचे नाव :{" "}
-                        </span>{" "}
-                        {userData?.professional_details?.company_name}
-                      </p>
-
-                      <p className="py-1">
-                        <span className="font-medium">
-                          नोकरी/व्यवसायाचा पत्ता :
-                        </span>{" "}
-                        {userData?.professional_details?.job_address}
-                      </p>
-                      <p className="py-1">
-                        <span className="font-medium">एकूण मासिक वेतन :</span>{" "}
-                        {userData?.professional_details?.monthly_income} (
-                        {userData?.professional_details.payment_currency})
-                      </p>
-                      <p className="py-1">
-                        <span className="font-medium">साप्ताहिक सुट्टी :</span>{" "}
-                        {userData?.professional_details?.weekly_holiday}
-                      </p>
-                    </div>
-                    <h1 className="text-base px-5 font-medium text-primary-normal border-t border-b py-2 my-10 mb-2">
-                      संपर्क
-                    </h1>
-                    <div className="grid grid-cols-1 mx-5 sm:grid-cols-2 gap-1">
-                      <p className="py-1">
-                        <span className="font-medium">मोबाईल क्रमांक :</span>{" "}
-                        {userData?.phone}
-                      </p>
-                      <p className="py-1">
-                        <span className="font-medium">दूरध्वनी क्रमांक :</span>{" "}
-                        {userData?.contact_details?.mobile}
-                      </p>
-                      <p className="py-1">
-                        <span className="font-medium">ईमेल :</span>{" "}
-                        {userData?.email}
-                      </p>
-                      <p className="py-1">
-                        <span className="font-medium">
-                          सध्याचा राहण्याचा पत्ता :
-                        </span>{" "}
-                        {userData?.family_details.address}
-                      </p>
-                      <p className="py-1">
-                        <span className="font-medium">
-                          जोडीदाराबद्दल अपेक्षा :
-                        </span>{" "}
-                        {userData?.contact_details?.partner_expectations}
-                      </p>
                       <p className="py-1">
                         <span className="font-medium">
                           सगोत्र विवाहास आपली मान्यता आहे का ? :
@@ -281,53 +185,154 @@ const MyProfile = () => {
                         {userData?.contact_details?.consanguineous_marriage}
                       </p>
                     </div>
+
+                    <div className="gap-1 py-1">
+                      <p className="py-2 mx-5">
+                        <span className="font-medium">
+                          जोडीदाराबद्दल अपेक्षा :
+                        </span>{" "}
+                        {userData?.contact_details?.partner_expectations}
+                      </p>
+                      <p className="py-2 mx-5">
+                        <span className="font-medium">
+                          सध्याचा राहण्याचा पत्ता :
+                        </span>{" "}
+                        {userData?.contact_details?.current_address}
+                      </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 mx-5 sm:grid-cols-2 gap-1">
+                      <div>
+                        <h1 className="text-base -mx-5 px-5 font-medium text-primary-normal border-t border-b py-2 my-10 mb-2">
+                          शैक्षणिक/पदवी तपशील
+                        </h1>
+                        <div className="grid grid-cols-1 gap-1">
+                          <p className="py-1">
+                            <span className="font-medium">
+                              शिक्षण पातळी पूर्ण :{" "}
+                            </span>
+                            {userData?.educational_details?.education_level}
+                          </p>
+                          <p className="py-1">
+                            <span className="font-medium">पदवी : </span>
+                            {userData?.educational_details?.education_detail}
+                          </p>
+                          <p className="py-1">
+                            <span className="font-medium">विशेष शिक्षण : </span>
+                            {userData?.educational_details?.special_education}
+                          </p>
+                          <p className="py-1 ">
+                            <span className="font-medium">
+                              स्वतः बद्दल विशेष माहिती :{" "}
+                            </span>{" "}
+                            {userData?.educational_details?.special_information}
+                          </p>
+                        </div>
+                      </div>
+                      <div>
+                        <h1 className="text-base font-medium text-primary-normal border-t border-b py-2 my-10 mb-2">
+                          नोकरी/व्यावसायिक तपशील ({" "}
+                          {userData?.professional_details?.profession})
+                        </h1>
+                        <div className="grid grid-cols-1 gap-1">
+                          <p className="py-1">
+                            <span className="font-medium">
+                              कंपनी अथवा व्यवसायाचे नाव :{" "}
+                            </span>{" "}
+                            {userData?.professional_details?.company_name}
+                          </p>
+                          <p className="py-1 ">
+                            <span className="font-medium">पद : </span>{" "}
+                            {userData?.professional_details?.job_title}
+                          </p>
+                          <p className="py-1">
+                            <span className="font-medium">
+                              एकूण मासिक वेतन :
+                            </span>{" "}
+                            {userData?.professional_details?.monthly_income} (
+                            {userData?.professional_details?.payment_currency})
+                          </p>
+                          <p className="py-1">
+                            <span className="font-medium">
+                              साप्ताहिक सुट्टी :
+                            </span>{" "}
+                            {userData.professional_details?.weekly_holiday
+                              ?.split(",")
+                              ?.map((day) => day.trim())
+                              ?.join(", ")}
+                          </p>
+                          <p className="py-1">
+                            <span className="font-medium">पत्ता :</span>{" "}
+                            {userData?.professional_details?.job_address}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
                     <h1 className="text-base px-5 font-medium text-primary-normal border-t border-b py-2 my-10 mb-2">
-                      पालक
+                      संपर्क
+                    </h1>
+                    <div className="grid grid-cols-1 mx-5 sm:grid-cols-2 gap-1">
+                      <p className="py-1">
+                        <span className="font-medium">मोबाईल क्रमांक :</span>{" "}
+                        {userData?.contact_details?.mobile}
+                      </p>
+                      <p className="py-1">
+                        <span className="font-medium">दूरध्वनी क्रमांक :</span>{" "}
+                        {userData?.contact_details?.phone_number}
+                      </p>
+                      <p className="py-1">
+                        <span className="font-medium">ईमेल :</span>{" "}
+                        {userData?.email}
+                      </p>
+                    </div>
+                    <h1 className="text-base px-5 font-medium text-primary-normal border-t border-b py-2 my-10 mb-2">
+                      कौटुंबिक परिचय
                     </h1>
                     <div className="grid grid-cols-1 mx-5 sm:grid-cols-2 gap-1">
                       <p className="py-1">
                         <span className="font-medium">
-                          पालक / वडिलांचे पूर्ण नाव :
+                          {userData?.family_details?.guardian} :
                         </span>{" "}
-                        {userData?.family_details.fathers_name}
+                        {userData?.family_details.father.salutation}{" "}
+                        {userData?.family_details.father.name}
                       </p>
                       <p className="py-1">
-                        <span className="font-medium">पालकांचा व्यवसाय :</span>{" "}
+                        <span className="font-medium">मोबाईल क्रमांक :</span>
+                        {userData?.family_details?.father.mobile}
+                      </p>
+                      <p className="py-1">
+                        <span className="font-medium"> व्यवसाय :</span>{" "}
                         {userData?.family_details?.guardians_profession}
                       </p>
                       <p className="py-1">
                         <span className="font-medium">नोकरी / पद :</span>{" "}
                         {userData?.family_details?.designation}
                       </p>
+
                       <p className="py-1">
-                        <span className="font-medium">
-                          पालकांचा मोबाईल क्रमांक :
-                        </span>
-                        {userData?.family_details?.parents_phone}
-                      </p>
-                      <p className="py-1">
-                        <span className="font-medium">
-                          पालकांचा संपूर्ण पत्ता :
-                        </span>{" "}
-                        {userData?.family_details?.address}
-                      </p>
-                      <p className="py-1">
-                        <span className="font-medium">आईचे संपूर्ण नाव :</span>{" "}
-                        {userData?.family_details?.mothers_name}
+                        <span className="font-medium">आई :</span>{" "}
+                        {userData?.family_details.mother.salutation}{" "}
+                        {userData?.family_details?.mother.name}
                       </p>
                       <p className="py-1">
                         <span className="font-medium">मोबाईल क्रमांक :</span>{" "}
-                        {userData?.family_details?.mothers_phone}
+                        {userData?.family_details?.mother.mobile}
                       </p>
                     </div>
+                    <p className="py-1 mx-5 mt-3">
+                      <span className="font-medium">पत्ता :</span>{" "}
+                      {userData?.family_details?.address}
+                    </p>
                   </div>
 
                   <div className="grid grid-cols-1 mx-5 sm:grid-cols-2 gap-1">
                     <div>
                       <h1 className="text-base font-medium -mx-5 px-5 text-primary-normal border-t border-b py-2 mt-6 mb-2">
-                        बन्धु
+                        बन्धु (अविवाहित :{" "}
+                        {userData?.brothers_details.brother_unmarried} / विवाहित
+                        :{userData?.brothers_details.brother_married})
                       </h1>
-                      <div className="grid grid-cols-1  sm:grid-cols-2 gap-1">
+                      {/* <div className="grid grid-cols-1  sm:grid-cols-2 gap-1">
                         <p className="py-1">
                           <span className="font-medium">विवाहित :</span>{" "}
                           {userData?.brothers_details?.brother_married}
@@ -336,28 +341,78 @@ const MyProfile = () => {
                           <span className="font-medium">अविवाहित :</span>{" "}
                           {userData?.brothers_details?.brother_unmarried}
                         </p>
+                      </div> */}
+
+                      <div className="py-1 border-2 p-5 mt-5 w-[90%] bg-white rounded-lg">
+                        {userData?.brothers_details?.father_in_law?.map(
+                          (item, index) => (
+                            <div key={index} className="py-1">
+                              {index === 0 && (
+                                <p className="font-medium">
+                                  बंधूंच्या सासऱ्यांचे नाव आणि मोबाईल नंबर :{" "}
+                                </p>
+                              )}
+                              <div className="mt-3">
+                                <p>
+                                  • {item.salutation} {item.name},{" "}
+                                  {item.address}{" "}
+                                </p>
+                                <p className="mt-2">
+                                  {item.mobile} {item.email}
+                                </p>
+                              </div>
+                            </div>
+                            // <div key={index} className="py-1">
+                            //   {index === 0 && (
+                            //     <p className="font-medium py-2">
+                            //       बंधूंच्या सासऱ्यांचे नाव आणि मोबाईल नंबर :{" "}
+                            //     </p>
+                            //   )}
+                            //   <div className="flex py-3 items-center">
+                            //     <p>
+                            //       • {item.salutation} {item.name} -{item.address}
+                            //     </p>
+                            //     <div className="flex gap-3 mx-2 items-center">
+                            //       <a
+                            //         onClick={() => phoneIconClicked()}
+                            //         className="bg-blue-800  hover:bg-primary-hover hover:text-white p-[6px] text-white rounded-full"
+                            //       >
+                            //         <FaMobileAlt size={18} />
+                            //       </a>
+                            //       <a
+                            //         onClick={() => whatsappIconClicked()}
+                            //         className=" bg-[#25D366] hover:border-primary-hover hover:bg-primary-hover hover:text-white p-[4px] text-white rounded-full"
+                            //       >
+                            //         <FaWhatsapp size={20} />
+                            //       </a>
+                            //       <a
+                            //         onClick={() => emailIconClicked()}
+                            //         className="bg-red-600 border-white-normal hover:border-primary-hover hover:bg-primary-hover hover:text-white text-white p-[6px] text-primary-normal rounded-full"
+                            //       >
+                            //         <FaEnvelope size={18} />
+                            //       </a>
+                            //       {userData?.contact_details?.mobile && (
+                            //         <a
+                            //           onClick={() => telephoneIconClicked()}
+                            //           className="bg-gray-600 border-white-normal hover:border-primary-hover hover:bg-primary-hover hover:text-white text-white p-[6px] text-primary-normal rounded-full"
+                            //         >
+                            //           <FaPhoneAlt size={15} />
+                            //         </a>
+                            //       )}
+                            //     </div>
+                            //   </div>
+                            // </div>
+                          )
+                        )}
                       </div>
-                      {userData?.brothers_details?.father_in_law_name_phone
-                        ?.filter(
-                          (kakaName) =>
-                            kakaName !== null && kakaName.trim() !== ""
-                        )
-                        .map((kakaName, index) => (
-                          <div key={index} className="py-1">
-                            {index === 0 && (
-                              <p className="font-medium py-2">
-                                बंधूंच्या सासऱ्यांचे नाव आणि मोबाईल नंबर :{" "}
-                              </p>
-                            )}
-                            <p>• {kakaName}</p>
-                          </div>
-                        ))}
                     </div>
                     <div>
                       <h1 className="text-base font-medium text-primary-normal border-t border-b py-2 mt-6 mb-2">
-                        भगिनी
+                        भगिनी (अविवाहित :{" "}
+                        {userData?.sisters_details.sisters_unmarried} / विवाहित
+                        :{userData?.sisters_details.sisters_married})
                       </h1>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-1">
+                      {/* <div className="grid grid-cols-1 sm:grid-cols-2 gap-1">
                         <p className="py-1">
                           <span className="font-medium">विवाहित :</span>{" "}
                           {userData?.sisters_details.sisters_married}
@@ -366,22 +421,40 @@ const MyProfile = () => {
                           <span className="font-medium">अविवाहित :</span>{" "}
                           {userData?.sisters_details.sisters_unmarried}
                         </p>
+                      </div> */}
+
+                      <div className="py-1 border-2 p-5 mt-5 w-[90%] bg-white rounded-lg">
+                        {userData?.sisters_details?.brother_in_law?.map(
+                          (item, index) => (
+                            <div key={index} className="py-1">
+                              {index === 0 && (
+                                <p className="font-medium">
+                                  बहिण व यजमानांचे नाव आणि मोबाईल नंबर :{" "}
+                                </p>
+                              )}
+                              <div className="mt-3">
+                                <p>
+                                  • {item.salutation} {item.name},{" "}
+                                  {item.address}{" "}
+                                </p>
+                                <p className="mt-2">
+                                  {item.mobile} {item.email}
+                                </p>
+                              </div>
+                            </div>
+                            // <p key={index} className="py-1">
+                            //   {index === 0 && (
+                            //     <p className="font-medium py-2">
+                            //       बहिण व यजमानांचे नाव आणि मोबाईल नंबर :{" "}
+                            //     </p>
+                            //   )}
+                            //   <p>
+                            //     • {item.salutation} {item.name} {item.address}{" "}
+                            //   </p>
+                            // </p>
+                          )
+                        )}
                       </div>
-                      {userData?.sisters_details?.brothers_in_law_name_phone
-                        ?.filter(
-                          (kakaName) =>
-                            kakaName !== null && kakaName.trim() !== ""
-                        )
-                        .map((kakaName, index) => (
-                          <p key={index} className="py-1">
-                            {index === 0 && (
-                              <p className="font-medium py-2">
-                                बहिण व यजमानांचे नाव आणि मोबाईल नंबर :{" "}
-                              </p>
-                            )}
-                            <p>• {kakaName}</p>
-                          </p>
-                        ))}
                     </div>
                   </div>
                   <h1 className="text-base px-5 font-medium text-primary-normal border-t border-b py-2 mt-6 mb-2">
@@ -391,41 +464,60 @@ const MyProfile = () => {
                     <div>
                       <p className="py-1">
                         <span className="font-medium">आजोबांचे नाव :</span>{" "}
-                        {userData?.fathers_family_details?.grandfather_name}
+                        {
+                          userData?.fathers_family_details?.grandfather
+                            ?.salutation
+                        }{" "}
+                        {userData?.fathers_family_details?.grandfather?.name}
                       </p>
 
-                      {userData?.fathers_family_details?.kaka
-                        ?.filter(
-                          (kakaName) =>
-                            kakaName !== null && kakaName.trim() !== ""
-                        ) // Filter out null and empty strings
-                        .map((kakaName, index) => (
-                          <p key={index} className="py-1">
-                            {index === 0 && (
-                              <p className="font-medium">काका : </p>
-                            )}
-                            <p>• {kakaName}</p>
-                          </p>
-                        ))}
+                      <div className="py-1 border-2 p-5 mt-5 w-[90%] bg-white rounded-lg">
+                        {userData?.fathers_family_details?.kaka?.map(
+                          (item, index) => (
+                            <div key={index} className="py-1">
+                              {index === 0 && (
+                                <p className="font-medium">काका : </p>
+                              )}
+                              <div className="mt-3">
+                                <p>
+                                  • {item.salutation} {item.name},{" "}
+                                  {item.address}{" "}
+                                </p>
+                                <p className="mt-2">
+                                  {item.mobile} {item.email}
+                                </p>
+                              </div>
+                            </div>
+                          )
+                        )}
+                      </div>
                     </div>
                     <div>
                       <p className="py-1">
                         <span className="font-medium">आजोबांचे मूळ गाव :</span>{" "}
-                        {userData?.fathers_family_details?.grandfather_village}
+                        {userData?.fathers_family_details?.grandfather?.address}
                       </p>
-                      {userData?.fathers_family_details?.fuva
-                        ?.filter(
-                          (kakaName) =>
-                            kakaName !== null && kakaName.trim() !== ""
-                        ) // Filter out null and empty strings
-                        .map((kakaName, index) => (
-                          <p key={index} className="py-1">
-                            {index === 0 && (
-                              <p className="font-medium">फुवा : </p>
-                            )}
-                            <p>• {kakaName}</p>
-                          </p>
-                        ))}
+
+                      <div className="py-1 border-2 p-5 mt-5 w-[90%] bg-white rounded-lg">
+                        {userData?.fathers_family_details?.fuva?.map(
+                          (item, index) => (
+                            <div key={index} className="py-1">
+                              {index === 0 && (
+                                <p className="font-medium">फुवा : </p>
+                              )}
+                              <div className="mt-3 ">
+                                <p>
+                                  • {item.salutation} {item.name},{" "}
+                                  {item.address}{" "}
+                                </p>
+                                <p className="mt-2">
+                                  {item.mobile} {item.email}
+                                </p>
+                              </div>
+                            </div>
+                          )
+                        )}
+                      </div>
                     </div>
                   </div>
                   <h1 className="text-base px-5 font-medium text-primary-normal border-t border-b py-2 mt-6 mb-2">
@@ -435,41 +527,59 @@ const MyProfile = () => {
                     <div>
                       <p className="py-1">
                         <span className="font-medium">आजोबांचे नाव :</span>{" "}
-                        {userData?.mothers_family_details?.grandfather_name}
+                        {
+                          userData?.mothers_family_details?.grandfather
+                            ?.salutation
+                        }{" "}
+                        {userData?.mothers_family_details?.grandfather?.name}
                       </p>
-
-                      {userData?.mothers_family_details?.mama
-                        ?.filter(
-                          (kakaName) =>
-                            kakaName !== null && kakaName.trim() !== ""
-                        ) // Filter out null and empty strings
-                        .map((kakaName, index) => (
-                          <p key={index} className="py-1">
-                            {index === 0 && (
-                              <p className="font-medium">मामा : </p>
-                            )}
-                            <p>• {kakaName}</p>
-                          </p>
-                        ))}
+                      <div className="py-1 border-2 p-5 mt-5 w-[90%] bg-white rounded-lg">
+                        {userData?.mothers_family_details?.mama?.map(
+                          (item, index) => (
+                            <div key={index} className="py-1">
+                              {index === 0 && (
+                                <p className="font-medium">मामा : </p>
+                              )}
+                              <div className="mt-3">
+                                <p>
+                                  • {item.salutation} {item.name},{" "}
+                                  {item.address}{" "}
+                                </p>
+                                <p className="mt-2">
+                                  {item.mobile} {item.email}
+                                </p>
+                              </div>
+                            </div>
+                          )
+                        )}
+                      </div>
                     </div>
                     <div>
                       <p className="py-1">
                         <span className="font-medium">आजोबांचे मूळ गाव :</span>{" "}
-                        {userData?.mothers_family_details?.grandfather_village}
+                        {userData?.mothers_family_details?.grandfather?.address}
                       </p>
-                      {userData?.mothers_family_details?.mavsa
-                        ?.filter(
-                          (kakaName) =>
-                            kakaName !== null && kakaName.trim() !== ""
-                        ) // Filter out null and empty strings
-                        .map((kakaName, index) => (
-                          <p key={index} className="py-1">
-                            {index === 0 && (
-                              <p className="font-medium">मावसा : </p>
-                            )}
-                            <p>• {kakaName}</p>
-                          </p>
-                        ))}
+
+                      <div className="py-1 border-2 p-5 mt-5 w-[90%] bg-white rounded-lg">
+                        {userData?.mothers_family_details?.mavsa?.map(
+                          (item, index) => (
+                            <div key={index} className="py-1">
+                              {index === 0 && (
+                                <p className="font-medium">मावसा : </p>
+                              )}
+                              <div className="mt-3">
+                                <p>
+                                  • {item.salutation} {item.name},{" "}
+                                  {item.address}{" "}
+                                </p>
+                                <p className="mt-2">
+                                  {item.mobile} {item.email}
+                                </p>
+                              </div>
+                            </div>
+                          )
+                        )}
+                      </div>
                     </div>
                   </div>
                   {/* <h1 className="text-base font-medium text-primary-normal border-t border-b py-2 mt-6 mb-2">

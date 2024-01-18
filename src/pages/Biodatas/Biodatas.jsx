@@ -10,27 +10,32 @@ import Select from "react-select";
 
 const Biodatas = () => {
   const [viewAll, setViewAll] = useState(null);
-  const [typeValue, setTypeValue] = useState("");
-  const [educationLevel, seteducationLevel] = useState("");
-  const [gotra, setGotra] = useState("");
+  const [typeValue, setTypeValue] = useState(
+    localStorage.getItem("user") === "उपवर" ? "उपवधु" : "उपवर"
+  );
+  const [searchBarClicked, setSearchBarClicked] = useState(false);
+  const [isVisible, setisvisible] = useState(false);
   const [divisionValue, setDivisionValue] = useState(null);
   const [isloading, setisloading] = useState(false);
 
   const [searchQuery, setSearchQuery] = useState("");
+  const [cityquery,setCityQuery] = useState('');
   const [selectedGotras, setSelectedGotras] = useState([]);
+  const [selectedProfession, setSelectedProfession] = useState([]);
   const [selectedEducations, setSelectedEducations] = useState([]);
 
   const [minMaxAutoRunStop, setMinMaxAutoRunStop] = useState(true);
 
-  const [minValue, setMinValue] = useState(null);
-  const [maxValue, setMaxValue] = useState(null);
+  const [minValue, setMinValue] = useState(18);
+  const [maxValue, setMaxValue] = useState(60);
 
-  const [minWeightValue, setMinWeightValue] = useState(20);
-  const [maxWeightValue, setMaxWeightValue] = useState(100);
+  const [minWeightValue, setMinWeightValue] = useState(35);
+  const [maxWeightValue, setMaxWeightValue] = useState(140);
 
-    const [minHeightValue, setMinHeightValue] = useState(null);
-    const [maxHeightValue, setMaxHeightValue] = useState(null);
+    const [minHeightValue, setMinHeightValue] = useState(48);
+    const [maxHeightValue, setMaxHeightValue] = useState(84);
 
+    const [cities,setCities] = useState([]);
   // --------------------------------- PAGINATION ------------------------------------
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(6);
@@ -41,24 +46,37 @@ const Biodatas = () => {
   const numberOfPages = Math.ceil(totalPaginationBiodata / itemsPerPage);
 
   const [users, setUsers] = useState([]);
-  const [biodatas, , isBiodataLoading] = useBiodatas(
-    viewAll,
-    typeValue,
-    divisionValue,
-    minValue,
-    maxValue,
-    currentPage,
-    itemsPerPage
-  );
+  // const [biodatas, , isBiodataLoading] = useBiodatas(
+  //   viewAll,
+  //   typeValue,
+  //   divisionValue,
+  //   minValue,
+  //   maxValue,
+  //   currentPage,
+  //   itemsPerPage
+  // );
 
   // const pages = [];
   // for (let i = 0; i < numberOfPages; i++) {
   //     pages.push(i + 1);
   // }
 
-  useEffect(() => {
-    fetchData();
-  }, [typeValue, educationLevel,selectedEducations,selectedGotras, viewAll,minWeightValue,maxWeightValue,minValue,maxValue,minHeightValue,maxHeightValue, gotra]); // Moved the fetchData call inside useEffect
+    useEffect(() => {
+        fetchData(); // Call when dependencies change after initial load
+      
+    }, [
+      minValue,
+      maxValue,
+      minWeightValue,
+      maxWeightValue,
+      typeValue,
+      selectedGotras,
+      selectedEducations,
+      selectedProfession,
+      cityquery,
+      viewAll
+    ]);
+
 
   const fetchData = async () => {
     setisloading(true);
@@ -78,10 +96,10 @@ const Biodatas = () => {
       }
 
       if (minHeightValue) {
-        requestBody.minHeight = minHeightValue;
+        requestBody.minHeight = formatHeight(minHeightValue);
       }
       if (maxHeightValue) {
-        requestBody.maxHeight = maxHeightValue;
+        requestBody.maxHeight = formatHeight(maxHeightValue);
       }
       if (minValue) {
         requestBody.minAge = minValue;
@@ -89,8 +107,8 @@ const Biodatas = () => {
       if (maxValue) {
         requestBody.maxAge = maxValue;
       }
-      if (searchQuery!=='') {
-        requestBody.searchQuery = searchQuery;
+      if (cityquery!=='') {
+        requestBody.searchQuery = cityquery;
       }
       // Add education_level_completed to the request payload if educationLevel has data
       if (selectedEducations.length >0) {
@@ -99,10 +117,16 @@ const Biodatas = () => {
       if (selectedGotras.length>0) {
         requestBody.gotra = selectedGotras;
       }
+      if (selectedProfession.length > 0) {
+        requestBody.profession = selectedProfession;
+      }
+      // if(cityquery){
+      //   requestBody.location = cityquery;
+      // }
 
       const response = await fetch(
-        "https://api.welkinhawk.in.net/api/users/search-users",
-        // "http://localhost:8000/api/users/search-users",
+        // "https://api.welkinhawk.in.net/api/users/search-users",
+        "http://localhost:8000/api/users/search-users",
         {
           method: "POST",
           headers: {
@@ -160,17 +184,20 @@ const Biodatas = () => {
 
   //-------------------------------- PAGINATION END --------------------------------------
 
-  const handleViewAll = () => {
+  const handleViewAll = (e) => {
+    setViewAll(e);
+    setCityQuery('')
     setTypeValue(null);
     setSelectedEducations([]);
     setSelectedGotras([]);
+    setSelectedProfession([])
     setMinHeightValue(null);
     setMaxHeightValue(null);
-    setMinWeightValue(20);
-    setMaxWeightValue(100);
+    setMinWeightValue(35);
+    setMaxWeightValue(140);
     setSearchQuery('');
-    setMinValue(null);
-    setMaxValue(null);
+    setMinValue(18);
+    setMaxValue(60);
   };
   const handleTypeValue = () => {
     setViewAll(null);
@@ -188,10 +215,30 @@ const Biodatas = () => {
     }
   };
 
+  useEffect(()=>{
+
+  },[searchBarClicked])
+    const fetchCity = async (e) => {
+      try {
+        const response = await fetch(
+          `http://localhost:8000/api/users/get-city?q=${e}`
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch user details");
+        }
+
+        const result = await response.json();
+        if(result.status){
+        setCities(result.data);
+        }
+      } catch (error) {
+        console.error("Error fetching user details:", error);
+      }
+    };
 
     const handleWeightInput = (e) => {
       setViewAll(null);
-
       if ((!viewAll) && !minMaxAutoRunStop) {
         setMinWeightValue(e.minValue);
         setMaxWeightValue(e.maxValue);
@@ -200,7 +247,6 @@ const Biodatas = () => {
 
         const handleHeightInput = (e) => {
           setViewAll(null);
-
           if (
             (!viewAll) &&
             !minMaxAutoRunStop
@@ -209,6 +255,12 @@ const Biodatas = () => {
             setMaxHeightValue(e.maxValue);
           }
         };
+
+         const formatHeight = (heightInInches) => {
+           const feet = Math.floor(heightInInches / 12);
+           const inches = heightInInches % 12;
+           return `${feet}'${inches < 10 ? "0" : ""}${inches}"`;
+         };
 //  className = "container w-[120%] grid lg:grid-cols-4 lg:gap-2";
   return (
     <div className="grid px-5 lg:gap-2 lg:grid-cols-6 ">
@@ -216,244 +268,295 @@ const Biodatas = () => {
       <div className="border-b-2 lg:border-b-0 lg:border-r bg-[#ffffffc2] ">
         {/* View All  */}
 
-        <div className="m-3 p-2 bg-white border border-gray-200 rounded-sm mt-7">
-          <h3 className="mb-1 pl-3 font-semibold text-gray-900">
-            View all Users
-          </h3>
-          <ul className="text-sm font-medium text-gray-900">
-            <li className="w-full">
-              <div onClick={handleViewAll} className="flex items-center">
-                <input
-                  id="viewAll"
-                  type="radio"
-                  value="viewAll"
-                  name="filter"
-                  onChange={(e) => setViewAll(e.target.value)}
-                  className="w-4 h-4 text-black bg-gray-100 border-gray-300 focus:ring-primary-normal cursor-pointer"
-                />
-                <label
-                  htmlFor="viewAll"
-                  className="w-full py-3 ms-2 text-sm font-medium text-gray-900 cursor-pointer"
-                >
-                  View all
-                </label>
-              </div>
-            </li>
-          </ul>
-        </div>
-
         <div className="m-3 p-2 bg-white border border-gray-200 rounded-sm mt-5">
-          <h3 className="pl-3 font-semibold text-gray-900">
-            Search
-          </h3>
+          <h3 className="pl-3 font-semibold text-gray-900">Search </h3>
           <div>
-            <div className="mb-4 lg:mb-0 lg:w-full lg:mr-4 my-5">
-              {/* <h1 className="text-lg font-bold mb-2">User Id</h1> */}
+            <div
+              onClick={() => setSearchBarClicked(!searchBarClicked)}
+              className="mb-4 lg:mb-0 lg:w-full lg:mr-4 my-5"
+            >
               <input
                 type="text"
                 className="p-2 border text-sm border-gray-300 rounded w-full"
-                placeholder="Enter User Id/Name/Education"
-                value={searchQuery}
+                placeholder="Enter city, user name or serial no.."
+                value={cityquery}
                 onChange={(e) => {
-                  setSearchQuery(e.target.value);
+                  const inputValue = e.target.value;
+                  setCityQuery(inputValue);
+                  // Check length for string
+                  if (inputValue.length >= 2) {
+                    fetchCity(inputValue);
+                    setisvisible(true);
+                  } else {
+                    setisvisible(false);
+                  }
                 }}
               />
             </div>
-            <div className="lg:w-full">
-              {/* <Link to={`/biodata/${userId}`}> */}
-              <button
-                disabled={!searchQuery}
-                onClick={() => {fetchData();setTypeValue(null);
-                setSelectedEducations([]);
-                setSelectedGotras([]);
-                setMinHeightValue(null);
-                setMaxHeightValue(null);
-                setMinWeightValue(20);
-                setMaxWeightValue(100);
-                setMinValue(null);
-                setMaxValue(null);}}
-                style={{ alignSelf: "center", backgroundColor: "#D10002" }}
-                className=" text-white p-2 mt-5 rounded w-full"
-              >
-                Search
-              </button>
-              {/* </Link> */}
-            </div>
           </div>
-        </div>
-
-        {/* Filter by age  */}
-
-        <div className="m-3 p-2 bg-white border border-gray-200 rounded-sm mt-5">
-          <h3 className="pl-3 font-semibold text-gray-900">Filter by Age</h3>
-          <div>
-            <div className="range">
-              <h1 className="flex justify-between font-medium text-sm max-w-[260px] mx-auto mb-5">
-                <span>Min {minValue}</span> <span>TO</span>{" "}
-                <span>Max {maxValue}</span>
-              </h1>
-              <MultiRangeSlider
-                min={20}
-                max={55}
-                step={1}
-                ruler={false}
-                minValue={minValue}
-                maxValue={maxValue}
-                barInnerColor="#D10002"
-                onChange={(e) => {
-                  handleAgeInput(e);
-                }}
-                onClick={handleAgeInput}
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* Filter by Height  */}
-
-        <div className="m-3 p-2 bg-white border border-gray-200 rounded-sm mt-5">
-          <h3 className="pl-3 font-semibold text-gray-900">Filter by Height</h3>
-          <div>
-            <div className="range">
-              <h1 className="flex justify-between font-medium text-sm max-w-[260px] mx-auto mb-5">
-                <span>Min {minHeightValue}</span> <span>TO</span>{" "}
-                <span>Max {maxHeightValue}</span>
-              </h1>
-              <MultiRangeSlider
-                min={120}
-                max={200}
-                step={1}
-                ruler={false}
-                minValue={minHeightValue}
-                maxValue={maxHeightValue}
-                barInnerColor="#D10002"
-                onChange={(e) => {
-                  handleHeightInput(e);
-                }}
-                onClick={handleHeightInput}
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* Filter by Weight  */}
-
-        <div className="m-3 p-2 bg-white border border-gray-200 rounded-sm mt-5">
-          <h3 className="pl-3 font-semibold text-gray-900">Filter by Weight</h3>
-          <div>
-            <div className="range">
-              <h1 className="flex justify-between font-medium text-sm max-w-[260px] mx-auto mb-5">
-                <span>Min {minWeightValue}</span> <span>TO</span>{" "}
-                <span>Max {maxWeightValue}</span>
-              </h1>
-              <MultiRangeSlider
-                min={20}
-                max={100}
-                step={1}
-                ruler={false}
-                minValue={minWeightValue}
-                maxValue={maxWeightValue}
-                barInnerColor="#D10002"
-                onChange={(e) => {
-                  handleWeightInput(e);
-                }}
-                onClick={handleWeightInput}
-              />
-            </div>
-          </div>
-        </div>
-        {/* Filter by Type  */}
-
-        <div className="m-3 p-2 bg-white border border-gray-200 rounded-sm mt-5">
-          <h3 className="mb-1 pl-3 font-semibold text-gray-900">
-            Filter by Type
-          </h3>
-          <ul className="text-sm font-medium text-gray-900">
-            <li className="w-full">
-              <div onClick={handleTypeValue} className="flex items-center">
-                <input
-                  id="male"
-                  type="radio"
-                  value="उपवर"
-                  name="filter"
-                  onChange={(e) => setTypeValue(e.target.value)}
-                  className="w-4 h-4 text-black bg-gray-100 border-gray-300 focus:ring-primary-normal cursor-pointer"
-                />
-                <label
-                  htmlFor="male"
-                  className="w-full py-3 ms-2 text-sm font-medium text-gray-900 cursor-pointer"
+          <div className="background-white pt-3" style={{ zIndex: 999 }}>
+            <ul>
+              {cities?.map((city, index) => (
+                <li
+                  className="py-1 cursor-pointer"
+                  key={index}
+                  onClick={() => {
+                    setCityQuery(city), setViewAll(null), setisvisible(false);
+                  }}
                 >
-                  उपवर
-                </label>
-              </div>
-            </li>
-            <li className="w-full">
-              <div onClick={handleTypeValue} className="flex items-center">
-                <input
-                  id="female"
-                  type="radio"
-                  value="उपवधु"
-                  name="filter"
-                  onChange={(e) => setTypeValue(e.target.value)}
-                  className="w-4 h-4 text-black bg-gray-100 border-gray-300 focus:ring-primary-normal cursor-pointer"
-                />
-                <label
-                  htmlFor="female"
-                  className="w-full py-3 ms-2 text-sm font-medium text-gray-900 cursor-pointer"
+                  {" "}
+                  🔍 {city}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        {/* {searchBarClicked && ( */}
+        <div className={`lg:block ${searchBarClicked ? "" : "hidden"}`}>
+          <div className="m-3 p-2 bg-white border border-gray-200 rounded-sm mt-7">
+            {/* <h3 className="mb-1 pl-3 font-semibold text-gray-900">
+            Show all profiles
+          </h3> */}
+            <ul className="text-sm font-medium text-gray-900">
+              <li className="w-full">
+                <div className="flex items-center">
+                  <input
+                    id="viewAll"
+                    type="radio"
+                    value="viewAll"
+                    checked={viewAll}
+                    name="filter"
+                    onChange={(e) => handleViewAll(e.target.value)}
+                    className="w-4 h-4 text-black bg-gray-100 border-gray-300 focus:ring-primary-normal cursor-pointer"
+                  />
+                  <label
+                    htmlFor="viewAll"
+                    className="w-full py-3 ms-2 text-sm font-medium text-gray-900 cursor-pointer"
+                  >
+                    Show all profiles
+                  </label>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          {/* Filter by Type  */}
+          <div className="m-3 p-2 bg-white border border-gray-200 rounded-sm mt-5">
+            <h3 className="mb-1 pl-3 font-semibold text-gray-900">
+              Filter by उपवर/उपवधु
+            </h3>
+            <ul className="text-sm font-medium text-gray-900">
+              <li className="w-full">
+                <div
+                  onClick={() => handleTypeValue()}
+                  className="flex items-center"
                 >
-                  उपवधु
-                </label>
+                  <input
+                    id="male"
+                    type="radio"
+                    value="उपवर"
+                    name="filter"
+                    checked={typeValue === "उपवर"}
+                    onChange={(e) => setTypeValue(e.target.value)}
+                    className="w-4 h-4 text-black bg-gray-100 border-gray-300 focus:ring-primary-normal cursor-pointer"
+                  />
+                  <label
+                    htmlFor="male"
+                    className="w-full py-3 ms-2 text-sm font-medium text-gray-900 cursor-pointer"
+                  >
+                    उपवर
+                  </label>
+                </div>
+              </li>
+              <li className="w-full">
+                <div
+                  onClick={() => handleTypeValue()}
+                  className="flex items-center"
+                >
+                  <input
+                    id="female"
+                    type="radio"
+                    value="उपवधु"
+                    name="filter"
+                    checked={typeValue === "उपवधु"}
+                    onChange={(e) => setTypeValue(e.target.value)}
+                    className="w-4 h-4 text-black bg-gray-100 border-gray-300 focus:ring-primary-normal cursor-pointer"
+                  />
+                  <label
+                    htmlFor="female"
+                    className="w-full py-3 ms-2 text-sm font-medium text-gray-900 cursor-pointer"
+                  >
+                    उपवधु
+                  </label>
+                </div>
+              </li>
+            </ul>
+          </div>
+          {/* Filter by Gotra  */}
+          <div className="m-3 p-2 bg-white border border-gray-200 rounded-sm mt-5">
+            <h3 className="mb-1 pl-3 font-semibold text-gray-900">
+              Filter by Gotra
+            </h3>
+            <Select
+              isMulti
+              options={[
+                { value: "काश्यप", label: "काश्यप" },
+                { value: "खालप", label: "खालप" },
+                { value: "गहिलम", label: "गहिलम" },
+                { value: "गौतम", label: "गौतम" },
+                { value: "मांडव", label: "मांडव" },
+                { value: "लोकाक्ष", label: "लोकाक्ष" },
+              ]}
+              onChange={(selectedOptions) => {
+                setSelectedGotras(
+                  selectedOptions.map((option) => option.label)
+                );
+                setViewAll(null);
+              }}
+              value={selectedGotras.map((label) => ({ label, value: label }))}
+            />
+          </div>
+
+          {/* Filter by Education */}
+          <div className="m-3 p-2 bg-white border border-gray-200 rounded-sm mt-5">
+            <h3 className="mb-1 pl-3 font-semibold text-gray-900">
+              Filter by Education
+            </h3>
+            <Select
+              isMulti
+              options={[
+                { value: "10th", label: "10th" },
+                { value: "12th", label: "12th" },
+                { value: "Diploma", label: "Diploma" },
+                { value: "Graduate", label: "Graduate" },
+                { value: "PostGraduate", label: "Post Graduate / Master" },
+                { value: "Doctorate", label: "Doctorate" },
+              ]}
+              onChange={(selectedOptions) => {
+                setSelectedEducations(
+                  selectedOptions.map((option) => option.label)
+                );
+                setViewAll(null);
+              }}
+              value={selectedEducations.map((label) => ({
+                label,
+                value: label,
+              }))}
+            />
+          </div>
+
+          {/* Filter by Profession  */}
+          <div className="m-3 p-2 bg-white border border-gray-200 rounded-sm mt-5">
+            <h3 className="mb-1 pl-3 font-semibold text-gray-900">
+              Filter by Profession
+            </h3>
+            <Select
+              isMulti
+              options={[
+                { value: "सरकारी नोकरी", label: "सरकारी नोकरी" },
+                { value: "खाजगी नोकरी", label: "खाजगी नोकरी" },
+                { value: "व्यवसाय मालक", label: "व्यवसाय मालक" },
+                {
+                  value: "स्वयंरोजगार व्यावसायिक",
+                  label: "स्वयंरोजगार व्यावसायिक",
+                },
+              ]}
+              onChange={(selectedOptions) => {
+                setSelectedProfession(
+                  selectedOptions.map((option) => option.label)
+                );
+                setViewAll(null);
+              }}
+              value={selectedProfession.map((label) => ({
+                label,
+                value: label,
+              }))}
+            />
+          </div>
+
+          {/* Filter by Height  */}
+
+          <div className="m-3 p-2 bg-white border border-gray-200 rounded-sm mt-5">
+            <h3 className="pl-3 font-semibold text-gray-900">
+              Filter by Height
+            </h3>
+            <div>
+              <div className="range">
+                <h1 className="flex justify-between font-medium text-sm max-w-[260px] mx-auto mb-5">
+                  <span>Min {formatHeight(minHeightValue)}</span>{" "}
+                  <span>TO</span>{" "}
+                  <span>Max {formatHeight(maxHeightValue)}</span>
+                </h1>
+                {/* Use your MultiSlider component here */}
+                <MultiRangeSlider
+                  min={48} // 4ft in inches
+                  max={84} // 7ft in inches
+                  ruler={false}
+                  step={1}
+                  minValue={minHeightValue}
+                  maxValue={maxHeightValue}
+                  onChange={(e) => handleHeightInput(e)}
+                />
               </div>
-            </li>
-          </ul>
-        </div>
+            </div>
+          </div>
+          {/* Filter by age  */}
 
-        {/* Filter by Education  */}
+          <div className="m-3 p-2 bg-white border border-gray-200 rounded-sm mt-5">
+            <h3 className="pl-3 font-semibold text-gray-900">Filter by Age</h3>
+            <div>
+              <div className="range">
+                <h1 className="flex justify-between font-medium text-sm max-w-[260px] mx-auto mb-5">
+                  <span>Min {minValue}</span> <span>TO</span>{" "}
+                  <span>Max {maxValue}</span>
+                </h1>
+                <MultiRangeSlider
+                  min={18}
+                  max={60}
+                  step={1}
+                  ruler={false}
+                  minValue={minValue}
+                  maxValue={maxValue}
+                  barInnerColor="#D10002"
+                  onChange={(e) => {
+                    handleAgeInput(e);
+                  }}
+                  // onClick={()=>handleAgeInput}
+                />
+              </div>
+            </div>
+          </div>
 
-        <div className="m-3 p-2 bg-white border border-gray-200 rounded-sm mt-5">
-          <h3 className="mb-1 pl-3 font-semibold text-gray-900">
-            Filter by Gotra
-          </h3>
-          <Select
-            isMulti
-            options={[
-              { value: "काश्यप", label: "काश्यप" },
-              { value: "खालप", label: "खालप" },
-              { value: "गहिलम", label: "गहिलम" },
-              { value: "गौतम", label: "गौतम" },
-              { value: "मांडव", label: "मांडव" },
-              { value: "लोकाक्ष", label: "लोकाक्ष" },
-            ]}
-            onChange={(selectedOptions) =>
-              setSelectedGotras(selectedOptions.map((option) => option.label))
-            }
-            value={selectedGotras.map((label) => ({ label, value: label }))}
-          />
+          {/* Filter by Weight  */}
+          <div className="m-3 p-2 bg-white border border-gray-200 rounded-sm mt-5">
+            <h3 className="pl-3 font-semibold text-gray-900">
+              Filter by Weight
+            </h3>
+            <div>
+              <div className="range">
+                <h1 className="flex justify-between font-medium text-sm max-w-[260px] mx-auto mb-5">
+                  <span>Min {minWeightValue}</span> <span>TO</span>{" "}
+                  <span>Max {maxWeightValue}</span>
+                </h1>
+                <MultiRangeSlider
+                  min={35}
+                  max={140}
+                  step={1}
+                  ruler={false}
+                  minValue={minWeightValue}
+                  maxValue={maxWeightValue}
+                  barInnerColor="#D10002"
+                  onChange={(e) => {
+                    handleWeightInput(e);
+                  }}
+                  // onClick={handleWeightInput}
+                />
+              </div>
+            </div>
+          </div>
         </div>
-
-        {/* Filter by Education */}
-        <div className="m-3 p-2 bg-white border border-gray-200 rounded-sm mt-5">
-          <h3 className="mb-1 pl-3 font-semibold text-gray-900">
-            Filter by Education
-          </h3>
-          <Select
-            isMulti
-            options={[
-              { value: "10th", label: "10th" },
-              { value: "12th", label: "12th" },
-              { value: "Diploma", label: "Diploma" },
-              { value: "Graduate", label: "Graduate" },
-              { value: "PostGraduate", label: "Post Graduate / Master" },
-              { value: "Doctorate", label: "Doctorate" },
-            ]}
-            onChange={(selectedOptions) =>
-              setSelectedEducations(
-                selectedOptions.map((option) => option.label)
-              )
-            }
-            value={selectedEducations.map((label) => ({ label, value: label }))}
-          />
-        </div>
+        {/* )} */}
       </div>
 
       {/* Content section  */}
@@ -489,6 +592,13 @@ const Biodatas = () => {
               </>
             ) : (
               <>
+                <h2 className="text-xl text-center mt-3">
+                  Total:{" "}
+                  <span className="font-medium" style={{ color: "#D10002" }}>
+                    {users?.length}
+                  </span>{" "}
+                  profiles found
+                </h2>
                 <div className="custom-media-query grid grid-cols-1 lg:grid-cols-4 gap-4 py-6">
                   {users.map((item) => (
                     <BiodataCard key={item._id} item={item} />

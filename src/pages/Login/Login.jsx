@@ -50,6 +50,10 @@ const Login = () => {
           localStorage.setItem("token", result.token);
           localStorage.setItem("isLoggedIn", true);
           localStorage.setItem('userType',result.user.role)
+          localStorage.setItem('userId',result.user?._id)
+          if(result.user.role=='user'){
+          localStorage.setItem('user',result.user?.personal_details.gender)
+          }
           navigate(location?.state ? location?.state : "/");
           window.location.reload();
         } else {
