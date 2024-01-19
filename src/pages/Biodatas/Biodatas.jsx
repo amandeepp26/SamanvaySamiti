@@ -298,6 +298,7 @@ const Biodatas = () => {
               />
             </div>
           </div>
+          {isVisible &&
           <div className="background-white pt-3" style={{ zIndex: 999 }}>
             <ul>
               {cities?.map((city, index) => (
@@ -314,6 +315,7 @@ const Biodatas = () => {
               ))}
             </ul>
           </div>
+          }
         </div>
 
         {/* {searchBarClicked && ( */}

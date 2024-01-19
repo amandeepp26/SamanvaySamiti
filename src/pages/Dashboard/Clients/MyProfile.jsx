@@ -45,7 +45,7 @@ const navigate = useNavigate();
         setData(data.profile);
         setisloading(false);
       }
-      if(response.error=='Unauthorized'){
+      if(response.error==='Unauthorized'){
         localStorage.removeItem("token");
         localStorage.removeItem("isLoggedIn");
         navigate("/login");
@@ -55,51 +55,51 @@ const navigate = useNavigate();
     }
   };
 
-  const handleRequestForPro = () => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You want to make premium biodata",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes Please",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        axiosSecure
-          .put(`/request/user/to-pro/${user?.email}`)
-          .then((res) => {
-            if (
-              res.data.resultForUser.modifiedCount > 0 &&
-              res.data.resultForBiodata.modifiedCount > 0
-            ) {
-              Swal.fire({
-                position: "center",
-                icon: "success",
-                title: `Request send for admin approve`,
-                showConfirmButton: false,
-                timer: 3000,
-              });
-            }
-            refetchSelfUser();
-            refetchSelfBiodata();
-          })
-          .catch((error) => {
-            if (error.message) {
-              Swal.fire({
-                position: "center",
-                icon: "warning",
-                title: error.message,
-                showConfirmButton: false,
-                timer: 3000,
-              });
-            }
-            refetchSelfUser();
-            refetchSelfBiodata();
-          });
-      }
-    });
-  };
+  // const handleRequestForPro = () => {
+  //   Swal.fire({
+  //     title: "Are you sure?",
+  //     text: "You want to make premium biodata",
+  //     icon: "warning",
+  //     showCancelButton: true,
+  //     confirmButtonColor: "#3085d6",
+  //     cancelButtonColor: "#d33",
+  //     confirmButtonText: "Yes Please",
+  //   }).then((result) => {
+  //     if (result.isConfirmed) {
+  //       axiosSecure
+  //         .put(`/request/user/to-pro/${user?.email}`)
+  //         .then((res) => {
+  //           if (
+  //             res.data.resultForUser.modifiedCount > 0 &&
+  //             res.data.resultForBiodata.modifiedCount > 0
+  //           ) {
+  //             Swal.fire({
+  //               position: "center",
+  //               icon: "success",
+  //               title: `Request send for admin approve`,
+  //               showConfirmButton: false,
+  //               timer: 3000,
+  //             });
+  //           }
+  //           refetchSelfUser();
+  //           refetchSelfBiodata();
+  //         })
+  //         .catch((error) => {
+  //           if (error.message) {
+  //             Swal.fire({
+  //               position: "center",
+  //               icon: "warning",
+  //               title: error.message,
+  //               showConfirmButton: false,
+  //               timer: 3000,
+  //             });
+  //           }
+  //           refetchSelfUser();
+  //           refetchSelfBiodata();
+  //         });
+  //     }
+  //   });
+  // };
 
   return (
     <div className="container mx-auto px-2 flex justify-center my-4">
