@@ -323,7 +323,7 @@ const downloadIconClicked = async (imageUrl) => {
 
         if (result.success) {
           // Handle success
-          window.location.href = `mailto:${userData?.email}`;
+          window.location.href = `mailto:${e}`;
         } else {
           Swal.fire({
             position: "center",
@@ -384,7 +384,7 @@ const downloadIconClicked = async (imageUrl) => {
 
         if (result.success) {
           // Handle success
-        window.location.href = `tel:${userData?.contact_details?.mobile}`;
+        window.location.href = `tel:${e}`;
         } else {
           Swal.fire({
             position: "center",
@@ -493,21 +493,19 @@ const downloadIconClicked = async (imageUrl) => {
                 {userData?.personal_details?.fullname}
               </p>
               <div className="flex gap-5 items-center py-2">
-                {userData?.contact_details?.mobile && (
+                {userData?.phone && (
                   <a
-                    onClick={() =>
-                      phoneIconClicked(userData?.contact_details?.mobile)
-                    }
+                    onClick={() => phoneIconClicked(userData?.phone)}
                     className="bg-blue-800  hover:bg-primary-hover hover:text-white p-[6px] text-white rounded-full"
                   >
                     <FaMobileAlt size={18} />
                   </a>
                 )}
 
-                {userData?.contact_details?.mobile && (
+                {userData?.contact_details?.whatsapp && (
                   <a
                     onClick={() =>
-                      whatsappIconClicked(userData?.contact_details?.mobile)
+                      whatsappIconClicked(userData?.contact_details?.whatsapp)
                     }
                     className=" bg-[#25D366] hover:border-primary-hover hover:bg-primary-hover hover:text-white p-[4px] text-white rounded-full"
                   >
@@ -523,12 +521,10 @@ const downloadIconClicked = async (imageUrl) => {
                     <FaEnvelope size={18} />
                   </a>
                 )}
-                {userData?.contact_details?.phone_number && (
+                {userData?.contact_details?.telephone && (
                   <a
                     onClick={() =>
-                      telephoneIconClicked(
-                        userData?.contact_details?.phone_number
-                      )
+                      telephoneIconClicked(userData?.contact_details?.telephone)
                     }
                     className="bg-gray-600 border-white-normal hover:border-primary-hover hover:bg-primary-hover hover:text-white text-white p-[6px] text-primary-normal rounded-full"
                   >
@@ -685,7 +681,7 @@ const downloadIconClicked = async (imageUrl) => {
               </p>
               <p className="py-1">
                 <span className="font-medium">दूरध्वनी क्रमांक :</span>{" "}
-                {userData?.contact_details?.mobile}
+                {userData?.phone}
               </p>
               <p className="py-1">
                 <span className="font-medium">ईमेल :</span> {userData?.email}
@@ -835,21 +831,23 @@ const downloadIconClicked = async (imageUrl) => {
                   </div>
                 )}
 
-                {userData?.fathers_family_details?.fuva.length > 0 &&
-                <div className="py-1 border-2 p-5 mt-5 w-[90%] bg-white rounded-lg">
-                  {userData?.fathers_family_details?.fuva.map((item, index) => (
-                    <>
-                      {index === 0 && (
-                        <p className="font-medium py-2">फुवा : </p>
-                      )}
-                      <ExpandableSection
-                        items={item || []}
-                        renderIcons={renderIcons}
-                      />
-                    </>
-                  ))}
-                </div>
-                }
+                {userData?.fathers_family_details?.fuva.length > 0 && (
+                  <div className="py-1 border-2 p-5 mt-5 w-[90%] bg-white rounded-lg">
+                    {userData?.fathers_family_details?.fuva.map(
+                      (item, index) => (
+                        <>
+                          {index === 0 && (
+                            <p className="font-medium py-2">फुवा : </p>
+                          )}
+                          <ExpandableSection
+                            items={item || []}
+                            renderIcons={renderIcons}
+                          />
+                        </>
+                      )
+                    )}
+                  </div>
+                )}
               </div>
             </div>
             <div>
@@ -873,24 +871,24 @@ const downloadIconClicked = async (imageUrl) => {
                   {userData?.mothers_family_details?.grandfather?.address}
                   {renderIcons(userData?.mothers_family_details?.grandfather)}
                 </p> */}
-                {userData?.mothers_family_details?.mama?.length>0 &&
-                <div className="py-1 border-2 p-5 mt-5 w-[90%] bg-white rounded-lg">
-                  {userData?.mothers_family_details?.mama?.map(
-                    (item, index) => (
-                      <>
-                        {index === 0 && (
-                          <p className="font-medium py-2">मामा : </p>
-                        )}
-                        <ExpandableSection
-                          items={item || []}
-                          renderIcons={renderIcons}
-                        />
-                      </>
-                    )
-                  )}
-                </div>
-                }
-                {userData?.mothers_family_details?.mavsa.length >0 &&
+                {userData?.mothers_family_details?.mama?.length > 0 && (
+                  <div className="py-1 border-2 p-5 mt-5 w-[90%] bg-white rounded-lg">
+                    {userData?.mothers_family_details?.mama?.map(
+                      (item, index) => (
+                        <>
+                          {index === 0 && (
+                            <p className="font-medium py-2">मामा : </p>
+                          )}
+                          <ExpandableSection
+                            items={item || []}
+                            renderIcons={renderIcons}
+                          />
+                        </>
+                      )
+                    )}
+                  </div>
+                )}
+                {userData?.mothers_family_details?.mavsa.length > 0 && (
                   <div className="py-1 border-2 p-5 mt-5 w-[90%] bg-white rounded-lg">
                     {userData?.mothers_family_details?.mavsa?.map(
                       (item, index) => (
@@ -904,9 +902,9 @@ const downloadIconClicked = async (imageUrl) => {
                           />
                         </>
                       )
-                    )}     
-                </div>
-                }
+                    )}
+                  </div>
+                )}
               </div>
             </div>
           </div>

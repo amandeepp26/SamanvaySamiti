@@ -8,6 +8,7 @@ import useSelfBiodata from "../../../hooks/useSelfBiodata";
 import { useEffect, useState } from "react";
 import { formatBirthDate } from "../../../Utils/FormatDate";
 import { FaEnvelope, FaMobileAlt, FaPhoneAlt, FaWhatsapp } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const MyProfile = () => {
   const [userData, setData] = useState(null);
@@ -19,7 +20,7 @@ const MyProfile = () => {
   useEffect(() => {
     getProfile();
   }, []);
-
+const navigate = useNavigate();
   const getProfile = async () => {
     try {
       const response = await fetch(
@@ -43,6 +44,11 @@ const MyProfile = () => {
         console.log(data); // Log the fetched data
         setData(data.profile);
         setisloading(false);
+      }
+      if(response.error=='Unauthorized'){
+        localStorage.removeItem("token");
+        localStorage.removeItem("isLoggedIn");
+        navigate("/login");
       }
     } catch (error) {
       console.error("Error fetching user details:", error);
@@ -274,11 +280,15 @@ const MyProfile = () => {
                     <div className="grid grid-cols-1 mx-5 sm:grid-cols-2 gap-1">
                       <p className="py-1">
                         <span className="font-medium">मोबाईल क्रमांक :</span>{" "}
-                        {userData?.contact_details?.mobile}
+                        {userData?.phone}
                       </p>
                       <p className="py-1">
                         <span className="font-medium">दूरध्वनी क्रमांक :</span>{" "}
-                        {userData?.contact_details?.phone_number}
+                        {userData?.contact_details?.telephone}
+                      </p>
+                      <p className="py-1">
+                        <span className="font-medium">व्हॉट्सऐप :</span>{" "}
+                        {userData?.contact_details?.whatsapp}
                       </p>
                       <p className="py-1">
                         <span className="font-medium">ईमेल :</span>{" "}
@@ -342,70 +352,71 @@ const MyProfile = () => {
                           {userData?.brothers_details?.brother_unmarried}
                         </p>
                       </div> */}
-                      {userData?.brothers_details?.father_in_law?.length >0 &&
-                      <div className="py-1 border-2 p-5 mt-5 w-[90%] bg-white rounded-lg">
-                        {userData?.brothers_details?.father_in_law?.map(
-                          (item, index) => (
-                            <div key={index} className="py-1">
-                              {index === 0 && (
-                                <p className="font-medium">
-                                  बंधूंच्या सासऱ्यांचे नाव आणि मोबाईल नंबर :{" "}
-                                </p>
-                              )}
-                              <div className="mt-3">
-                                <p>
-                                  • {item.salutation} {item.name},{" "}
-                                  {item.address}{" "}
-                                </p>
-                                <p className="mt-2">
-                                  {item.mobile} {item.email}
-                                </p>
+                      {userData?.brothers_details?.father_in_law?.length >
+                        0 && (
+                        <div className="py-1 border-2 p-5 mt-5 w-[90%] bg-white rounded-lg">
+                          {userData?.brothers_details?.father_in_law?.map(
+                            (item, index) => (
+                              <div key={index} className="py-1">
+                                {index === 0 && (
+                                  <p className="font-medium">
+                                    बंधूंच्या सासऱ्यांचे नाव आणि मोबाईल नंबर :{" "}
+                                  </p>
+                                )}
+                                <div className="mt-3">
+                                  <p>
+                                    • {item.salutation} {item.name},{" "}
+                                    {item.address}{" "}
+                                  </p>
+                                  <p className="mt-2">
+                                    {item.mobile} {item.email}
+                                  </p>
+                                </div>
                               </div>
-                            </div>
-                            // <div key={index} className="py-1">
-                            //   {index === 0 && (
-                            //     <p className="font-medium py-2">
-                            //       बंधूंच्या सासऱ्यांचे नाव आणि मोबाईल नंबर :{" "}
-                            //     </p>
-                            //   )}
-                            //   <div className="flex py-3 items-center">
-                            //     <p>
-                            //       • {item.salutation} {item.name} -{item.address}
-                            //     </p>
-                            //     <div className="flex gap-3 mx-2 items-center">
-                            //       <a
-                            //         onClick={() => phoneIconClicked()}
-                            //         className="bg-blue-800  hover:bg-primary-hover hover:text-white p-[6px] text-white rounded-full"
-                            //       >
-                            //         <FaMobileAlt size={18} />
-                            //       </a>
-                            //       <a
-                            //         onClick={() => whatsappIconClicked()}
-                            //         className=" bg-[#25D366] hover:border-primary-hover hover:bg-primary-hover hover:text-white p-[4px] text-white rounded-full"
-                            //       >
-                            //         <FaWhatsapp size={20} />
-                            //       </a>
-                            //       <a
-                            //         onClick={() => emailIconClicked()}
-                            //         className="bg-red-600 border-white-normal hover:border-primary-hover hover:bg-primary-hover hover:text-white text-white p-[6px] text-primary-normal rounded-full"
-                            //       >
-                            //         <FaEnvelope size={18} />
-                            //       </a>
-                            //       {userData?.contact_details?.mobile && (
-                            //         <a
-                            //           onClick={() => telephoneIconClicked()}
-                            //           className="bg-gray-600 border-white-normal hover:border-primary-hover hover:bg-primary-hover hover:text-white text-white p-[6px] text-primary-normal rounded-full"
-                            //         >
-                            //           <FaPhoneAlt size={15} />
-                            //         </a>
-                            //       )}
-                            //     </div>
-                            //   </div>
-                            // </div>
-                          )
-                        )}
-                      </div>
-                      }
+                              // <div key={index} className="py-1">
+                              //   {index === 0 && (
+                              //     <p className="font-medium py-2">
+                              //       बंधूंच्या सासऱ्यांचे नाव आणि मोबाईल नंबर :{" "}
+                              //     </p>
+                              //   )}
+                              //   <div className="flex py-3 items-center">
+                              //     <p>
+                              //       • {item.salutation} {item.name} -{item.address}
+                              //     </p>
+                              //     <div className="flex gap-3 mx-2 items-center">
+                              //       <a
+                              //         onClick={() => phoneIconClicked()}
+                              //         className="bg-blue-800  hover:bg-primary-hover hover:text-white p-[6px] text-white rounded-full"
+                              //       >
+                              //         <FaMobileAlt size={18} />
+                              //       </a>
+                              //       <a
+                              //         onClick={() => whatsappIconClicked()}
+                              //         className=" bg-[#25D366] hover:border-primary-hover hover:bg-primary-hover hover:text-white p-[4px] text-white rounded-full"
+                              //       >
+                              //         <FaWhatsapp size={20} />
+                              //       </a>
+                              //       <a
+                              //         onClick={() => emailIconClicked()}
+                              //         className="bg-red-600 border-white-normal hover:border-primary-hover hover:bg-primary-hover hover:text-white text-white p-[6px] text-primary-normal rounded-full"
+                              //       >
+                              //         <FaEnvelope size={18} />
+                              //       </a>
+                              //       {userData?.contact_details?.mobile && (
+                              //         <a
+                              //           onClick={() => telephoneIconClicked()}
+                              //           className="bg-gray-600 border-white-normal hover:border-primary-hover hover:bg-primary-hover hover:text-white text-white p-[6px] text-primary-normal rounded-full"
+                              //         >
+                              //           <FaPhoneAlt size={15} />
+                              //         </a>
+                              //       )}
+                              //     </div>
+                              //   </div>
+                              // </div>
+                            )
+                          )}
+                        </div>
+                      )}
                     </div>
                     <div>
                       <h1 className="text-base font-medium text-primary-normal border-t border-b py-2 mt-6 mb-2">
@@ -423,40 +434,41 @@ const MyProfile = () => {
                           {userData?.sisters_details.sisters_unmarried}
                         </p>
                       </div> */}
-                      {userData?.sisters_details?.brother_in_law?.length > 0 &&
-                      <div className="py-1 border-2 p-5 mt-5 w-[90%] bg-white rounded-lg">
-                        {userData?.sisters_details?.brother_in_law?.map(
-                          (item, index) => (
-                            <div key={index} className="py-1">
-                              {index === 0 && (
-                                <p className="font-medium">
-                                  बहिण व यजमानांचे नाव आणि मोबाईल नंबर :{" "}
-                                </p>
-                              )}
-                              <div className="mt-3">
-                                <p>
-                                  • {item.salutation} {item.name},{" "}
-                                  {item.address}{" "}
-                                </p>
-                                <p className="mt-2">
-                                  {item.mobile} {item.email}
-                                </p>
+                      {userData?.sisters_details?.brother_in_law?.length >
+                        0 && (
+                        <div className="py-1 border-2 p-5 mt-5 w-[90%] bg-white rounded-lg">
+                          {userData?.sisters_details?.brother_in_law?.map(
+                            (item, index) => (
+                              <div key={index} className="py-1">
+                                {index === 0 && (
+                                  <p className="font-medium">
+                                    बहिण व यजमानांचे नाव आणि मोबाईल नंबर :{" "}
+                                  </p>
+                                )}
+                                <div className="mt-3">
+                                  <p>
+                                    • {item.salutation} {item.name},{" "}
+                                    {item.address}{" "}
+                                  </p>
+                                  <p className="mt-2">
+                                    {item.mobile} {item.email}
+                                  </p>
+                                </div>
                               </div>
-                            </div>
-                            // <p key={index} className="py-1">
-                            //   {index === 0 && (
-                            //     <p className="font-medium py-2">
-                            //       बहिण व यजमानांचे नाव आणि मोबाईल नंबर :{" "}
-                            //     </p>
-                            //   )}
-                            //   <p>
-                            //     • {item.salutation} {item.name} {item.address}{" "}
-                            //   </p>
-                            // </p>
-                          )
-                        )}
-                      </div>
-                      }
+                              // <p key={index} className="py-1">
+                              //   {index === 0 && (
+                              //     <p className="font-medium py-2">
+                              //       बहिण व यजमानांचे नाव आणि मोबाईल नंबर :{" "}
+                              //     </p>
+                              //   )}
+                              //   <p>
+                              //     • {item.salutation} {item.name} {item.address}{" "}
+                              //   </p>
+                              // </p>
+                            )
+                          )}
+                        </div>
+                      )}
                     </div>
                   </div>
                   <h1 className="text-base px-5 font-medium text-primary-normal border-t border-b py-2 mt-6 mb-2">

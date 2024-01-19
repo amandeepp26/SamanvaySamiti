@@ -423,6 +423,14 @@ const EditBiodata = () => {
           form.consanguineous_marriage.value
         );
         formData.append(
+          "contact_details[whatsapp]",
+          form.whatsapp.value
+        );
+        formData.append(
+          "contact_details[telephone]",
+          form.telephone.value
+        );
+        formData.append(
           "contact_details[current_address]",
           form.current_address.value
         );
@@ -1433,6 +1441,42 @@ const EditBiodata = () => {
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 sm:gap-6">
               <div className="w-full">
                 <label
+                  htmlFor="whatsapp"
+                  className="block mb-2 text-sm font-medium text-gray-900 cursor-pointer"
+                >
+                  {" "}
+                  Whatsapp number
+                </label>
+                <input
+                  type="number"
+                  id="whatsapp"
+                  pattern="\+?[0-9]{10,15}"
+                  title="Please enter a valid number"
+                  placeholder="Whatsapp number"
+                  className="bg-gray-50 border border-gray-300 text-base rounded-lg block w-full p-2.5"
+                  defaultValue={userData?.contact_details?.whatsapp}
+                />
+              </div>
+              <div className="w-full">
+                <label
+                  htmlFor="telephone"
+                  className="block mb-2 text-sm font-medium text-gray-900 cursor-pointer"
+                >
+                  {" "}
+                  Telephone number
+                </label>
+                <input
+                  type="number"
+                  id="telephone"
+                  pattern="\+?[0-9]{10,15}"
+                  title="Please enter a valid number"
+                  placeholder="Telephone number"
+                  className="bg-gray-50 border border-gray-300 text-base rounded-lg block w-full p-2.5"
+                  defaultValue={userData?.contact_details?.telephone}
+                />
+              </div>
+              <div className="w-full">
+                <label
                   htmlFor="current_address"
                   className="block mb-2 text-sm font-medium text-gray-900 cursor-pointer"
                 >
@@ -1536,9 +1580,9 @@ const EditBiodata = () => {
                       Mobile
                     </label>
                     <input
-                      type="text"
-                      pattern="[0-9]{10}"
-                      title="Please enter a 10-digit mobile number"
+                      type="number"
+                      pattern="\+?[0-9]{10,15}"
+                      title="Please enter a valid number"
                       id="father_mobile"
                       name="family_details[father][mobile]"
                       defaultValue={userData?.family_details.father?.mobile}
@@ -1573,9 +1617,9 @@ const EditBiodata = () => {
                       WhatsApp
                     </label>
                     <input
-                      type="text"
-                      pattern="[0-9]{10}"
-                      title="Please enter a 10-digit mobile number"
+                      type="number"
+                      pattern="\+?[0-9]{10,15}"
+                      title="Please enter a valid number"
                       id="father_whatsapp"
                       name="family_details[father][whatsapp]"
                       defaultValue={userData?.family_details.father?.whatsapp}
@@ -1610,8 +1654,10 @@ const EditBiodata = () => {
                       Phone
                     </label>
                     <input
-                      type="text"
+                      type="number"
                       id="father_phone"
+                      pattern="\+?[0-9]{10,15}"
+                      title="Please enter a valid number"
                       name="family_details[father][phone]"
                       defaultValue={userData?.family_details.father?.phone}
                       placeholder="Phone"
@@ -1669,9 +1715,9 @@ const EditBiodata = () => {
                       Mobile
                     </label>
                     <input
-                      type="text"
-                      pattern="[0-9]{10}"
-                      title="Please enter a 10-digit mobile number"
+                      type="number"
+                      pattern="\+?[0-9]{10,15}"
+                      title="Please enter a valid number"
                       id="mother_mobile"
                       name="family_details[mother][mobile]"
                       defaultValue={userData?.family_details.mother?.mobile}
@@ -1706,9 +1752,9 @@ const EditBiodata = () => {
                       WhatsApp
                     </label>
                     <input
-                      type="text"
-                      pattern="[0-9]{10}"
-                      title="Please enter a 10-digit mobile number"
+                      type="number"
+                      pattern="\+?[0-9]{10,15}"
+                      title="Please enter a valid number"
                       id="mother_whatsapp"
                       name="family_details[mother][whatsapp]"
                       defaultValue={userData?.family_details.mother?.whatsapp}
@@ -1743,8 +1789,10 @@ const EditBiodata = () => {
                       Phone
                     </label>
                     <input
-                      type="text"
+                      type="number"
                       id="mother_phone"
+                      pattern="\+?[0-9]{10,15}"
+                      title="Please enter a valid number"
                       name="family_details[mother][phone]"
                       defaultValue={userData?.family_details.mother?.phone}
                       placeholder="Phone"
@@ -1846,9 +1894,9 @@ const EditBiodata = () => {
                   </select>
                 </div>
                 <div>
-                  {selectedBrotherUnmarried > 0 &&
-                  <h3 className="mx-2 mt-5">Brother</h3>
-                  }
+                  {selectedBrotherUnmarried > 0 && (
+                    <h3 className="mx-2 mt-5">Brother</h3>
+                  )}
                   {brotherFields.map((_, index) => (
                     <div
                       className="grid gap-4 md:grid-cols-2 border-2 mt-5 rounded-lg p-3 lg:grid-cols-2 sm:gap-6"
@@ -1904,9 +1952,9 @@ const EditBiodata = () => {
                           Mobile
                         </label>
                         <input
-                          type="text"
-                          pattern="[0-9]{10}"
-                          title="Please enter a 10-digit mobile number"
+                          type="number"
+                          pattern="\+?[0-9]{10,15}"
+                          title="Please enter a valid number"
                           id={`brother_mobile_${index}`}
                           name="family_details[brother][father_in_law][mobile]"
                           defaultValue={
@@ -1945,9 +1993,9 @@ const EditBiodata = () => {
                           WhatsApp
                         </label>
                         <input
-                          type="text"
-                          pattern="[0-9]{10}"
-                          title="Please enter a 10-digit mobile number"
+                          type="number"
+                          pattern="\+?[0-9]{10,15}"
+                          title="Please enter a valid number"
                           id={`brother_whatsapp_${index}`}
                           name="family_details[brother][father_in_law][whatsapp]"
                           defaultValue={
@@ -1989,8 +2037,10 @@ const EditBiodata = () => {
                           Phone
                         </label>
                         <input
-                          type="text"
+                          type="number"
                           id={`brother_phone_${index}`}
+                          pattern="\+?[0-9]{10,15}"
+                          title="Please enter a valid number"
                           name="family_details[brother][father_in_law][phone]"
                           defaultValue={
                             userData?.brothers_details?.brothers?.[index]?.phone
@@ -2036,9 +2086,9 @@ const EditBiodata = () => {
                   </select>
                 </div>
                 <div>
-                  {selectedBrothermarried > 0 &&
-                  <h3 className="mx-2 mt-5">Brother's Father-in-law</h3>
-                  }
+                  {selectedBrothermarried > 0 && (
+                    <h3 className="mx-2 mt-5">Brother's Father-in-law</h3>
+                  )}
                   {inLawFields.map((_, index) => (
                     <div
                       className="grid gap-4 md:grid-cols-2 border-2 mt-5 rounded-lg p-3 lg:grid-cols-2 sm:gap-6"
@@ -2094,9 +2144,9 @@ const EditBiodata = () => {
                           Mobile
                         </label>
                         <input
-                          type="text"
-                          pattern="[0-9]{10}"
-                          title="Please enter a 10-digit mobile number"
+                          type="number"
+                          pattern="\+?[0-9]{10,15}"
+                          title="Please enter a valid number"
                           id={`brother_father_in_law_mobile_${index}`}
                           name="family_details[brother][father_in_law][mobile]"
                           defaultValue={
@@ -2137,9 +2187,9 @@ const EditBiodata = () => {
                           WhatsApp
                         </label>
                         <input
-                          type="text"
-                          pattern="[0-9]{10}"
-                          title="Please enter a 10-digit mobile number"
+                          type="number"
+                          pattern="\+?[0-9]{10,15}"
+                          title="Please enter a valid number"
                           id={`brother_father_in_law_whatsapp_${index}`}
                           name="family_details[brother][father_in_law][whatsapp]"
                           defaultValue={
@@ -2180,8 +2230,10 @@ const EditBiodata = () => {
                           Phone
                         </label>
                         <input
-                          type="text"
+                          type="number"
                           id={`brother_father_in_law_phone_${index}`}
+                          pattern="\+?[0-9]{10,15}"
+                          title="Please enter a valid number"
                           name="family_details[brother][father_in_law][phone]"
                           defaultValue={
                             userData?.brothers_details?.father_in_law?.[index]
@@ -2223,9 +2275,9 @@ const EditBiodata = () => {
                   </select>
                 </div>
                 <div>
-                  {selectedSisterUnmarried > 0 &&
-                  <h3 className="mx-2 mt-5">Sister</h3>
-                  }
+                  {selectedSisterUnmarried > 0 && (
+                    <h3 className="mx-2 mt-5">Sister</h3>
+                  )}
                   {sisterFields?.map((_, index) => (
                     <div
                       className="grid gap-4 md:grid-cols-2 border-2 mt-5 rounded-lg p-3 lg:grid-cols-2 sm:gap-6"
@@ -2284,9 +2336,9 @@ const EditBiodata = () => {
                           Mobile
                         </label>
                         <input
-                          type="text"
-                          pattern="[0-9]{10}"
-                          title="Please enter a 10-digit mobile number"
+                          type="number"
+                          pattern="\+?[0-9]{10,15}"
+                          title="Please enter a valid number"
                           id={`sister_mobile_${index}`}
                           name="family_details[sister][brother_in_law][mobile]"
                           defaultValue={
@@ -2328,9 +2380,9 @@ const EditBiodata = () => {
                           WhatsApp
                         </label>
                         <input
-                          type="text"
-                          pattern="[0-9]{10}"
-                          title="Please enter a 10-digit mobile number"
+                          type="number"
+                          pattern="\+?[0-9]{10,15}"
+                          title="Please enter a valid number"
                           id={`sister_whatsapp_${index}`}
                           name="family_details[sister][brother_in_law][whatsapp]"
                           defaultValue={
@@ -2371,8 +2423,10 @@ const EditBiodata = () => {
                           Phone
                         </label>
                         <input
-                          type="text"
+                          type="number"
                           id={`sister_phone_${index}`}
+                          pattern="\+?[0-9]{10,15}"
+                          title="Please enter a valid number"
                           name="family_details[sister][brother_in_law][phone]"
                           defaultValue={
                             (userData?.sisters_details?.sisters || [])[index]
@@ -2419,9 +2473,9 @@ const EditBiodata = () => {
                   </select>
                 </div>
                 <div>
-                  {selectedSistermarried > 0 &&
-                  <h3 className="mx-2 mt-5">Sister's Husband</h3>
-                  }
+                  {selectedSistermarried > 0 && (
+                    <h3 className="mx-2 mt-5">Sister's Husband</h3>
+                  )}
                   {brothersInLawFields?.map((_, index) => (
                     <div
                       className="grid gap-4 md:grid-cols-2 border-2 mt-5 rounded-lg p-3 lg:grid-cols-2 sm:gap-6"
@@ -2482,8 +2536,8 @@ const EditBiodata = () => {
                         </label>
                         <input
                           type="number"
-                          pattern="[0-9]{10}"
-                          title="Please enter a 10-digit mobile number"
+                          pattern="\+?[0-9]{10,15}"
+                          title="Please enter a valid number"
                           id={`sister_brother_in_law_mobile_${index}`}
                           name="family_details[sister][brother_in_law][mobile]"
                           defaultValue={
@@ -2527,8 +2581,8 @@ const EditBiodata = () => {
                         </label>
                         <input
                           type="number"
-                          pattern="[0-9]{10}"
-                          title="Please enter a 10-digit mobile number"
+                          pattern="\+?[0-9]{10,15}"
+                          title="Please enter a valid number"
                           id={`sister_brother_in_law_whatsapp_${index}`}
                           name="family_details[sister][brother_in_law][whatsapp]"
                           defaultValue={
@@ -2573,6 +2627,8 @@ const EditBiodata = () => {
                         <input
                           type="number"
                           id={`sister_brother_in_law_phone_${index}`}
+                          pattern="\+?[0-9]{10,15}"
+                          title="Please enter a valid number"
                           name="family_details[sister][brother_in_law][phone]"
                           defaultValue={
                             (userData?.sisters_details?.brother_in_law || [])[
@@ -2641,9 +2697,9 @@ const EditBiodata = () => {
                   Grandfather's mobile
                 </label>
                 <input
-                  type="text"
-                  pattern="[0-9]{10}"
-                  title="Please enter a 10-digit mobile number"
+                  type="number"
+                  pattern="\+?[0-9]{10,15}"
+                  title="Please enter a valid number"
                   id="father_grandfather_mobile"
                   name="family_details[father][mobile]"
                   defaultValue={
@@ -2683,9 +2739,9 @@ const EditBiodata = () => {
                   Grandfather's WhatsApp
                 </label>
                 <input
-                  type="text"
-                  pattern="[0-9]{10}"
-                  title="Please enter a 10-digit mobile number"
+                  type="number"
+                  pattern="\+?[0-9]{10,15}"
+                  title="Please enter a valid number"
                   id="father_grandfather_whatsapp"
                   name="family_details[father][whatsapp]"
                   defaultValue={
@@ -2704,8 +2760,10 @@ const EditBiodata = () => {
                   Grandfather's phone
                 </label>
                 <input
-                  type="text"
+                  type="number"
                   id="father_grandfather_phone"
+                  pattern="\+?[0-9]{10,15}"
+                  title="Please enter a valid number"
                   name="family_details[father][phone]"
                   defaultValue={
                     userData?.fathers_family_details?.grandfather?.phone
@@ -2830,9 +2888,9 @@ const EditBiodata = () => {
                         Mobile
                       </label>
                       <input
-                        type="text"
-                        pattern="[0-9]{10}"
-                        title="Please enter a 10-digit mobile number"
+                        type="number"
+                        pattern="\+?[0-9]{10,15}"
+                        title="Please enter a valid number"
                         id={`fathers_family_details_kaka_mobile_${index}`}
                         name="fathers_family_details[kaka][mobile]"
                         defaultValue={
@@ -2874,9 +2932,9 @@ const EditBiodata = () => {
                         WhatsApp
                       </label>
                       <input
-                        type="text"
-                        pattern="[0-9]{10}"
-                        title="Please enter a 10-digit mobile number"
+                        type="number"
+                        pattern="\+?[0-9]{10,15}"
+                        title="Please enter a valid number"
                         id={`fathers_family_details_kaka_whatsapp_${index}`}
                         name="fathers_family_details[kaka][whatsapp]"
                         defaultValue={
@@ -2917,7 +2975,9 @@ const EditBiodata = () => {
                         Phone
                       </label>
                       <input
-                        type="text"
+                        type="number"
+                        pattern="\+?[0-9]{10,15}"
+                        title="Please enter a valid number"
                         id={`fathers_family_details_kaka_phone_${index}`}
                         name="fathers_family_details[kaka][phone]"
                         defaultValue={
@@ -3180,9 +3240,9 @@ const EditBiodata = () => {
                   Grandfather's mobile
                 </label>
                 <input
-                  type="text"
-                  pattern="[0-9]{10}"
-                  title="Please enter a 10-digit mobile number"
+                  type="number"
+                  pattern="\+?[0-9]{10,15}"
+                  title="Please enter a valid number"
                   id="mother_grandfather_mobile"
                   name="family_details[father][mobile]"
                   defaultValue={
@@ -3221,9 +3281,9 @@ const EditBiodata = () => {
                   Grandfather's WhatsApp
                 </label>
                 <input
-                  type="text"
-                  pattern="[0-9]{10}"
-                  title="Please enter a 10-digit mobile number"
+                  type="number"
+                  pattern="\+?[0-9]{10,15}"
+                  title="Please enter a valid number"
                   id="mother_grandfather_whatsapp"
                   name="family_details[father][whatsapp]"
                   defaultValue={
@@ -3243,9 +3303,9 @@ const EditBiodata = () => {
                   Grandfather's phone
                 </label>
                 <input
-                  type="text"
-                  id="mother_grandfather_phone"
-                  name="family_details[father][phone]"
+                  type="number"
+                  pattern="\+?[0-9]{10,15}"
+                  title="Please enter a valid number"
                   defaultValue={
                     userData?.mothers_family_details?.grandfather?.phone
                   }
@@ -3365,9 +3425,9 @@ const EditBiodata = () => {
                         Mobile
                       </label>
                       <input
-                        type="text"
-                        pattern="[0-9]{10}"
-                        title="Please enter a 10-digit mobile number"
+                        type="number"
+                        pattern="\+?[0-9]{10,15}"
+                        title="Please enter a valid number"
                         id={`mothers_family_details_mama_mobile_${index}`}
                         name="mothers_family_details[mama][mobile]"
                         defaultValue={
@@ -3408,9 +3468,9 @@ const EditBiodata = () => {
                         WhatsApp
                       </label>
                       <input
-                        type="text"
-                        pattern="[0-9]{10}"
-                        title="Please enter a 10-digit mobile number"
+                        type="number"
+                        pattern="\+?[0-9]{10,15}"
+                        title="Please enter a valid number"
                         id={`mothers_family_details_mama_whatsapp_${index}`}
                         name="mothers_family_details[mama][whatsapp]"
                         defaultValue={
@@ -3451,7 +3511,9 @@ const EditBiodata = () => {
                         Phone
                       </label>
                       <input
-                        type="text"
+                        type="number"
+                        pattern="\+?[0-9]{10,15}"
+                        title="Please enter a valid number"
                         id={`mothers_family_details_mama_phone_${index}`}
                         name="mothers_family_details[mama][phone]"
                         defaultValue={
@@ -3556,9 +3618,9 @@ const EditBiodata = () => {
                         Mobile
                       </label>
                       <input
-                        type="text"
-                        pattern="[0-9]{10}"
-                        title="Please enter a 10-digit mobile number"
+                        type="number"
+                        pattern="\+?[0-9]{10,15}"
+                        title="Please enter a valid number"
                         id={`mothers_family_details_mavsa_mobile_${index}`}
                         name="mothers_family_details[mavsa][mobile]"
                         defaultValue={
@@ -3599,9 +3661,9 @@ const EditBiodata = () => {
                         WhatsApp
                       </label>
                       <input
-                        type="text"
-                        pattern="[0-9]{10}"
-                        title="Please enter a 10-digit mobile number"
+                        type="number"
+                        pattern="\+?[0-9]{10,15}"
+                        title="Please enter a valid number"
                         id={`mothers_family_details_mavsa_whatsapp_${index}`}
                         name="mothers_family_details[mavsa][whatsapp]"
                         defaultValue={
@@ -3642,7 +3704,9 @@ const EditBiodata = () => {
                         Phone
                       </label>
                       <input
-                        type="text"
+                        type="number"
+                        pattern="\+?[0-9]{10,15}"
+                        title="Please enter a valid number"
                         id={`mothers_family_details_mavsa_phone_${index}`}
                         name="mothers_family_details[mavsa][phone]"
                         defaultValue={
