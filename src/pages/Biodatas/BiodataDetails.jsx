@@ -267,7 +267,7 @@ const downloadIconClicked = async (imageUrl) => {
         Swal.fire({
           position: "center",
           icon: "warning",
-          title: "Something went wrong!",
+          title: result.message,
           showConfirmButton: false,
           timer: 3000,
         });
@@ -328,7 +328,7 @@ const downloadIconClicked = async (imageUrl) => {
           Swal.fire({
             position: "center",
             icon: "warning",
-            title: "Something went wrong!",
+            title: result.message,
             showConfirmButton: false,
             timer: 3000,
           });
@@ -389,7 +389,7 @@ const downloadIconClicked = async (imageUrl) => {
           Swal.fire({
             position: "center",
             icon: "warning",
-            title: "Something went wrong!",
+            title: result.message,
             showConfirmButton: false,
             timer: 3000,
           });
