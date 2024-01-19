@@ -1448,7 +1448,7 @@ const EditBiodata = () => {
                   Whatsapp number
                 </label>
                 <input
-                  type="number"
+                  type="text"
                   id="whatsapp"
                   pattern="\+?[0-9]{10,15}"
                   title="Please enter a valid number"
@@ -1466,7 +1466,7 @@ const EditBiodata = () => {
                   Telephone number
                 </label>
                 <input
-                  type="number"
+                  type="text"
                   id="telephone"
                   pattern="\+?[0-9]{10,15}"
                   title="Please enter a valid number"
@@ -1580,7 +1580,7 @@ const EditBiodata = () => {
                       Mobile
                     </label>
                     <input
-                      type="number"
+                      type="text"
                       pattern="\+?[0-9]{10,15}"
                       title="Please enter a valid number"
                       id="father_mobile"
@@ -1617,7 +1617,7 @@ const EditBiodata = () => {
                       WhatsApp
                     </label>
                     <input
-                      type="number"
+                      type="text"
                       pattern="\+?[0-9]{10,15}"
                       title="Please enter a valid number"
                       id="father_whatsapp"
@@ -1654,7 +1654,7 @@ const EditBiodata = () => {
                       Phone
                     </label>
                     <input
-                      type="number"
+                      type="text"
                       id="father_phone"
                       pattern="\+?[0-9]{10,15}"
                       title="Please enter a valid number"
@@ -1715,7 +1715,7 @@ const EditBiodata = () => {
                       Mobile
                     </label>
                     <input
-                      type="number"
+                      type="text"
                       pattern="\+?[0-9]{10,15}"
                       title="Please enter a valid number"
                       id="mother_mobile"
@@ -1752,7 +1752,7 @@ const EditBiodata = () => {
                       WhatsApp
                     </label>
                     <input
-                      type="number"
+                      type="text"
                       pattern="\+?[0-9]{10,15}"
                       title="Please enter a valid number"
                       id="mother_whatsapp"
@@ -1789,7 +1789,7 @@ const EditBiodata = () => {
                       Phone
                     </label>
                     <input
-                      type="number"
+                      type="text"
                       id="mother_phone"
                       pattern="\+?[0-9]{10,15}"
                       title="Please enter a valid number"
@@ -1952,7 +1952,7 @@ const EditBiodata = () => {
                           Mobile
                         </label>
                         <input
-                          type="number"
+                          type="text"
                           pattern="\+?[0-9]{10,15}"
                           title="Please enter a valid number"
                           id={`brother_mobile_${index}`}
@@ -1993,7 +1993,7 @@ const EditBiodata = () => {
                           WhatsApp
                         </label>
                         <input
-                          type="number"
+                          type="text"
                           pattern="\+?[0-9]{10,15}"
                           title="Please enter a valid number"
                           id={`brother_whatsapp_${index}`}
@@ -2037,7 +2037,7 @@ const EditBiodata = () => {
                           Phone
                         </label>
                         <input
-                          type="number"
+                          type="text"
                           id={`brother_phone_${index}`}
                           pattern="\+?[0-9]{10,15}"
                           title="Please enter a valid number"
@@ -2144,7 +2144,7 @@ const EditBiodata = () => {
                           Mobile
                         </label>
                         <input
-                          type="number"
+                          type="text"
                           pattern="\+?[0-9]{10,15}"
                           title="Please enter a valid number"
                           id={`brother_father_in_law_mobile_${index}`}
@@ -2187,7 +2187,7 @@ const EditBiodata = () => {
                           WhatsApp
                         </label>
                         <input
-                          type="number"
+                          type="text"
                           pattern="\+?[0-9]{10,15}"
                           title="Please enter a valid number"
                           id={`brother_father_in_law_whatsapp_${index}`}
@@ -2230,7 +2230,7 @@ const EditBiodata = () => {
                           Phone
                         </label>
                         <input
-                          type="number"
+                          type="text"
                           id={`brother_father_in_law_phone_${index}`}
                           pattern="\+?[0-9]{10,15}"
                           title="Please enter a valid number"
@@ -2336,7 +2336,7 @@ const EditBiodata = () => {
                           Mobile
                         </label>
                         <input
-                          type="number"
+                          type="text"
                           pattern="\+?[0-9]{10,15}"
                           title="Please enter a valid number"
                           id={`sister_mobile_${index}`}
@@ -2380,7 +2380,7 @@ const EditBiodata = () => {
                           WhatsApp
                         </label>
                         <input
-                          type="number"
+                          type="text"
                           pattern="\+?[0-9]{10,15}"
                           title="Please enter a valid number"
                           id={`sister_whatsapp_${index}`}
@@ -2423,7 +2423,7 @@ const EditBiodata = () => {
                           Phone
                         </label>
                         <input
-                          type="number"
+                          type="text"
                           id={`sister_phone_${index}`}
                           pattern="\+?[0-9]{10,15}"
                           title="Please enter a valid number"
@@ -2535,7 +2535,7 @@ const EditBiodata = () => {
                           Mobile
                         </label>
                         <input
-                          type="number"
+                          type="text"
                           pattern="\+?[0-9]{10,15}"
                           title="Please enter a valid number"
                           id={`sister_brother_in_law_mobile_${index}`}
@@ -2580,7 +2580,7 @@ const EditBiodata = () => {
                           WhatsApp
                         </label>
                         <input
-                          type="number"
+                          type="text"
                           pattern="\+?[0-9]{10,15}"
                           title="Please enter a valid number"
                           id={`sister_brother_in_law_whatsapp_${index}`}
@@ -2625,7 +2625,7 @@ const EditBiodata = () => {
                           Phone
                         </label>
                         <input
-                          type="number"
+                          type="text"
                           id={`sister_brother_in_law_phone_${index}`}
                           pattern="\+?[0-9]{10,15}"
                           title="Please enter a valid number"
@@ -2697,7 +2697,7 @@ const EditBiodata = () => {
                   Grandfather's mobile
                 </label>
                 <input
-                  type="number"
+                  type="text"
                   pattern="\+?[0-9]{10,15}"
                   title="Please enter a valid number"
                   id="father_grandfather_mobile"
@@ -2739,7 +2739,7 @@ const EditBiodata = () => {
                   Grandfather's WhatsApp
                 </label>
                 <input
-                  type="number"
+                  type="text"
                   pattern="\+?[0-9]{10,15}"
                   title="Please enter a valid number"
                   id="father_grandfather_whatsapp"
@@ -2760,7 +2760,7 @@ const EditBiodata = () => {
                   Grandfather's phone
                 </label>
                 <input
-                  type="number"
+                  type="text"
                   id="father_grandfather_phone"
                   pattern="\+?[0-9]{10,15}"
                   title="Please enter a valid number"
@@ -2888,7 +2888,7 @@ const EditBiodata = () => {
                         Mobile
                       </label>
                       <input
-                        type="number"
+                        type="text"
                         pattern="\+?[0-9]{10,15}"
                         title="Please enter a valid number"
                         id={`fathers_family_details_kaka_mobile_${index}`}
@@ -2932,7 +2932,7 @@ const EditBiodata = () => {
                         WhatsApp
                       </label>
                       <input
-                        type="number"
+                        type="text"
                         pattern="\+?[0-9]{10,15}"
                         title="Please enter a valid number"
                         id={`fathers_family_details_kaka_whatsapp_${index}`}
@@ -2975,7 +2975,7 @@ const EditBiodata = () => {
                         Phone
                       </label>
                       <input
-                        type="number"
+                        type="text"
                         pattern="\+?[0-9]{10,15}"
                         title="Please enter a valid number"
                         id={`fathers_family_details_kaka_phone_${index}`}
@@ -3240,7 +3240,7 @@ const EditBiodata = () => {
                   Grandfather's mobile
                 </label>
                 <input
-                  type="number"
+                  type="text"
                   pattern="\+?[0-9]{10,15}"
                   title="Please enter a valid number"
                   id="mother_grandfather_mobile"
@@ -3281,7 +3281,7 @@ const EditBiodata = () => {
                   Grandfather's WhatsApp
                 </label>
                 <input
-                  type="number"
+                  type="text"
                   pattern="\+?[0-9]{10,15}"
                   title="Please enter a valid number"
                   id="mother_grandfather_whatsapp"
@@ -3303,7 +3303,7 @@ const EditBiodata = () => {
                   Grandfather's phone
                 </label>
                 <input
-                  type="number"
+                  type="text"
                   id="mother_grandfather_phone"
                   pattern="\+?[0-9]{10,15}"
                   title="Please enter a valid number"
@@ -3426,7 +3426,7 @@ const EditBiodata = () => {
                         Mobile
                       </label>
                       <input
-                        type="number"
+                        type="text"
                         pattern="\+?[0-9]{10,15}"
                         title="Please enter a valid number"
                         id={`mothers_family_details_mama_mobile_${index}`}
@@ -3469,7 +3469,7 @@ const EditBiodata = () => {
                         WhatsApp
                       </label>
                       <input
-                        type="number"
+                        type="text"
                         pattern="\+?[0-9]{10,15}"
                         title="Please enter a valid number"
                         id={`mothers_family_details_mama_whatsapp_${index}`}
@@ -3512,7 +3512,7 @@ const EditBiodata = () => {
                         Phone
                       </label>
                       <input
-                        type="number"
+                        type="text"
                         pattern="\+?[0-9]{10,15}"
                         title="Please enter a valid number"
                         id={`mothers_family_details_mama_phone_${index}`}
@@ -3619,7 +3619,7 @@ const EditBiodata = () => {
                         Mobile
                       </label>
                       <input
-                        type="number"
+                        type="text"
                         pattern="\+?[0-9]{10,15}"
                         title="Please enter a valid number"
                         id={`mothers_family_details_mavsa_mobile_${index}`}
@@ -3662,7 +3662,7 @@ const EditBiodata = () => {
                         WhatsApp
                       </label>
                       <input
-                        type="number"
+                        type="text"
                         pattern="\+?[0-9]{10,15}"
                         title="Please enter a valid number"
                         id={`mothers_family_details_mavsa_whatsapp_${index}`}
@@ -3705,7 +3705,7 @@ const EditBiodata = () => {
                         Phone
                       </label>
                       <input
-                        type="number"
+                        type="text"
                         pattern="\+?[0-9]{10,15}"
                         title="Please enter a valid number"
                         id={`mothers_family_details_mavsa_phone_${index}`}
