@@ -8,33 +8,7 @@ import { useEffect } from "react";
 
 const Home = () => {
   const { adminStatistic, isLoadingAdminStatistic } = useAdminStatistic();
-    useEffect(() => {
-      getProfile();
-    }, []);
-    const navigate = useNavigate();
-    const getProfile = async () => {
-      try {
-        const response = await fetch(
-          `https://api.welkinhawk.in.net/api/users/get-profile`,
-          // "http://localhost:8000/api/users/get-profile",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              // Add other headers if needed
-            },
-          }
-        );
-        console.log("response------>", response);
-        if (response.error == "Unauthorized") {
-          localStorage.removeItem("token");
-          localStorage.removeItem("isLoggedIn");
-          navigate("/login");
-        }
-        
-      } catch (error) {
-        console.error("Error fetching user details:", error);
-      }
-    };
+  
   return (
     <Container>
       <section>

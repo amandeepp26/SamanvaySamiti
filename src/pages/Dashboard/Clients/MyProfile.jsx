@@ -39,6 +39,12 @@ const navigate = useNavigate();
       if (!response.ok) {
         setisloading(false);
         setData(null);
+            // Check if the response status is not ok (e.g., 401 Unauthorized)
+            if (response.status === 401) {
+              localStorage.removeItem("token");
+              localStorage.removeItem("isLoggedIn");
+              navigate("/login");
+            } 
       } else {
         const data = await response.json();
         console.log(data); // Log the fetched data

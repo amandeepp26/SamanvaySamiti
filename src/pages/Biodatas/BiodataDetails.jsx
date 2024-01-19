@@ -831,7 +831,7 @@ const downloadIconClicked = async (imageUrl) => {
                   </div>
                 )}
 
-                {userData?.fathers_family_details?.fuva.length > 0 && (
+                {userData?.fathers_family_details?.fuva?.length > 0 && (
                   <div className="py-1 border-2 p-5 mt-5 w-[90%] bg-white rounded-lg">
                     {userData?.fathers_family_details?.fuva.map(
                       (item, index) => (
@@ -888,7 +888,7 @@ const downloadIconClicked = async (imageUrl) => {
                     )}
                   </div>
                 )}
-                {userData?.mothers_family_details?.mavsa.length > 0 && (
+                {userData?.mothers_family_details?.mavsa?.length > 0 && (
                   <div className="py-1 border-2 p-5 mt-5 w-[90%] bg-white rounded-lg">
                     {userData?.mothers_family_details?.mavsa?.map(
                       (item, index) => (

@@ -5,7 +5,7 @@ import BiodataCard from "../Utils/Biodatas/BiodataCard";
 import "./Biodatas.css";
 import MultiRangeSlider from "multi-range-slider-react";
 import useTotalBiodataForPagination from "../../hooks/useTotalBiodataForPagination";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Select from "react-select";
 
 const Biodatas = () => {
@@ -78,6 +78,43 @@ const Biodatas = () => {
     ]);
 
   const myId = localStorage.getItem("userId");
+   useEffect(() => {
+     getProfile();
+   }, []);
+   const navigate = useNavigate();
+
+   const token = localStorage.getItem("token");
+   const getProfile = async () => {
+     try {
+       const response = await fetch(
+         `https://api.welkinhawk.in.net/api/users/get-profile`,
+         // "http://localhost:8000/api/users/get-profile",
+         {
+           headers: {
+             Authorization: `Bearer ${token}`,
+             // Add other headers if needed
+           },
+         }
+       );
+
+       if (!response.ok) {
+         // Check if the response status is not ok (e.g., 401 Unauthorized)
+         if (response.status === 401) {
+           localStorage.removeItem("token");
+           localStorage.removeItem("isLoggedIn");
+           navigate("/login");
+         } else {
+           console.error(`Error: ${response.statusText}`);
+         }
+       } else {
+         // Process the successful response
+         const data = await response.json();
+         console.log("User details:", data);
+       }
+     } catch (error) {
+       console.error("Error fetching user details:", error);
+     }
+   };
 
   const fetchData = async () => {
     setisloading(true);
