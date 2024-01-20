@@ -716,9 +716,12 @@ const downloadIconClicked = async (imageUrl) => {
               </p>
               <p className="py-1">
                 <span className="font-medium">नोकरी/व्यावसायिक तपशील :</span>{" "}
-                {userData?.family_details?.guardians_profession},{" "}
-                {userData?.family_details?.designation}
+                {userData?.family_details?.guardians_profession}
+                {userData?.family_details?.designation
+                  ? `, ${userData?.family_details?.designation}`
+                  : ""}
               </p>
+
               <p className="py-1">
                 <span className="font-medium">आई :</span>{" "}
                 <ExpandableSection
@@ -951,29 +954,25 @@ const ExpandableSection = ({ items, renderIcons }) => {
         <div key={index}>
           <div className="flex items-center">
             <p
-              className=" py-2 cursor-pointer"
+              className="py-2 cursor-pointer"
               onClick={() => handleExpandToggle(index)}
             >
-              • {item.salutation} {item.name} -{item.address}{" "}
-              {/* <span
-              className={`cursor-pointer transform ${
-                expandedItem !== index ? "rotate-180" : ""
-              }`}
-            >
-              {expandedItem === index ? "^" : "⌄"}
-            </span> */}
+              • {item.salutation} {item.name}{" "}
+              {item.address && `, ${item.address}`}
             </p>
-            {expandedItem === index ?
-            <FaSortUp
-              className="cursor-pointer mt-2 mx-2"
-              onClick={() => handleExpandToggle(index)}
-            />
-            :
-            <FaSortDown
-              className="cursor-pointer -mt-1 mx-2"
-              onClick={() => handleExpandToggle(index)}
-            />
-            }
+
+            {(item.mobile || item.whatsapp || item.phone || item.email) &&
+              (expandedItem === index ? (
+                <FaSortUp
+                  className="cursor-pointer mt-2 mx-2"
+                  onClick={() => handleExpandToggle(index)}
+                />
+              ) : (
+                <FaSortDown
+                  className="cursor-pointer -mt-1 mx-2"
+                  onClick={() => handleExpandToggle(index)}
+                />
+              ))}
           </div>
 
           {expandedItem === index && (

@@ -1542,24 +1542,26 @@ const EditBiodata = () => {
                       Name
                     </label>
                     <div className="flex">
-                      <select
-                        id="father_salutation"
-                        className="bg-gray-50 border w-[40%] mr-2 border-gray-300 text-base rounded-lg block w-full p-2.5"
-                        defaultValue={
-                          userData?.family_details.father.salutation
-                        }
-                        value={userData?.family_details.father.salutation}
-                        onChange={(e) => {
-                          userData.family_details.father.salutation =
-                            e.target.value;
-                          forceUpdate();
-                        }}
-                      >
-                        <option value="">Select</option>
-                        {maleSalutations.map((key) => (
-                          <option value={key}>{key}</option>
-                        ))}
-                      </select>
+                      <div className=" w-[35%] mr-3">
+                        <select
+                          id="father_salutation"
+                          className="bg-gray-50 border mr-2 border-gray-300 text-base rounded-lg block w-full p-2.5"
+                          defaultValue={
+                            userData?.family_details.father.salutation
+                          }
+                          value={userData?.family_details.father.salutation}
+                          onChange={(e) => {
+                            userData.family_details.father.salutation =
+                              e.target.value;
+                            forceUpdate();
+                          }}
+                        >
+                          <option value="">Select</option>
+                          {maleSalutations.map((key) => (
+                            <option value={key}>{key}</option>
+                          ))}
+                        </select>
+                      </div>
                       <input
                         type="text"
                         id="fathers_name"
@@ -1680,9 +1682,11 @@ const EditBiodata = () => {
                       Name
                     </label>
                     <div className="flex">
+
+                      <div className=" w-[35%] mr-3">
                       <select
                         id="mother_salutation"
-                        className="bg-gray-50 border w-[80px] mr-2 border-gray-300 text-base rounded-lg block w-full p-2.5"
+                        className="bg-gray-50 border mr-2 border-gray-300 text-base rounded-lg block w-full p-2.5"
                         value={userData?.family_details.mother.salutation}
                         onChange={(e) => {
                           userData.family_details.mother.salutation =
@@ -1695,6 +1699,7 @@ const EditBiodata = () => {
                           <option value={key}>{key}</option>
                         ))}
                       </select>
+                      </div>
                       <input
                         type="text"
                         id="mothers_name"
@@ -1911,9 +1916,11 @@ const EditBiodata = () => {
                           Name
                         </label>
                         <div className="flex">
+
+                      <div className=" w-[35%] mr-3">
                           <select
                             id={`brother_salutation_${index}`}
-                            className="bg-gray-50 border w-[30%] mr-2 border-gray-300 text-base rounded-lg block w-full p-2.5"
+                            className="bg-gray-50 border mr-2 border-gray-300 text-base rounded-lg block w-full p-2.5"
                             value={
                               userData?.brothers_details?.brothers?.[index]
                                 ?.salutation
@@ -1930,6 +1937,7 @@ const EditBiodata = () => {
                               <option value={key}>{key}</option>
                             ))}
                           </select>
+                          </div>
                           <input
                             type="text"
                             id={`brother_name_${index}`}
@@ -2103,9 +2111,11 @@ const EditBiodata = () => {
                           Name
                         </label>
                         <div className="flex">
+
+                      <div className=" w-[35%] mr-3">
                           <select
                             id={`brother_father_in_law_salutation_${index}`}
-                            className="bg-gray-50 border w-[30%] mr-2 border-gray-300 text-base rounded-lg block w-full p-2.5"
+                            className="bg-gray-50 border mr-2 border-gray-300 text-base rounded-lg block w-full p-2.5"
                             value={
                               userData?.brothers_details?.father_in_law[index]
                                 ?.salutation
@@ -2122,6 +2132,7 @@ const EditBiodata = () => {
                               <option value={key}>{key}</option>
                             ))}
                           </select>
+                          </div>
                           <input
                             type="text"
                             id={`brother_father_in_law_name_${index}`}
@@ -2292,9 +2303,11 @@ const EditBiodata = () => {
                           Name
                         </label>
                         <div className="flex">
+
+                      <div className=" w-[35%] mr-3">
                           <select
                             id={`sister_salutation_${index}`}
-                            className="bg-gray-50 border w-[30%] mr-2 border-gray-300 text-base rounded-lg block w-full p-2.5"
+                            className="bg-gray-50 border mr-2 border-gray-300 text-base rounded-lg block w-full p-2.5"
                             value={
                               (userData?.sisters_details?.sisters || [])[index]
                                 ?.salutation
@@ -2313,6 +2326,7 @@ const EditBiodata = () => {
                               </option>
                             ))}
                           </select>
+                              </div>
                           <input
                             type="text"
                             id={`sister_name_${index}`}
@@ -2490,9 +2504,11 @@ const EditBiodata = () => {
                           Name
                         </label>
                         <div className="flex">
+
+                      <div className=" w-[35%] mr-3">
                           <select
                             id={`sister_brother_in_law_salutation_${index}`}
-                            className="bg-gray-50 border w-[30%] mr-2 border-gray-300 text-base rounded-lg block w-full p-2.5"
+                            className="bg-gray-50 border mr-2 border-gray-300 text-base rounded-lg block w-full p-2.5"
                             value={
                               (userData?.sisters_details?.brother_in_law || [])[
                                 index
@@ -2512,6 +2528,7 @@ const EditBiodata = () => {
                               </option>
                             ))}
                           </select>
+                          </div>
                           <input
                             type="text"
                             id={`sister_brother_in_law_name_${index}`}
@@ -2658,9 +2675,11 @@ const EditBiodata = () => {
                   Grandfather's Name
                 </label>
                 <div className="flex">
+
+                      <div className=" w-[35%] mr-3">
                   <select
                     id={`father_grandfather_salutation`}
-                    className="bg-gray-50 border w-[30%] mr-2 border-gray-300 text-base rounded-lg block w-full p-2.5"
+                    className="bg-gray-50 border mr-2 border-gray-300 text-base rounded-lg block w-full p-2.5"
                     value={
                       userData?.fathers_family_details?.grandfather?.salutation
                     }
@@ -2677,6 +2696,7 @@ const EditBiodata = () => {
                       </option>
                     ))}
                   </select>
+                  </div>
                   <input
                     type="text"
                     id="father_grandfather_name"
@@ -2842,9 +2862,11 @@ const EditBiodata = () => {
                         Name
                       </label>
                       <div className="flex">
+
+                      <div className=" w-[35%] mr-3">
                         <select
                           id={`fathers_family_details_kaka_salutation_${index}`}
-                          className="bg-gray-50 border w-[30%] mr-2 border-gray-300 text-base rounded-lg block w-full p-2.5"
+                          className="bg-gray-50 border mr-2 border-gray-300 text-base rounded-lg block w-full p-2.5"
                           value={
                             (userData?.fathers_family_details?.kaka || [])[
                               index
@@ -2864,6 +2886,7 @@ const EditBiodata = () => {
                             </option>
                           ))}
                         </select>
+                        </div>
                         <input
                           type="text"
                           id={`fathers_family_details_kaka_name_${index}`}
@@ -3040,9 +3063,11 @@ const EditBiodata = () => {
                         Name
                       </label>
                       <div className="flex">
+
+                      <div className=" w-[35%] mr-3">
                         <select
                           id={`fathers_family_details_fuva_salutation_${index}`}
-                          className="bg-gray-50 border w-[30%] mr-2 border-gray-300 text-base rounded-lg block w-full p-2.5"
+                          className="bg-gray-50 border mr-2 border-gray-300 text-base rounded-lg block w-full p-2.5"
                           value={
                             (userData?.fathers_family_details?.fuva || [])[
                               index
@@ -3062,6 +3087,7 @@ const EditBiodata = () => {
                             </option>
                           ))}
                         </select>
+                        </div>
                         <input
                           type="text"
                           id={`fathers_family_details_fuva_name_${index}`}
@@ -3201,9 +3227,11 @@ const EditBiodata = () => {
                   Grandfather's Name
                 </label>
                 <div className="flex">
+
+                      <div className=" w-[35%] mr-3">
                   <select
                     id={`mother_grandfather_salutation`}
-                    className="bg-gray-50 border w-[30%] mr-2 border-gray-300 text-base rounded-lg block w-full p-2.5"
+                    className="bg-gray-50 border mr-2 border-gray-300 text-base rounded-lg block w-full p-2.5"
                     value={
                       userData?.mothers_family_details?.grandfather?.salutation
                     }
@@ -3220,6 +3248,7 @@ const EditBiodata = () => {
                       </option>
                     ))}
                   </select>
+                  </div>
                   <input
                     type="text"
                     id="mother_grandfather_name"
@@ -3380,9 +3409,11 @@ const EditBiodata = () => {
                         Name
                       </label>
                       <div className="flex">
+
+                      <div className=" w-[35%] mr-3">
                         <select
                           id={`mothers_family_details_mama_salutation_${index}`}
-                          className="bg-gray-50 border w-[30%] mr-2 border-gray-300 text-base rounded-lg block w-full p-2.5"
+                          className="bg-gray-50 border mr-2 border-gray-300 text-base rounded-lg block w-full p-2.5"
                           value={
                             (userData?.mothers_family_details?.mama || [])[
                               index
@@ -3402,6 +3433,7 @@ const EditBiodata = () => {
                             </option>
                           ))}
                         </select>
+                        </div>
                         <input
                           type="text"
                           id={`mothers_family_details_mama_name_${index}`}
@@ -3573,9 +3605,11 @@ const EditBiodata = () => {
                         Name
                       </label>
                       <div className="flex">
+
+                      <div className=" w-[35%] mr-3">
                         <select
                           id={`mothers_family_details_mavsa_salutation_${index}`}
-                          className="bg-gray-50 border w-[30%] mr-2 border-gray-300 text-base rounded-lg block w-full p-2.5"
+                          className="bg-gray-50 border mr-2 border-gray-300 text-base rounded-lg block w-full p-2.5"
                           value={
                             (userData?.mothers_family_details?.mavsa || [])[
                               index
@@ -3595,6 +3629,7 @@ const EditBiodata = () => {
                             </option>
                           ))}
                         </select>
+                        </div>
                         <input
                           type="text"
                           id={`mothers_family_details_mavsa_name_${index}`}
