@@ -74,7 +74,9 @@ const Biodatas = () => {
       selectedEducations,
       selectedProfession,
       cityquery,
-      viewAll
+      viewAll,
+      minHeightValue,
+      maxHeightValue
     ]);
 
   const myId = localStorage.getItem("userId");
@@ -133,12 +135,12 @@ const Biodatas = () => {
         requestBody.maxWeight = maxWeightValue;
       }
 
-      // if (minHeightValue) {
-      //   requestBody.minHeight = 48;
-      // }
-      // if (maxHeightValue) {
-      //   requestBody.maxHeight = 84;
-      // }
+      if (minHeightValue) {
+        requestBody.minHeight = minHeightValue * 2.54;
+      }
+      if (maxHeightValue) {
+        requestBody.maxHeight = maxHeightValue * 2.54;
+      }
       if (minValue) {
         requestBody.minAge = minValue;
       }
@@ -520,7 +522,7 @@ const Biodatas = () => {
 
           {/* Filter by Height  */}
 
-          {/* <div className="m-3 p-2 bg-white border border-gray-200 rounded-sm mt-5">
+          <div className="m-3 p-2 bg-white border border-gray-200 rounded-sm mt-5">
             <h3 className="pl-3 font-semibold text-gray-900">
               Filter by Height
             </h3>
@@ -542,7 +544,7 @@ const Biodatas = () => {
                 />
               </div>
             </div>
-          </div> */}
+          </div>
           {/* Filter by age  */}
 
           <div className="m-3 p-2 bg-white border border-gray-200 rounded-sm mt-5">

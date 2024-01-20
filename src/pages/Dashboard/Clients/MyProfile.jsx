@@ -371,8 +371,8 @@ const navigate = useNavigate();
                                 )}
                                 <div className="mt-3">
                                   <p>
-                                    • {item.salutation} {item.name},{" "}
-                                    {item.address}{" "}
+                                    • {item.salutation} {item.name}{" "}
+                                    {item.address && `, ${item.address}`}
                                   </p>
                                   <p className="mt-2">
                                     {item.mobile} {item.email}
@@ -453,8 +453,8 @@ const navigate = useNavigate();
                                 )}
                                 <div className="mt-3">
                                   <p>
-                                    • {item.salutation} {item.name},{" "}
-                                    {item.address}{" "}
+                                    • {item.salutation} {item.name}{" "}
+                                    {item.address && `, ${item.address}`}
                                   </p>
                                   <p className="mt-2">
                                     {item.mobile} {item.email}
@@ -500,8 +500,8 @@ const navigate = useNavigate();
                               )}
                               <div className="mt-3">
                                 <p>
-                                  • {item.salutation} {item.name},{" "}
-                                  {item.address}{" "}
+                                  • {item.salutation} {item.name}{" "}
+                                  {item.address && `, ${item.address}`}
                                 </p>
                                 <p className="mt-2">
                                   {item.mobile} {item.email}
@@ -527,8 +527,8 @@ const navigate = useNavigate();
                               )}
                               <div className="mt-3 ">
                                 <p>
-                                  • {item.salutation} {item.name},{" "}
-                                  {item.address}{" "}
+                                  • {item.salutation} {item.name}{" "}
+                                  {item.address && `, ${item.address}`}
                                 </p>
                                 <p className="mt-2">
                                   {item.mobile} {item.email}
@@ -562,8 +562,8 @@ const navigate = useNavigate();
                               )}
                               <div className="mt-3">
                                 <p>
-                                  • {item.salutation} {item.name},{" "}
-                                  {item.address}{" "}
+                                  • {item.salutation} {item.name}{" "}
+                                  {item.address && `, ${item.address}`}
                                 </p>
                                 <p className="mt-2">
                                   {item.mobile} {item.email}
@@ -589,8 +589,8 @@ const navigate = useNavigate();
                               )}
                               <div className="mt-3">
                                 <p>
-                                  • {item.salutation} {item.name},{" "}
-                                  {item.address}{" "}
+                                  • {item.salutation} {item.name}
+                                  {item.address && `, ${item.address}`}
                                 </p>
                                 <p className="mt-2">
                                   {item.mobile} {item.email}

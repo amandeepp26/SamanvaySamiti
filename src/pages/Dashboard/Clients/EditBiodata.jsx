@@ -49,7 +49,7 @@ const EditBiodata = () => {
 
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
 
-   const blood_group= ["A +ive", "B +ive", "AB +ive", "O +ive", "A -ive", "B -ive", "AB -ive", "O -ive"]
+   const blood_group= ["A +ve", "B +ve", "AB +ve", "O +ve", "A -ve", "B -ve", "AB -ve", "O -ve"]
    const gotra = ["काश्यप", "खालप", "गहिलम", "गौतम", "मांडव", "लोकाक्ष"];
   const kuldevi = [
     "श्री. अंबिका भवानी माता, निझर वेलदा, नंदुरबार",
@@ -910,22 +910,30 @@ const EditBiodata = () => {
         };
 
 
-         const generateHeightOptions = () => {
-           const options = [];
-           for (let feet = 4; feet <= 7; feet++) {
-             for (let inches = 1; inches <= 11; inches++) {
-               const formattedHeight = `${feet}'${
-                 inches < 10 ? "0" : ""
-               }${inches}"`;
-               options.push(
-                 <option key={formattedHeight} value={formattedHeight}>
-                   {formattedHeight}
-                 </option>
-               );
+       const generateHeightOptions = () => {
+         const options = [];
+
+         for (let feet = 4; feet <= 8; feet++) {
+           for (let inches = 0; inches <= 11; inches++) {
+             // Skip the option where both feet and inches are zero
+             if (feet === 0 && inches === 0) {
+               continue;
              }
+
+             const formattedHeight = `${feet}'${
+               inches === 0 ? "" : inches + '"'
+             }`;
+             options.push(
+               <option key={formattedHeight} value={formattedHeight}>
+                 {formattedHeight}
+               </option>
+             );
            }
-           return options;
-         };
+         }
+
+         return options;
+       };
+
 
 
           const options = weeklyHolidays.map((key) => ({
