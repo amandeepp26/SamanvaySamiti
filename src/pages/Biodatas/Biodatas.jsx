@@ -82,6 +82,8 @@ const Biodatas = () => {
   const myId = localStorage.getItem("userId");
    useEffect(() => {
      getProfile();
+     formatHeight(minHeightValue);
+     formatHeight(maxHeightValue)
    }, []);
    const navigate = useNavigate();
 
