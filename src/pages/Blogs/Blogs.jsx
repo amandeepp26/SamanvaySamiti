@@ -23,7 +23,7 @@ const Blogs = () => {
         <Link to={`/blog-details`} className="w-full" >
         <div key={item.id} className="w-full sm:w-1/2  md:w-1/4 p-2">
           <div className="shadow-md hover:shadow-lg bg-white ">
-            <div className="flex items-center">
+            <div className="flex items-center justify-center">
               <img
                 style={{ width: "250px", height: "240px" }}
                 src={logo}
