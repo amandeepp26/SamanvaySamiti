@@ -34,6 +34,7 @@ import ResetPassword from "../pages/Reset Password/ResetPassword";
 import MyProfile from "../pages/Dashboard/Clients/MyProfile";
 import GuestRegister from "../pages/Guest/GuestRegister";
 import GuestLogin from "../pages/Guest/GuestLogin";
+import BlogDetails from "../pages/Blogs/BlogDetails";
 
 const router = createBrowserRouter([
   {
@@ -69,6 +70,10 @@ const router = createBrowserRouter([
       {
         path: "/आमच्या-बद्दल",
         element: <AboutUs />,
+      },
+      {
+        path: "/blog-details",
+        element: <BlogDetails />,
       },
       {
         path: "/privacy-policy",
